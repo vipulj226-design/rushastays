@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: VIPUL/rushastays  # <-- Will update with actual repo name
+  repo: vipulj226-design/rushastays
   branch: main
 
 # Where uploaded images will be stored
