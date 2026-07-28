@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="sitemap" type="application/xml" href="https://rushastays.com/sitemap.xml">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs & Stays Guide Gurugram (Gurgaon) | Rusha Stays</title>
+    <meta name="description" content="Read the latest articles on coliving trends, relocation guides, and serviced stays in Gurugram (Gurgaon). Stay updated with Rusha Stays.">
+    <link rel="preload" href="images/luxury_apartment_living.webp" as="image">
+    <link rel="preload" href="images/gurgaon_skyline.webp" as="image">
+    <link rel="stylesheet" href="styles-v6.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .blog-hero {
+            background: linear-gradient(135deg, rgba(200, 56, 40, 0.04) 0%, rgba(133, 37, 27, 0.02) 100%), #FAF7F2;
+            padding: 120px 24px 24px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .blog-hero h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: #85251B;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+        .blog-hero p {
+            font-size: 15px;
+            color: var(--text-body);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .blog-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 24px;
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 40px;
+        }
+        @media (max-width: 991px) {
+            .blog-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 16px 16px;
+            }
+        }
+
+        .featured-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+        .featured-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .featured-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .featured-content {
+            padding: 24px;
+        }
+        .post-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 16px;
+            line-height: 1.3;
+        }
+        .post-excerpt {
+            color: var(--text-body);
+            line-height: 1.7;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+        .read-more-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .read-more-btn:hover {
+            color: var(--primary-hover);
+        }
+        .blog-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .sidebar-widget {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+        }
+        .widget-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+        }
+        .recent-posts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .recent-post-item {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .recent-post-thumb {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            background-size: cover;
+            background-position: center;
+            flex-shrink: 0;
+        }
+        .recent-post-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+        }
+        .recent-post-info span {
+            font-size: 12px;
+            color: var(--text-body);
+        }
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tag-item {
+            font-size: 13px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            padding: 6px 14px;
+            border-radius: 100px;
+            color: var(--text-heading);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .tag-item:hover {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            /* ---- Hero ---- */
+            .blog-hero {
+                padding: 30px 16px 20px !important;
+            }
+            .blog-hero h1 {
+                font-size: 22px !important;
+                margin-bottom: 6px !important;
+                letter-spacing: -0.5px !important;
+            }
+            .blog-hero p {
+                font-size: 13px !important;
+                line-height: 1.5 !important;
+            }
+
+            /* ---- Layout ---- */
+            .blog-layout {
+                padding: 14px 12px !important;
+                gap: 20px !important;
+            }
+
+            /* ---- Featured Article Card ---- */
+            .featured-card {
+                border-radius: 16px !important;
+                margin-bottom: 16px !important;
+            }
+            .featured-img {
+                height: 160px !important;
+            }
+            .featured-content {
+                padding: 16px !important;
+            }
+            .post-title {
+                font-size: 18px !important;
+                margin-bottom: 10px !important;
+                line-height: 1.3 !important;
+            }
+            .post-excerpt {
+                font-size: 13px !important;
+                margin-bottom: 16px !important;
+                line-height: 1.6 !important;
+            }
+            .read-more-btn {
+                font-size: 13px !important;
+            }
+
+            /* ---- Sidebar ---- */
+            .blog-sidebar {
+                gap: 16px !important;
+            }
+            .sidebar-widget {
+                border-radius: 14px !important;
+                padding: 20px 16px !important;
+            }
+            .widget-title {
+                font-size: 15px !important;
+                margin-bottom: 14px !important;
+                padding-bottom: 8px !important;
+            }
+            .recent-post-item {
+                gap: 10px !important;
+            }
+            .recent-post-thumb {
+                width: 56px !important;
+                height: 56px !important;
+                border-radius: 8px !important;
+            }
+            .recent-post-info h4 {
+                font-size: 13px !important;
+            }
+            .recent-post-info span {
+                font-size: 11px !important;
+            }
+            .tag-cloud {
+                gap: 8px !important;
+            }
+            .tag-item {
+                font-size: 12px !important;
+                padding: 5px 12px !important;
+            }
+
+            /* ---- Blogs Grid (if multiple posts) ---- */
+            .blogs-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+        }
+    </style>
+
+    <link rel="canonical" href="https://rushastays.com/blog.html">
+
+    <!-- Open Graph / Facebook -->
+
+
+
+
+<!-- Twitter -->
+
+
+
+
+<!-- Favicon -->
+    <link rel="icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="shortcut icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="apple-touch-icon" href="images/rusha-stays-logo.webp">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rushastays.com/blog">
+    <meta property="og:title" content="Blog — Rusha Stays | Living & Lifestyle in Gurugram">
+    <meta property="og:description" content="Tips, guides and insights about living in Gurugram — from best localities to serviced apartment trends.">
+    <meta property="og:image" content="https://rushastays.com/images/gurugram-cybercity.webp">
+    <meta property="og:site_name" content="Rusha Stays">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rushastays.com/blog">
+    <meta name="twitter:title" content="Blog — Rusha Stays | Living & Lifestyle in Gurugram">
+    <meta name="twitter:description" content="Tips, guides and insights about living in Gurugram — from best localities to serviced apartment trends.">
+    <meta name="twitter:image" content="https://rushastays.com/images/gurugram-cybercity.webp">
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo cursor-pointer" onclick="location.href='/'">
+                <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo" class="logo-img">
+            </div>
+            <div class="nav-right">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog" class="active">Blogs</a></li>
+                    </ul>
+                </nav>
+                <a href="https://wa.me/919205859444" target="_blank" class="contact-number" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i><span class="contact-text">Call us on </span><span class="contact-num-only">9205859444</span></a>
+                <button class="btn-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                <div class="hamburger" onclick="app.toggleSidebar()">
+                    <span class="hamburger-text">Menu</span><i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="app.toggleSidebar()"></div>
+    <div class="sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="close-btn" onclick="app.toggleSidebar()">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index" onclick="app.toggleSidebar()">Home</a></li>
+            <li><a href="locations" onclick="app.toggleSidebar()">Locations</a></li>
+            <li><a href="corporate" onclick="app.toggleSidebar()">Corporate Stays</a></li>
+            <li><a href="about" onclick="app.toggleSidebar()">About Us</a></li>
+            <li><a href="faqs" onclick="app.toggleSidebar()">FAQs</a></li>
+            <li><a href="blog" onclick="app.toggleSidebar()">Blogs</a></li>
+            <li><a class="active-tab text-primary" href="https://wa.me/919205859444" target="_blank" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i> Call us on 9205859444</a></li>
+        </ul>
+        <button class="btn-primary mt-20-full" onclick="app.toggleSidebar(); openCallbackModal()">Request a Call Back</button>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="blog-hero">
+        <h1>Rusha Stays Blogs</h1>
+        <p style="font-style: italic; font-size: 16px; opacity: 0.95;" data-style="font-style: italic; font-size: 16px; opacity: 0.95;">Insights, guides, and updates on premium co-living spaces and serviced suites in Gurugram (Gurgaon).</p>
+    </section>
+
+    <!-- BLOG CONTENT -->
+    <main class="blog-layout">
+        <div class="blog-main-content">
+            <!-- Article Card -->
+            <article class="featured-card" onclick="location.href='why-serviced-apartments-are-replacing-pgs-in-gurugram'" style="cursor: pointer;" data-style="cursor: pointer;">
+                <div class="featured-img" style="background-image: url('images/luxury_apartment_living.webp');" data-style="background-image: url('images/luxury_apartment_living.webp');"></div>
+                <div class="featured-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar"></i> July 7, 2026</span>
+                        <span><i class="far fa-clock"></i> 8 Min Read</span>
+                        <span><i class="far fa-user"></i> By Hospitality Expert</span>
+                    </div>
+                    <h2 class="post-title">Why Serviced Apartments in Gurugram (Gurgaon) are Replacing PGs: The Ultimate Guide for Modern Professionals</h2>
+                    <p class="post-excerpt">Relocating to Gurugram (Gurgaon) for work? Discover why modern corporate executives and startup founders are moving away from traditional Paying Guest (PG) accommodations and embracing the privacy, flexibility, and luxury of managed serviced suites.</p>
+                    <a href="why-serviced-apartments-are-replacing-pgs-in-gurugram" class="read-more-btn">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+        </div>
+
+        <!-- SIDEBAR -->
+        <aside class="blog-sidebar">
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Recent Posts</h3>
+                <div class="recent-posts-list">
+                    <div class="recent-post-item cursor-pointer" onclick="location.href='why-serviced-apartments-are-replacing-pgs-in-gurugram'">
+                        <div class="recent-post-thumb" style="background-image: url('images/luxury_apartment_living.webp');" data-style="background-image: url('images/luxury_apartment_living.webp');"></div>
+                        <div class="recent-post-info">
+                            <h4>Why Serviced Apartments are Replacing PGs...</h4>
+                            <span>July 7, 2026</span>
+                        </div>
+                    </div>
+                    <div class="recent-post-item cursor-pointer" onclick="location.href='top-10-popular-places-in-gurugram'">
+                        <div class="recent-post-thumb" style="background-image: url('images/gurgaon_skyline.webp');" data-style="background-image: url('images/gurgaon_skyline.webp');"></div>
+                        <div class="recent-post-info">
+                            <h4>Top 10 Popular Places in Gurugram (Gurgaon)...</h4>
+                            <span>July 7, 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Stays Tags</h3>
+                <div class="tag-cloud">
+                    <span class="tag-item">Serviced Suites</span>
+                    <span class="tag-item">Gurugram (Gurgaon)</span>
+                    <span class="tag-item">Co-living</span>
+                    <span class="tag-item">Corporate Housing</span>
+                    <span class="tag-item">Sector 28</span>
+                    <span class="tag-item">Sector 42</span>
+                    <span class="tag-item">Sushant Lok</span>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- PREMIUM FOOTER -->
+    <footer class="premium-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo">
+                    </div>
+                    <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
+                
+                    <div class="footer-social-block footer-social-block">
+                        <span class="label-caps">Follow Us</span>
+                        <div class="d-flex-gap-12">
+                            <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=100088761680648&mibextid=ZbWKwL" target="_blank" class="social-icon-btn facebook" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                                <div class="footer-col">
+                    <h4>Explore Stays</h4>
+                    <ul class="footer-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Properties</h4>
+                    <ul class="footer-links">
+                        <li><a href="sector-42-1-bhk-suite">Sector 42 Suite</a></li>
+                        <li><a href="sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
+                        <li><a href="sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                        <li class="mt-8"><span style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 43 (Upcoming)</span></li>
+                        <li><span style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 55 (Upcoming)</span></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact-info">
+                        <li>
+                            <i class="fas fa-phone-alt mt-2px"></i>
+                            <a href="https://wa.me/919205859444" target="_blank" class="prop-detail-label" rel="noopener noreferrer">Call us on +91-9205859444</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope mt-2px"></i>
+                            <a href="mailto:rushastays@gmail.com" class="prop-detail-label">rushastays@gmail.com</a>
+                        </li>
+                        <li class="mt-15-block">
+                            <button class="btn-primary btn-sidebar-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                        <div class="footer-bottom">
+                <p>&copy; 2023 Rusha Stays. All rights reserved.</p><p style="margin-top: 4px; font-weight: normal; color: var(--text-muted);" data-style="margin-top: 4px; font-weight: normal; color: var(--text-muted);">Established in 2023, serving guests with a 99% satisfaction rate.</p>
+                <a href="https://wa.me/918470990283" target="_blank" class="dev-badge" rel="noopener noreferrer">
+                    <span>Designed &amp; Developed by <strong>Vipul Jain</strong></span>
+                    <span class="d-inline-flex-nowrap">
+                        <i class="fab fa-whatsapp text-whatsapp"></i>
+                        <strong>8470990283</strong>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALLBACK MODAL popup -->
+    <div class="modal-overlay" id="callback-modal" onclick="closeCallbackModal(event)">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeCallbackModal(event)">&times;</button>
+            <div class="modal-header">
+                <h3>Request a Callback</h3>
+                <p>Fill out the form below and our hospitality advisors will reach out to you shortly.</p>
+            </div>
+            <form class="modal-form" id="callbackForm" onsubmit="handleCallbackSubmit(event)">
+                <div class="form-group">
+                    <label for="modal-name">Your Name</label>
+                    <input type="text" id="modal-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Phone Number</label>
+                    <input type="tel" id="modal-phone" class="form-control" placeholder="e.g. +91 98765 43210" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-email">Email Address</label>
+                    <input type="email" id="modal-email" class="form-control" placeholder="e.g. rahul@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-interest">Property of Interest</label>
+                    <select id="modal-interest" class="form-control">
+                        <option value="General Enquiry">General Enquiry</option>
+                        <option value="Sector 28 - 1 BHK Suite">Sector 28, Gurugram - 1 BHK Suite</option>
+                        <option value="Sector 28 - King Room Suite">Sector 28, Gurugram - King Room Suite</option>
+                        <option value="Sector 28 - Executive Premium Rooms">Sector 28, Gurugram - Executive Premium Rooms</option>
+                        <option value="Sector 28 - Executive Rooms">Sector 28, Gurugram - Executive Rooms</option>
+                        <option value="Sector 42 - 1 BHK Suite">Sector 42, Gurugram - 1 BHK Suite</option>
+                        <option value="Sushant Lok - 1 BHK Studio">Sushant Lok Phase 1, Gurugram - 1 BHK Studio</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary w-100">Submit Request</button>
+            </form>
+            <div class="modal-success-state d-none" id="modal-success-state">
+                <div class="success-icon-wrap">
+                    <div class="success-icon-pulse"></div>
+                    <div class="success-icon-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <h3 class="success-title">Request Received!</h3>
+                <p class="success-subtitle">We have successfully received your callback details.</p>
+                <div class="success-advisor-badge">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Our advisor will call you shortly!</span>
+                </div>
+                <div>
+                    <button class="btn-success-close" onclick="closeCallbackModal(true)">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        function openCallbackModal() {
+            document.getElementById('callback-modal').classList.add('active');
+        }
+
+        let modalTimeoutId = null;
+
+        
+        function closeCallbackModal(e) {
+        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
+        if (modalTimeoutId) {
+        clearTimeout(modalTimeoutId);
+        modalTimeoutId = null;
+        }
+        document.getElementById('callback-modal').classList.remove('active');
+        // Reset states
+        setTimeout(() => {
+        document.getElementById('callbackForm').style.display = 'flex';
+        document.getElementById('modal-success-state').style.display = 'none';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'block';
+        document.getElementById('callbackForm').reset();
+        }, 300);
+        }
+        }
+
+        function handleCallbackSubmit(e) {
+        e.preventDefault();
+        // Simulate form submission
+        document.getElementById('callbackForm').style.display = 'none';
+        document.getElementById('modal-success-state').style.display = 'block';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'none';
+
+        // Auto close modal after 15 seconds if not clicked manually
+        modalTimeoutId = setTimeout(() => {
+        closeCallbackModal(true);
+        }, 15000);
+        }
+
+</script>
+
+    <!-- Floating WhatsApp Live Chat -->
+    <a href="https://wa.me/919205859444" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+        <span>Live Chat</span>
+    </a>
+
+    <script>document.querySelectorAll("[data-style]").forEach(function(el){el.setAttribute("style",el.getAttribute("data-style"))});</script>
+</body>
+</html>

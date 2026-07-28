@@ -1,0 +1,99 @@
+{
+  "id": "sector-28-king-room-suite",
+  "locality": "Sector 28",
+  "roomType": "King Room Suite",
+  "occupancy": "Solo Room / Twin Sharing Room",
+  "categories": [
+    "Executive Suites",
+    "Managed Living"
+  ],
+  "size": "450 Sq. Ft.",
+  "pricingHtml": "Solo starting at 44,999 / month<br>Twin starting at 20,999 / month",
+  "priceVal": "44999",
+  "image": "images/king-room/bedroom.jpg",
+  "images": [
+    "images/king-room/bedroom.jpg",
+    "images/king-room/living-area.jpg",
+    "images/king-room/bathroom.jpg",
+    "images/king-room/rooftop.jpg",
+    "images/king-room/terrace.jpg",
+    "images/sector-28-1bhk/living-area-2.jpg",
+    "images/sector-28-1bhk/bathroom-2.jpg"
+  ],
+  "aboutShort": "Experience the comfort of a fully furnished Premium King Room Suite in the heart of Sector 28, Gurgaon...",
+  "aboutFull": "Experience the comfort of a fully furnished Premium King Room Suite in the heart of Sector 28, Gurgaon. Conveniently located near Galleria Market, DLF Phase 1, MG Road Metro Station, Rapid Metro, Hamilton Road, Golf Course Road and Cyber City, the property offers excellent connectivity to major business hubs, restaurants, cafés and lifestyle destinations.<br><br>Designed for professionals who value privacy and convenience, the suite features a spacious studio-style layout with a dedicated living area, fully functional modular kitchen, dining space, modern washroom and premium furnishings. Whether you're relocating to Gurgaon, working on a long-term assignment, building a startup or simply looking for a premium managed residence, everything is thoughtfully designed to help you feel at home from day one.<br><br>The property is professionally managed by Rusha Stays and offers a secure, well-maintained environment supported by housekeeping services, high-speed Wi-Fi, power backup and dedicated resident assistance.<br><br>Residents also enjoy access to a vibrant terrace café serving freshly prepared meals, snacks and beverages. Nutritious breakfast and dinner, along with weekend lunch options, are thoughtfully curated to provide convenience without compromising on quality. Combined with a well-equipped gym, gaming zone and comfortable community spaces, the property offers a balanced lifestyle designed around the needs of modern professionals.",
+  "inSuiteFeatures": [
+    "Fully Furnished Luxury Setup",
+    "Private Balcony",
+    "Air Conditioning",
+    "Smart TV",
+    "Refrigerator",
+    "Microwave",
+    "Electric Kettle",
+    "Couch",
+    "Spacious Wardrobe & Storage",
+    "Bed with Storage",
+    "Iron & Ironing Board",
+    "Hair Dryer",
+    "Modern Attached Washroom",
+    "Luxury Bathtub"
+  ],
+  "propertyAmenities": [
+    "Well-Equipped Gym",
+    "Terrace Garden",
+    "Terrace Café",
+    "Freshly Prepared Meals",
+    "App-Based Food Ordering",
+    "Pool Table & Foosball",
+    "24×7 RO Drinking Water",
+    "High-Speed Wi-Fi",
+    "Daily Housekeeping",
+    "Lift Access",
+    "CCTV & Biometric Security",
+    "100% Power Backup",
+    "Fully Automatic Washing Machines",
+    "Parking Available",
+    "Professionally Managed Property",
+    "Dedicated Resident Support"
+  ],
+  "neighbourhoodText": "Located in one of Gurgaon's most preferred residential and commercial neighbourhoods, Sector 28 offers exceptional connectivity and a vibrant lifestyle. With major business districts, metro stations, shopping destinations, cafés and restaurants located nearby, residents enjoy the perfect balance of work, convenience and leisure.",
+  "landmarks": [
+    {
+      "icon": "📍",
+      "text": "Galleria Market – 2 Minutes"
+    },
+    {
+      "icon": "🚇",
+      "text": "MG Road Metro Station – 5 Minutes"
+    },
+    {
+      "icon": "🚇",
+      "text": "DLF Phase 1 Rapid Metro Station – 5 Minutes"
+    },
+    {
+      "icon": "🛣️",
+      "text": "Hamilton Road – 2 Minutes"
+    },
+    {
+      "icon": "🛣️",
+      "text": "Golf Course Road – 5 Minutes"
+    },
+    {
+      "icon": "💼",
+      "text": "DLF Cyber City – 10 Minutes"
+    },
+    {
+      "icon": "🏢",
+      "text": "Udyog Vihar – 15 Minutes"
+    },
+    {
+      "icon": "🛍️",
+      "text": "Ambience Mall – 15 Minutes"
+    },
+    {
+      "icon": "🏥",
+      "text": "Fortis Memorial Research Institute – 15 Minutes"
+    }
+  ],
+  "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.2758117765103!2d77.09459567549495!3d28.471253075752948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19b4944a0a73%3A0x1c0b6b64f7cef48!2sRusha%20Stays%20-%20Sec%2028!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+}

@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="sitemap" type="application/xml" href="https://rushastays.com/sitemap.xml">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Rusha Stays Premium Accommodation</title>
+    <meta name="description" content="About Rusha Stays, founded by Neha Jain Sharma & R.D. Sharma. Explore our vision, values, and managed rooms in Gurugram (Gurgaon).">
+    <link rel="stylesheet" href="styles-v6.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Structured Schema for About Page -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About Rusha Stays",
+        "description": "Rusha Stays is a professionally managed accommodation brand offering fully furnished rooms, premium suites, studio residences and managed living spaces across Gurugram (Gurgaon).",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Rusha Stays",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "images/rusha-stays-logo.webp"
+            }
+        }
+    }
+    </script>
+
+    <style>
+        /* Specific Styles for About Page */
+        @keyframes floatImage {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(0.5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .about-hero {
+            padding: 50px 24px 70px;
+            background: linear-gradient(135deg, #FFFDF9 0%, rgba(249, 217, 118, 0.15) 50%, rgba(229, 92, 62, 0.08) 100%), var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        .about-hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .about-hero-text h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--text-heading);
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+        .about-hero-text p {
+            font-size: 16px;
+            color: var(--text-body);
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+        .about-hero-img {
+            width: 100%;
+            height: 480px;
+            border-radius: 24px;
+            background-image: url('images/stress-free-experience.webp');
+            background-size: cover;
+            background-position: center;
+            border: 8px solid #ffffff;
+            box-shadow: 0 24px 50px rgba(198, 58, 45, 0.12);
+            animation: floatImage 6s ease-in-out infinite;
+            z-index: 1;
+            position: relative;
+        }
+
+        .vision-mission-section {
+            padding: 50px 24px;
+            background-color: var(--bg-main);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .corp-label {
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--primary); margin-bottom: 16px; font-family: 'Poppins', sans-serif;
+            display: block;
+            width: 100%;
+        }
+        .vision-mission-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+        .vision-mission-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            max-width: 540px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        .vision-mission-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 36px rgba(198, 58, 45, 0.08);
+            border-color: rgba(198, 58, 45, 0.3);
+        }
+        .vision-mission-card > i {
+            font-size: 30px;
+            color: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            background: rgba(198, 58, 45, 0.06);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            transition: all 0.3s ease;
+        }
+        .vision-mission-card:hover > i {
+            background: var(--primary);
+            color: #ffffff;
+            transform: rotate(-6deg) scale(1.1);
+        }
+        .vision-mission-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-heading);
+        }
+        .vision-mission-card p {
+            font-size: 15px;
+            color: var(--text-body);
+            line-height: 1.7;
+        }
+
+        .values-section {
+            padding: 50px 24px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .values-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .values-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-heading);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 12px;
+        }
+        .values-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .values-header:hover h2::after {
+            width: 70px;
+        }
+        .values-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        .value-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            width: calc(33.333% - 20px);
+            min-width: 280px;
+            max-width: 360px;
+            text-align: center;
+        }
+        .value-card:hover {
+            border-color: rgba(198, 58, 45, 0.3);
+            box-shadow: 0 16px 36px rgba(198, 58, 45, 0.08);
+            transform: translateY(-8px);
+        }
+        .value-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        .value-card h3 i {
+            color: var(--primary);
+            font-size: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: rgba(198, 58, 45, 0.06);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .value-card:hover h3 i {
+            background: var(--primary);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+        .value-card p {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        .team-section {
+            padding: 50px 24px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .team-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .team-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-heading);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 12px;
+        }
+        .team-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .team-header:hover h2::after {
+            width: 70px;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .team-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+        .team-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        .team-avatar-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary);
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .team-info h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 4px;
+        }
+        .team-info span {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 16px;
+        }
+        .team-info p {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.7;
+        }
+
+        .amenities-tag-section {
+            padding: 50px 24px;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .amenities-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .amenities-tag-section h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 16px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 12px;
+        }
+        .amenities-tag-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        .amenities-tag-section:hover h2::after {
+            width: 70px;
+        }
+        .amenities-tag-section p {
+            font-size: 16px;
+            color: var(--text-body);
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .amenities-tag-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .amenity-tag {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-heading);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .amenity-tag i {
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        .amenity-tag:hover {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #e64a3b);
+            color: #ffffff;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(198, 58, 45, 0.18);
+        }
+        .amenity-tag:hover i {
+            color: #ffffff;
+        }
+
+        @media (max-width: 1024px) {
+            .about-hero-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .vision-mission-grid { grid-template-columns: 1fr; }
+            .values-grid { gap: 20px; }
+            .team-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .about-hero { padding-top: 30px; }
+            .about-hero-img { height: 300px; }
+            .team-card {
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                padding: 30px 20px !important;
+            }
+            .value-card {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .about-hero-scroll-indicator {
+                display: none !important;
+            }
+            /* Hero: stack column, center everything */
+            .about-hero {
+                padding: 20px 16px 32px !important;
+                text-align: center !important;
+            }
+            .about-hero-container {
+                grid-template-columns: 1fr !important;
+                gap: 24px !important;
+            }
+            .about-hero-text h1 {
+                font-size: 26px !important;
+                line-height: 1.25 !important;
+                margin-bottom: 12px !important;
+                text-align: center !important;
+            }
+            .about-hero-text h3 {
+                font-size: 15px !important;
+                text-align: center !important;
+                margin-bottom: 12px !important;
+            }
+            .about-hero-text p {
+                font-size: 14px !important;
+                text-align: center !important;
+                margin-bottom: 12px !important;
+            }
+            .about-hero-img {
+                height: 220px !important;
+                border-radius: 16px !important;
+            }
+            /* Hide the decorative offset frame on mobile */
+            .about-hero-img-wrapper::before { display: none !important; }
+
+            /* Stats row: center, remove dividers on small screens */
+            .hero-mini-stats {
+                justify-content: center !important;
+                gap: 24px !important;
+                margin-top: 20px !important;
+                flex-wrap: wrap !important;
+            }
+            .hero-mini-stats > div {
+                text-align: center !important;
+                border-left: none !important;
+                padding-left: 0 !important;
+            }
+            .hero-mini-stats > div:first-child {
+                border-right: 1px solid var(--border-color) !important;
+                padding-right: 24px !important;
+            }
+
+            /* Corp badge / label */
+            .corp-hero-badge, .corp-label {
+                text-align: center !important;
+                display: block !important;
+            }
+
+            /* Section headings */
+            .values-header h2,
+            .team-header h2,
+            .amenities-tag-section h2 {
+                font-size: 24px !important;
+                text-align: center !important;
+            }
+            
+            /* Vision/Mission cards */
+            .vision-mission-section { padding: 30px 16px !important; }
+            .vision-mission-card {
+                padding: 24px 16px !important;
+                text-align: center !important;
+            }
+            .vision-mission-card i {
+                display: block !important;
+                margin: 0 auto 14px !important;
+            }
+            .vision-mission-card h3 {
+                font-size: 18px !important;
+                text-align: center !important;
+            }
+            .vision-mission-card ul {
+                display: inline-block !important;
+                text-align: left !important;
+                margin: 12px auto !important;
+            }
+
+            /* Values cards */
+            .values-section { padding: 30px 16px !important; }
+            .values-grid { gap: 16px !important; }
+            .value-card {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                padding: 20px !important;
+                text-align: center !important;
+            }
+            .value-card h3 {
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 8px !important;
+                font-size: 16px !important;
+            }
+            .value-card h3 i { margin: 0 !important; }
+
+            /* Team cards */
+            .team-section { padding: 30px 16px !important; }
+            .team-grid { gap: 20px !important; }
+            .team-card {
+                padding: 24px 16px !important;
+                text-align: center !important;
+                align-items: center !important;
+            }
+            .team-info h3 { font-size: 18px !important; }
+            .team-info p { font-size: 13px !important; }
+
+            /* Amenities */
+            .amenities-tag-section { padding: 30px 16px !important; }
+            .amenities-tag-section p { font-size: 14px !important; }
+            .amenities-tag-grid { gap: 10px !important; }
+            .amenity-tag {
+                padding: 10px 16px !important;
+                font-size: 13px !important;
+            }
+        }
+        
+        /* Offset collage frame layout */
+        .about-hero-img-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        .about-hero-img-wrapper::before {
+            display: none;
+        }
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: -10%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(229, 92, 62, 0.1) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .about-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -15%;
+            left: -10%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(249, 217, 118, 0.12) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Scoped layout classes to prevent layout shift and FOUC */
+        .about-main {
+            padding-top: 90px;
+            background-color: var(--bg-main);
+        }
+        .text-left {
+            text-align: left;
+        }
+        .about-locations-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .mt-10 {
+            margin-top: 10px;
+        }
+        .about-mission-text {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--text-heading);
+        }
+
+        .vision-mission-grid-single {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .about-hero-scroll-indicator {
+            bottom: 15px !important;
+        }
+
+        .about-locations-flex {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin: 28px auto 20px;
+            text-align: left;
+            max-width: 600px;
+            width: 100%;
+        }
+        .about-locations-col {
+            flex: 1;
+            min-width: 180px;
+        }
+        .about-locations-subheading {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .about-locations-list {
+            margin: 0 !important;
+            padding-left: 20px !important;
+        }
+        @media (max-width: 600px) {
+            .about-locations-flex {
+                flex-direction: column;
+                gap: 20px;
+                align-items: center;
+                text-align: center;
+            }
+            .about-locations-col {
+                text-align: center;
+            }
+            .about-locations-list {
+                display: inline-block;
+                text-align: left;
+            }
+        }
+
+        .about-commitment-divider {
+            border: 0;
+            border-top: 1px solid var(--border-color);
+            margin: 35px 0 25px;
+        }
+        .about-commitment-icon {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: block;
+            text-align: center;
+        }
+        .about-commitment-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .about-commitment-text {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 12px;
+            font-size: 14.5px;
+            line-height: 1.6;
+        }
+        .about-commitment-highlight {
+            text-align: center;
+            max-width: 620px;
+            margin: 0 auto;
+            font-size: 16.5px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.5;
+        }
+    </style>
+
+    <link rel="canonical" href="https://rushastays.com/about.html">
+
+    <!-- Open Graph / Facebook -->
+
+
+
+
+<!-- Twitter -->
+
+
+
+
+<!-- Favicon -->
+    <link rel="icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="shortcut icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="apple-touch-icon" href="images/rusha-stays-logo.webp">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rushastays.com/about">
+    <meta property="og:title" content="About Us — Rusha Stays | Our Story & Mission">
+    <meta property="og:description" content="Learn about Rusha Stays — trusted provider of premium managed living spaces for working professionals & corporate employees in Gurugram.">
+    <meta property="og:image" content="https://rushastays.com/images/about-hero.avif">
+    <meta property="og:site_name" content="Rusha Stays">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rushastays.com/about">
+    <meta name="twitter:title" content="About Us — Rusha Stays | Our Story & Mission">
+    <meta name="twitter:description" content="Learn about Rusha Stays — trusted provider of premium managed living spaces for working professionals & corporate employees in Gurugram.">
+    <meta name="twitter:image" content="https://rushastays.com/images/about-hero.avif">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo cursor-pointer" onclick="location.href='/'">
+                <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo" class="logo-img">
+            </div>
+            <div class="nav-right">
+                <nav>
+                                        <ul class="nav-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about" class="active">About Us</a></li>
+                        
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </nav>
+                <a href="https://wa.me/919205859444" target="_blank" class="contact-number" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i><span class="contact-text">Call us on </span><span class="contact-num-only">9205859444</span></a>
+                <button class="btn-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                <div class="hamburger" onclick="toggleSidebar()">
+                    <span class="hamburger-text">Menu</span><i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="close-btn" onclick="toggleSidebar()">&times;</button>
+        </div>
+                <ul class="sidebar-links">
+            <li><a href="index" onclick="toggleSidebar()">Home</a></li>
+            <li><a href="locations" onclick="toggleSidebar()">Locations</a></li>
+            <li><a href="corporate" onclick="toggleSidebar()">Corporate Stays</a></li>
+            <li><a href="about" onclick="toggleSidebar()">About Us</a></li>
+            
+            <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+            <li><a class="active-tab text-primary" href="https://wa.me/919205859444" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></li>
+        </ul>
+        <button class="btn-primary mt-20-full" onclick="toggleSidebar(); openCallbackModal()">Request a Call Back</button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content" class="about-main">
+        
+                <!-- HERO SECTION -->
+        <section class="about-hero">
+            <div class="about-hero-container">
+                <div class="about-hero-text">
+                    <span class="corp-hero-badge animate-fade-in-up delay-1 tag-hero-badge">Our Story &amp; Vision</span>
+                    <h1 class="animate-fade-in-up delay-2">About Rusha Stays</h1>
+                    <h3 class="animate-fade-in-up delay-3 text-primary-mb20">Live Better. Work Smarter. Stay Hassle-Free.</h3>
+                    <p class="animate-fade-in-up delay-4">Rusha Stays is a professionally managed accommodation brand offering fully furnished rooms, premium suites, studio residences and managed living spaces across prime locations in Gurugram (Gurgaon).</p>
+                    <p class="animate-fade-in-up delay-4">Founded with a simple vision of making urban living more comfortable, convenient and hassle-free, Rusha Stays was created for professionals who seek more than just a room. We believe accommodation should support your lifestyle, productivity and peace of mind.</p>
+                    <p class="animate-fade-in-up delay-4">Whether you're relocating to Gurugram (Gurgaon), starting a new job, working on a project assignment, building a startup, pursuing an internship or looking for a better living experience, Rusha Stays provides thoughtfully designed accommodations that help you feel at home from day one.</p>
+                    
+                    <!-- Mini Stats in Hero -->
+                    <div class="flex-gap-30 hero-mini-stats animate-fade-in-up delay-5">
+                        <div class="text-left">
+                            <div class="hero-title-lg">500+</div>
+                            <div class="tag-caps-sm">Happy Residents</div>
+                        </div>
+                        <div class="border-left-styled">
+                            <div class="hero-title-lg">4.8★</div>
+                            <div class="tag-caps-sm">Google Rating</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-hero-img-wrapper">
+                    <div class="about-hero-img animate-fade-in delay-3"></div>
+                </div>
+            </div>
+            <!-- Bouncing Scroll Down Indicator -->
+            <div class="scroll-down-indicator about-hero-scroll-indicator animate-fade-in delay-5" onclick="document.querySelector('.vision-mission-section').scrollIntoView({ behavior: 'smooth' });">
+                <span>Scroll to explore</span><br>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+        
+        <!-- OUR STORY -->
+        <section class="vision-mission-section bg-card">
+            <div class="vision-mission-grid-single">
+                <div class="vision-mission-card container-center-width">
+                    <i class="fas fa-book-open block-center-margin"></i>
+                    <h3>Our Story</h3>
+                    <p>Finding quality accommodation in Gurugram (Gurgaon) can often be overwhelming. Between unfurnished rentals, inconsistent services and traditional PG setups, professionals frequently struggle to find a place that offers both comfort and convenience.</p>
+                    <p class="mt-15">Rusha Stays was established to bridge this gap by creating professionally managed living spaces that combine the warmth of a home with the convenience of hospitality.</p>
+                    <p class="mt-15">Over the years, we have evolved into a trusted accommodation partner for working professionals, consultants, startup founders, interns, remote workers and relocating residents seeking safe, comfortable and fully managed living solutions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VISION & MISSION -->
+        <section class="vision-mission-section">
+            <div class="vision-mission-grid">
+                <div class="vision-mission-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Our Vision</h3>
+                    <p>To become Gurugram (Gurgaon)’s most trusted managed accommodation brand by redefining urban living through thoughtfully designed spaces, exceptional service and resident-first experiences.</p>
+                </div>
+                <div class="vision-mission-card">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Our Mission</h3>
+                    <p>To provide safe, comfortable and professionally managed accommodations that enable residents to live better, work smarter and stay hassle-free.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VALUES -->
+        <section class="values-section">
+            <div class="values-container">
+                <div class="values-header">
+                    <h2>Our Values</h2>
+                </div>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <h3><i class="fas fa-user-friends"></i> Resident First</h3>
+                        <p>The comfort, convenience and well-being of our residents remain at the centre of everything we do.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3><i class="fas fa-award"></i> Quality</h3>
+                        <p>We are committed to maintaining high standards across our properties, services and resident experiences.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3><i class="fas fa-shield-alt"></i> Trust</h3>
+                        <p>Transparency, reliability and long-term relationships form the foundation of our business.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3><i class="fas fa-concierge-bell"></i> Convenience</h3>
+                        <p>We simplify urban living through move-in-ready accommodations and professional management.</p>
+                    </div>
+                    <div class="value-card">
+                        <h3><i class="fas fa-chart-line"></i> Continuous Growth</h3>
+                        <p>We continuously improve our spaces, services and experiences to meet the evolving needs of modern professionals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATIONS -->
+        <section class="vision-mission-section bg-main">
+            <div class="vision-mission-grid-single">
+                <div class="vision-mission-card max-width-900-center">
+                    <div class="corp-label">Where to Find Us</div>
+                    <i class="fas fa-map-marked-alt block-center-primary-32-center"></i>
+                    <h3 class="about-locations-title">Our Locations</h3>
+                    <p>Rusha Stays currently operates across prime Gurugram (Gurgaon) locations including:</p>
+                    
+                    <div class="about-locations-flex">
+                        <div class="about-locations-col">
+                            <span class="about-locations-subheading"><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 6px;"></i> Active Locations</span>
+                            <ul class="list-disc-styled about-locations-list">
+                                <li>Sector 28</li>
+                                <li>Sector 42</li>
+                                <li>Sushant Lok Phase 1</li>
+                            </ul>
+                        </div>
+                        <div class="about-locations-col">
+                            <span class="about-locations-subheading"><i class="fas fa-clock" style="color: #999; margin-right: 6px;"></i> Upcoming Locations</span>
+                            <ul class="list-disc-styled about-locations-list">
+                                <li>Sector 43</li>
+                                <li>Sector 55</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p>All properties are strategically located near major business hubs such as DLF Cyber City, Udyog Vihar, Golf Course Road, MG Road Metro Station, Galleria Market, Cyber Hub and other key commercial districts.</p>
+                    
+                    <hr class="about-commitment-divider">
+                    <i class="fas fa-handshake about-commitment-icon"></i>
+                    <h4 class="about-commitment-title">Our Commitment</h4>
+                    <p class="about-commitment-text">Whether you're staying for a few weeks, a few months or much longer, our commitment remains the same:</p>
+                    <p class="about-commitment-highlight">To provide a living experience that is comfortable, secure, professionally managed and truly feels like home.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TEAM SECTION -->
+        <section class="team-section bg-card">
+            <div class="team-container">
+                <div class="team-header">
+                    <h2>Meet our Founders</h2>
+                </div>
+                <div class="team-grid">
+                    <div class="team-card align-center">
+                        <div class="team-avatar-box avatar-size"><img src="images/neha-jain.avif" alt="Neha Jain" class="img-cover-full"></div>
+                        <div class="team-info">
+                            <h3>Neha Jain</h3>
+                            <span>Co-Founder, Rusha Stays</span>
+                            <p>Neha Jain is an entrepreneur with extensive experience in real estate, managed accommodations and customer-centric hospitality solutions. Having worked closely with professionals, students, consultants and relocating families in Gurugram (Gurgaon), she identified a growing need for comfortable, professionally managed and hassle-free living spaces.</p>
+                            <p class="mt-10">Her vision for Rusha Stays is simple — to create accommodations that combine the warmth of a home with the convenience of professional hospitality. From selecting prime locations to designing resident experiences, she remains actively involved in ensuring that every Rusha Stays property delivers comfort, convenience and value.</p>
+                        </div>
+                    </div>
+                    <div class="team-card align-center">
+                        <div class="team-avatar-box avatar-size"><img src="images/rd-sharma-wix.webp" alt="R. D. Sharma" class="img-cover-full"></div>
+                        <div class="team-info">
+                            <h3>R. D. Sharma</h3>
+                            <span>Co-Founder, Rusha Stays</span>
+                            <p>With extensive experience and deep roots in Gurugram (Gurgaon)’s real estate landscape, R. D. Sharma provides strategic guidance and valuable market insights that support the long-term vision and development of Rusha Stays.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- AMENITIES TAGS -->
+        <section class="amenities-tag-section">
+            <div class="amenities-container">
+                <h2>Why Choose Us?</h2>
+                <p class="mb-30">Everything you need for a comfortable stay. Just bring your personal belongings, and we take care of the rest.</p>
+            <div class="amenities-tag-grid">
+                <div class="amenity-tag"><i class="fas fa-bed"></i> Fully Furnished Rooms</div>
+                <div class="amenity-tag"><i class="fas fa-tshirt"></i> Laundry / Common Washing</div>
+                <div class="amenity-tag"><i class="fas fa-couch"></i> Lounge & Social Spaces</div>
+                <div class="amenity-tag"><i class="fas fa-tree"></i> Terrace & Garden</div>
+                <div class="amenity-tag"><i class="fas fa-dumbbell"></i> Gym</div>
+                <div class="amenity-tag"><i class="fas fa-water"></i> Geyser</div>
+                <div class="amenity-tag"><i class="fas fa-hdd"></i> Lift</div>
+                <div class="amenity-tag"><i class="fas fa-utensils"></i> Nutritious Meals</div>
+                <div class="amenity-tag"><i class="fas fa-video"></i> CCTV Cameras</div>
+                <div class="amenity-tag"><i class="fas fa-snowflake"></i> AC & Fridge</div>
+                <div class="amenity-tag"><i class="fas fa-tv"></i> Television</div>
+                <div class="amenity-tag"><i class="fas fa-wifi"></i> Highspeed Wi-Fi</div>
+                <div class="amenity-tag"><i class="fas fa-bolt"></i> Power Back-up</div>
+                <div class="amenity-tag"><i class="fas fa-fingerprint"></i> Biometric Access</div>
+                <div class="amenity-tag"><i class="fas fa-gamepad"></i> Gaming Zone</div>
+                <div class="amenity-tag"><i class="fas fa-broom"></i> Housekeeping</div>
+                <div class="amenity-tag"><i class="fas fa-sink"></i> Modular Kitchen</div>
+            </div>
+        </div> <!-- end of amenities-container -->
+    </section>
+
+    </main>
+
+    <!-- PREMIUM FOOTER -->
+    <footer class="premium-footer mt-0">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo">
+                    </div>
+                    <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
+                    
+                
+                    <div class="footer-social-block footer-social-block">
+                        <span class="label-caps">Follow Us</span>
+                        <div class="d-flex-gap-12">
+                            <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=100088761680648&mibextid=ZbWKwL" target="_blank" class="social-icon-btn facebook" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                                <div class="footer-col">
+                    <h4>Explore Stays</h4>
+                    <ul class="footer-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                                          <h4>Properties</h4>
+                      <ul class="footer-links">
+                          <li><a href="sector-42-1-bhk-suite">Sector 42 Suite</a></li>
+                          <li><a href="sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
+                          <li><a href="sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                          <li class="mt-8"><span class="tag-pill-gray">Sector 43 (Upcoming)</span></li>
+                          <li><span class="tag-pill-gray">Sector 55 (Upcoming)</span></li>
+                      </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                      <ul class="footer-contact-info">
+                          <li>
+                              <i class="fas fa-phone-alt mt-2px"></i>
+                              <a href="https://wa.me/919205859444" target="_blank" class="prop-detail-label" rel="noopener noreferrer">Call us on +91-9205859444</a>
+                          </li>
+                          <li>
+                              <i class="fas fa-envelope mt-2px"></i>
+                              <a href="mailto:rushastays@gmail.com" class="prop-detail-label">rushastays@gmail.com</a>
+                          </li>
+                          <li class="mt-15-block">
+                              <button class="btn-primary btn-sidebar-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                          </li>
+                      </ul>
+                </div>
+            </div>
+                        <div class="footer-bottom">
+                <p>&copy; 2023 Rusha Stays. All rights reserved.</p><p style="margin-top: 4px; font-weight: normal; color: var(--text-muted);" data-style="margin-top: 4px; font-weight: normal; color: var(--text-muted);">Established in 2023, serving guests with a 99% satisfaction rate.</p>
+                <a href="https://wa.me/918470990283" target="_blank" class="dev-badge" rel="noopener noreferrer">
+                    <span>Designed &amp; Developed by <strong>Vipul Jain</strong></span>
+                    <span class="d-inline-flex-nowrap">
+                        <i class="fab fa-whatsapp text-whatsapp"></i>
+                        <strong>8470990283</strong>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALLBACK MODAL popup -->
+    <div class="modal-overlay" id="callback-modal" onclick="closeCallbackModal(event)">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeCallbackModal(event)">&times;</button>
+            <div class="modal-header">
+                <h3>Request a Callback</h3>
+                <p>Fill out the form below and our hospitality advisors will reach out to you shortly.</p>
+            </div>
+            <form class="modal-form" id="callbackForm" onsubmit="handleCallbackSubmit(event)">
+                <div class="form-group">
+                    <label for="modal-name">Your Name</label>
+                    <input type="text" id="modal-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Phone Number</label>
+                    <input type="tel" id="modal-phone" class="form-control" placeholder="e.g. +91 98765 43210" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-email">Email Address</label>
+                    <input type="email" id="modal-email" class="form-control" placeholder="e.g. rahul@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-interest">Property of Interest</label>
+                    <select id="modal-interest" class="form-control">
+                        <option value="General Enquiry">General Enquiry</option>
+                        <option value="Sector 28 - 1 BHK Suite">Sector 28, Gurugram - 1 BHK Suite</option>
+                        <option value="Sector 28 - King Room Suite">Sector 28, Gurugram - King Room Suite</option>
+                        <option value="Sector 28 - Executive Premium Rooms">Sector 28, Gurugram - Executive Premium Rooms</option>
+                        <option value="Sector 28 - Executive Rooms">Sector 28, Gurugram - Executive Rooms</option>
+                        <option value="Sector 42 - 1 BHK Suite">Sector 42, Gurugram - 1 BHK Suite</option>
+                        <option value="Sushant Lok - 1 BHK Studio">Sushant Lok Phase 1, Gurugram - 1 BHK Studio</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary w-100">Submit Request</button>
+            </form>
+            <div class="modal-success-state d-none" id="modal-success-state">
+                <div class="success-icon-wrap">
+                    <div class="success-icon-pulse"></div>
+                    <div class="success-icon-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <h3 class="success-title">Request Received!</h3>
+                <p class="success-subtitle">We have successfully received your callback details.</p>
+                <div class="success-advisor-badge">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Our advisor will call you shortly!</span>
+                </div>
+                <div>
+                    <button class="btn-success-close" onclick="closeCallbackModal(true)">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('mobile-sidebar').classList.toggle('open');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
+        }
+
+        // Modal Trigger functions
+        function openCallbackModal() {
+            document.getElementById('callback-modal').classList.add('active');
+        }
+
+        let modalTimeoutId = null;
+
+        
+        function closeCallbackModal(e) {
+        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
+        if (modalTimeoutId) {
+        clearTimeout(modalTimeoutId);
+        modalTimeoutId = null;
+        }
+        document.getElementById('callback-modal').classList.remove('active');
+        // Reset states
+        setTimeout(() => {
+        document.getElementById('callbackForm').style.display = 'flex';
+        document.getElementById('modal-success-state').style.display = 'none';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'block';
+        document.getElementById('callbackForm').reset();
+        }, 300);
+        }
+        }
+
+        function handleCallbackSubmit(e) {
+        e.preventDefault();
+        // Simulate form submission
+        document.getElementById('callbackForm').style.display = 'none';
+        document.getElementById('modal-success-state').style.display = 'block';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'none';
+
+        // Auto close modal after 15 seconds if not clicked manually
+        modalTimeoutId = setTimeout(() => {
+        closeCallbackModal(true);
+        }, 15000);
+        }
+
+</script>
+
+    <!-- Floating WhatsApp Live Chat -->
+    <a href="https://wa.me/919205859444" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+        <span>Live Chat</span>
+    </a>
+    
+    <!-- Scripts -->
+    <script src="app.js"></script>
+
+    
+</body>
+</html>

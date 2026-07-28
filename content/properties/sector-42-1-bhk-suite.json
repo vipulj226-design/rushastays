@@ -1,0 +1,86 @@
+{
+  "id": "sector-42-1-bhk-suite",
+  "locality": "Sector 42",
+  "roomType": "1 BHK Suite",
+  "occupancy": "Solo Room",
+  "categories": [
+    "Studio Apartments",
+    "Executive Suites"
+  ],
+  "size": "450 Sq. Ft.",
+  "pricingHtml": "Starting at 44,999 / month",
+  "priceVal": "44999",
+  "image": "assets/images/sector-42/image-10.jpg",
+  "images": [
+    "assets/images/sector-42/image-10.jpg",
+    "assets/images/sector-42/image-2.jpg",
+    "assets/images/sector-42/image-3.jpg",
+    "assets/images/sector-42/image-4.jpg",
+    "assets/images/sector-42/image-5.jpg",
+    "assets/images/sector-42/image-6.jpg",
+    "assets/images/sector-42/image-7.jpg",
+    "assets/images/sector-42/image-8.jpg",
+    "assets/images/sector-42/image-9.jpg",
+    "assets/images/sector-42/image-10.jpg"
+  ],
+  "aboutShort": "Experience the comfort of a spacious fully furnished 1 BHK Suite in the prime residential neighbourhood of Sector 42, Gurgaon...",
+  "aboutFull": "Experience the comfort of a spacious fully furnished 1 BHK Suite in the prime residential neighbourhood of Sector 42, Gurgaon. Strategically located near Golf Course Road, Rapid Metro connectivity, premium commercial hubs and lifestyle destinations, this suite is designed for professionals seeking privacy, convenience and a premium living experience.<br><br>Spanning approximately 450 sq. ft., the suite features a spacious bedroom, private living area, fully equipped kitchen and modern washroom, offering the perfect balance of comfort and functionality for long-term stays.<br><br>The property is ideal for corporate professionals, consultants, startup founders, hybrid workers, expats and relocating individuals looking for a professionally managed residence in one of Gurgaon's most sought-after locations.<br><br>Professionally managed by Rusha Stays, residents enjoy a secure and well-maintained environment with housekeeping services, high-speed Wi-Fi, power backup and dedicated resident support. A key highlight of this suite is the convenience of a private fully automatic washing machine within the unit, ensuring complete privacy and independence.",
+  "inSuiteFeatures": [
+    "Fully Furnished Luxury Setup",
+    "Private Balcony",
+    "Private Kitchen",
+    "Dedicated Living Area",
+    "Air Conditioning",
+    "Fully Automatic Washing Machine",
+    "Smart TV",
+    "Refrigerator",
+    "Induction Cooktop",
+    "Microwave",
+    "Electric Kettle",
+    "RO",
+    "Study Table & Chair",
+    "Spacious Wardrobe",
+    "Modern Attached Washroom"
+  ],
+  "propertyAmenities": [
+    "High-Speed Wi-Fi",
+    "Daily Housekeeping",
+    "CCTV & Biometric Security",
+    "100% Power Backup",
+    "Parking Available",
+    "Professionally Managed Property",
+    "Dedicated Resident Support"
+  ],
+  "neighbourhoodText": "Located in the prestigious Sector 42 neighbourhood, the property offers seamless access to Golf Course Road, Rapid Metro stations, business districts, premium dining destinations and everyday conveniences.<br><br>Surrounded by corporate offices, retail centres, cafés, fitness studios and healthcare facilities, the location is highly preferred by professionals working across Gurgaon.",
+  "landmarks": [
+    {
+      "icon": "📍",
+      "text": "Golf Course Road – 2 Minutes"
+    },
+    {
+      "icon": "🚇",
+      "text": "Sector 42-43 Rapid Metro Station – 5 Minutes"
+    },
+    {
+      "icon": "💼",
+      "text": "DLF Cyber City – 15 Minutes"
+    },
+    {
+      "icon": "🏢",
+      "text": "One Horizon Center – 10 Minutes"
+    },
+    {
+      "icon": "🛍️",
+      "text": "South Point Mall – 5 Minutes"
+    },
+    {
+      "icon": "🛍️",
+      "text": "Galleria Market – 10 Minutes"
+    },
+    {
+      "icon": "🏥",
+      "text": "Paras Hospital – 10 Minutes"
+    }
+  ],
+  "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14033.488344799042!2d77.09033327912239!3d28.438290987820123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18cf4b802619%3A0xc3cf5eb662c16139!2sSector%2042%2C%20Gurugram%2C%20Haryana%20122002!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+}

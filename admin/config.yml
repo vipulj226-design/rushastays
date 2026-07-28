@@ -1,0 +1,107 @@
+backend:
+  name: github
+  repo: VIPUL/rushastays  # <-- Will update with actual repo name
+  branch: main
+
+# Where uploaded images will be stored
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  # ═══════════════════════════════════════════
+  # PROPERTIES — Each property is a JSON file
+  # ═══════════════════════════════════════════
+  - name: "properties"
+    label: "🏠 Properties"
+    folder: "content/properties"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Property ID (URL slug)", name: "id", widget: "string", hint: "e.g. sector-28-1-bhk-suite" }
+      - { label: "Locality", name: "locality", widget: "string", hint: "e.g. Sector 28" }
+      - { label: "Room Type", name: "roomType", widget: "string", hint: "e.g. 1 BHK Suite" }
+      - { label: "Occupancy", name: "occupancy", widget: "select", options: ["Solo Room", "Sharing Room", "Studio Suite"] }
+      - { label: "Size", name: "size", widget: "string", hint: "e.g. 450 Sq. Ft." }
+      - { label: "Price Display", name: "pricingHtml", widget: "string", hint: "e.g. Starting at 44,999 / month" }
+      - { label: "Price Value", name: "priceVal", widget: "string", hint: "e.g. 44999" }
+      - label: "Categories"
+        name: "categories"
+        widget: "list"
+        field: { label: "Category", name: "category", widget: "string" }
+      - { label: "Main Image (Card Thumbnail)", name: "image", widget: "image" }
+      - label: "Gallery Images"
+        name: "images"
+        widget: "list"
+        field: { label: "Image", name: "img", widget: "image" }
+        hint: "Upload all property photos here — these will show in the property gallery"
+      - { label: "Short Description", name: "aboutShort", widget: "text" }
+      - { label: "Full Description (HTML allowed)", name: "aboutFull", widget: "text" }
+      - label: "In-Suite Features"
+        name: "inSuiteFeatures"
+        widget: "list"
+        field: { label: "Feature", name: "feature", widget: "string" }
+      - label: "Property Amenities"
+        name: "propertyAmenities"
+        widget: "list"
+        field: { label: "Amenity", name: "amenity", widget: "string" }
+      - { label: "Neighbourhood Description (HTML)", name: "neighbourhoodText", widget: "text" }
+      - label: "Nearby Landmarks"
+        name: "landmarks"
+        widget: "list"
+        fields:
+          - { label: "Emoji Icon", name: "icon", widget: "string" }
+          - { label: "Distance Text", name: "text", widget: "string" }
+
+  # ═══════════════════════════════════════════
+  # HOMEPAGE — Single file
+  # ═══════════════════════════════════════════
+  - name: "pages"
+    label: "📄 Pages"
+    delete: false
+    files:
+      - name: "homepage"
+        label: "🏡 Homepage"
+        file: "content/pages/home.json"
+        format: "json"
+        fields:
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "text" }
+          - { label: "Hero Image", name: "hero_image", widget: "image" }
+          - { label: "CTA Button Text", name: "cta_text", widget: "string" }
+          - label: "Value Props"
+            name: "value_props"
+            widget: "list"
+            fields:
+              - { label: "Icon (FontAwesome class)", name: "icon", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+      - name: "about"
+        label: "ℹ️ About Page"
+        file: "content/pages/about.json"
+        format: "json"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Hero Image", name: "hero_image", widget: "image" }
+          - { label: "Our Story", name: "story", widget: "markdown" }
+          - { label: "Mission", name: "mission", widget: "text" }
+          - { label: "Vision", name: "vision", widget: "text" }
+
+  # ═══════════════════════════════════════════
+  # BLOG POSTS
+  # ═══════════════════════════════════════════
+  - name: "blog"
+    label: "📝 Blog Posts"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    extension: "json"
+    format: "json"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime", format: "YYYY-MM-DD" }
+      - { label: "Featured Image", name: "featured_image", widget: "image" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }

@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+
+# Scratch/temp files
+scratch/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Unrelated projects
+flipkart_grocery_bot/
+DEPLOY_GUIDE.md
+
+# Build
+*.zip

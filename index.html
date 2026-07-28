@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="sitemap" type="application/xml" href="https://rushastays.com/sitemap.xml">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Living & Executive Suites in Gurugram | Rusha Stays</title>
+    <meta name="description" content="Rusha Stays offers luxury fully-managed serviced suites and PG accommodations across Gurgaon near Golf Course Road & Cyber Hub. Tailored for professionals.">
+    <link rel="stylesheet" href="styles-v6.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="canonical" href="https://rushastays.com/">
+
+    <!-- Open Graph / Facebook -->
+
+
+
+
+<!-- Twitter -->
+
+
+
+
+<!-- Favicon -->
+    <link rel="icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="shortcut icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="apple-touch-icon" href="images/rusha-stays-logo.webp">
+    
+
+    <!-- Website & Organization Structured Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Rusha Stays",
+        "url": "https://rushastays.com",
+        "logo": "images/rusha-stays-logo.webp",
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9205859444",
+            "contactType": "reservations",
+            "areaServed": "IN",
+            "availableLanguage": ["en", "hi"]
+        },
+        "sameAs": [
+            "https://www.instagram.com/rushastays",
+            "https://www.facebook.com/profile.php?id=100088761680648"
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Rusha Stays",
+        "url": "https://rushastays.com",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://rushastays.com/locations.html?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+        
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rushastays.com/">
+    <meta property="og:title" content="Rusha Stays — Premium Managed Living & Serviced Suites in Gurugram">
+    <meta property="og:description" content="Luxury fully-managed serviced suites, executive rooms & 1 BHK residences across prime Gurugram locations. Move in within 24 hours.">
+    <meta property="og:image" content="https://rushastays.com/images/woman_sofa_hero.webp">
+    <meta property="og:site_name" content="Rusha Stays">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rushastays.com/">
+    <meta name="twitter:title" content="Rusha Stays — Premium Managed Living & Serviced Suites in Gurugram">
+    <meta name="twitter:description" content="Luxury fully-managed serviced suites, executive rooms & 1 BHK residences across prime Gurugram locations. Move in within 24 hours.">
+    <meta name="twitter:image" content="https://rushastays.com/images/woman_sofa_hero.webp">
+</head>
+<body>
+    <!-- HEADER NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo cursor-pointer" onclick="location.href='/'">
+                <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo" class="logo-img">
+            </div>
+            <div class="nav-right">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index" class="active">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </nav>
+                <a href="https://wa.me/919205859444" target="_blank" class="contact-number" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i><span class="contact-text">Call us on </span><span class="contact-num-only">9205859444</span></a>
+                <button class="btn-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                <div class="hamburger" onclick="app.toggleSidebar()">
+                    <span class="hamburger-text">Menu</span><i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="app.toggleSidebar()"></div>
+    <div class="sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="close-btn" onclick="app.toggleSidebar()">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index" onclick="app.toggleSidebar()">Home</a></li>
+            <li><a href="locations" onclick="app.toggleSidebar()">Locations</a></li>
+            <li><a href="corporate" onclick="app.toggleSidebar()">Corporate Stays</a></li>
+            <li><a href="about" onclick="app.toggleSidebar()">About Us</a></li>
+            
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+            <li><a class="active-tab text-primary" href="https://wa.me/919205859444" target="_blank" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i> Call us on 9205859444</a></li>
+        </ul>
+        <button class="btn-primary mt-20-full" onclick="app.toggleSidebar(); openCallbackModal()">Request a Call Back</button>
+    </div>
+
+    <!-- MAIN CONTENT SHELL -->
+    <main id="app-content"></main>
+
+    <!-- PREMIUM FOOTER WITH CALLBACK FORM -->
+    <footer class="premium-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo">
+                    </div>
+                    <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
+                    
+                
+                    <div class="footer-social-block footer-social-block">
+                        <span class="label-caps">Follow Us</span>
+                        <div class="d-flex-gap-12">
+                            <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=100088761680648&mibextid=ZbWKwL" target="_blank" class="social-icon-btn facebook" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                                <div class="footer-col">
+                    <h4>Explore Stays</h4>
+                    <ul class="footer-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                                          <h4>Properties</h4>
+                      <ul class="footer-links">
+                          <li><a href="sector-42-1-bhk-suite">Sector 42 Suite</a></li>
+                          <li><a href="sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
+                          <li><a href="sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                          <li class="mt-8"><span style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 43 (Upcoming)</span></li>
+                          <li><span style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 55 (Upcoming)</span></li>
+                      </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                      <ul class="footer-contact-info">
+                          <li>
+                              <i class="fas fa-phone-alt mt-2px"></i>
+                              <a href="https://wa.me/919205859444" target="_blank" class="prop-detail-label" rel="noopener noreferrer">Call us on +91-9205859444</a>
+                          </li>
+                          <li>
+                              <i class="fas fa-envelope mt-2px"></i>
+                              <a href="mailto:rushastays@gmail.com" class="prop-detail-label">rushastays@gmail.com</a>
+                          </li>
+                          <li class="mt-15-block">
+                              <button class="btn-primary btn-sidebar-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                          </li>
+                      </ul>
+                </div>
+            </div>
+                        <div class="footer-bottom">
+                <p>&copy; 2023 Rusha Stays. All rights reserved.</p><p style="margin-top: 4px; font-weight: normal; color: var(--text-muted);" data-style="margin-top: 4px; font-weight: normal; color: var(--text-muted);">Established in 2023, serving guests with a 99% satisfaction rate.</p>
+                <a href="https://wa.me/918470990283" target="_blank" class="dev-badge" rel="noopener noreferrer">
+                    <span>Designed &amp; Developed by <strong>Vipul Jain</strong></span>
+                    <span class="d-inline-flex-nowrap">
+                        <i class="fab fa-whatsapp text-whatsapp"></i>
+                        <strong>8470990283</strong>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALLBACK MODAL popup -->
+    <div class="modal-overlay" id="callback-modal" onclick="closeCallbackModal(event)">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeCallbackModal(event)">&times;</button>
+            <div class="modal-header">
+                <h3>Request a Callback</h3>
+                <p>Fill out the form below and our hospitality advisors will reach out to you shortly.</p>
+            </div>
+            <form class="modal-form" id="callbackForm" onsubmit="handleCallbackSubmit(event)">
+                <div class="form-group">
+                    <label for="modal-name">Your Name</label>
+                    <input type="text" id="modal-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Phone Number</label>
+                    <input type="tel" id="modal-phone" class="form-control" placeholder="e.g. +91 98765 43210" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-email">Email Address</label>
+                    <input type="email" id="modal-email" class="form-control" placeholder="e.g. rahul@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-interest">Property of Interest</label>
+                    <select id="modal-interest" class="form-control">
+                        <option value="General Enquiry">General Enquiry</option>
+                        <option value="Sector 28 - 1 BHK Suite">Sector 28, Gurugram - 1 BHK Suite</option>
+                        <option value="Sector 28 - King Room Suite">Sector 28, Gurugram - King Room Suite</option>
+                        <option value="Sector 28 - Executive Premium Rooms">Sector 28, Gurugram - Executive Premium Rooms</option>
+                        <option value="Sector 28 - Executive Rooms">Sector 28, Gurugram - Executive Rooms</option>
+                        <option value="Sector 42 - 1 BHK Suite">Sector 42, Gurugram - 1 BHK Suite</option>
+                        <option value="Sushant Lok - 1 BHK Studio">Sushant Lok Phase 1, Gurugram - 1 BHK Studio</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary w-100">Submit Request</button>
+            </form>
+            <div class="modal-success-state d-none" id="modal-success-state">
+                <div class="success-icon-wrap">
+                    <div class="success-icon-pulse"></div>
+                    <div class="success-icon-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <h3 class="success-title">Request Received!</h3>
+                <p class="success-subtitle">We have successfully received your callback details.</p>
+                <div class="success-advisor-badge">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Our advisor will call you shortly!</span>
+                </div>
+                <div>
+                    <button class="btn-success-close" onclick="closeCallbackModal(true)">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates -->
+    <template id="home-template">
+        <!-- ═══════════ HERO — Full-bleed Warm Gradient Overlay ═══════════ -->
+        <section class="hero-v2">
+            <div class="hero-v2__inner">
+                <div class="hero-v2__text">
+                    <span class="hero-v2__badge">Welcome to Rusha Stays</span>
+                    <h1 class="hero-v2__title">Live Better. <br>Work Smarter. <br><span class="highlight-red">Stay Hassle-Free.</span></h1>
+                    <p class="hero-v2__sub" style="font-style: italic;" data-style="font-style: italic;">Premium fully furnished accommodations across Gurugram (Gurgaon), including executive rooms, studio suites, serviced apartments and 1 BHK residences for modern professionals and corporate stays.<br><br>Fully Furnished Rooms, Studio Suites & Premium Residences Across Prime Gurgaon Locations</p>
+                    <div class="hero-v2__actions" style="display: flex; gap: 16px; flex-wrap: wrap;" data-style="display: flex; gap: 16px; flex-wrap: wrap;">
+                        <a href="locations" class="btn-hero-explore">Explore Locations <span class="btn-arrow-circle"><i class="fas fa-arrow-right"></i></span></a>
+                        <button class="btn-hero-secondary" onclick="openCallbackModal()">Request a Call Back <span class="btn-arrow-circle"><i class="fas fa-phone-alt"></i></span></button>
+                    </div>
+                </div>
+            </div>
+            <!-- Bouncing Scroll Down Indicator -->
+            <div class="scroll-down-indicator" onclick="document.querySelector('.promo-ticker').scrollIntoView({ behavior: 'smooth' });">
+                <span>Scroll to explore</span><br>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <!-- ═══════════ MARQUEE TICKER ═══════════ -->
+        <div class="promo-ticker" style="font-style: italic;" data-style="font-style: italic;">
+            <div class="ticker-wrap">
+                <div class="ticker-content">
+                    <div class="ticker-item">— Trusted By <span class="highlight">Working Professionals</span>, <span class="highlight">Corporate Employees</span>, <span class="highlight">Consultants</span>, <span class="highlight">Startup Founders</span>, <span class="highlight">Interns & Trainees</span>, <span class="highlight">Remote & Hybrid Workers</span> and <span class="highlight">Relocating Professionals</span> —</div>
+                    <div class="ticker-item">— Trusted By <span class="highlight">Working Professionals</span>, <span class="highlight">Corporate Employees</span>, <span class="highlight">Consultants</span>, <span class="highlight">Startup Founders</span>, <span class="highlight">Interns & Trainees</span>, <span class="highlight">Remote & Hybrid Workers</span> and <span class="highlight">Relocating Professionals</span> —</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════ FLOATING HERO INFO CARDS ═══════════ -->
+        <section class="hero-features-section" style="position: relative; z-index: 10;" data-style="position: relative; z-index: 10;">
+            <div class="hero-features-container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;" data-style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+                <!-- Card 1 -->
+                <div class="hero-feature-card" reveal-delay-1>
+                    <div class="feature-icon-circle"><i class="fas fa-building"></i></div>
+                    <h4>Premium Stays</h4>
+                    <p>Comfortable & stylish accommodation</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="hero-feature-card" reveal-delay-2>
+                    <div class="feature-icon-circle icon-red"><i class="fas fa-map-marker-alt"></i></div>
+                    <h4>Prime Locations</h4>
+                    <p>Across Gurugram (Gurgaon)'s best areas</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="hero-feature-card" reveal-delay-3>
+                    <div class="feature-icon-circle icon-teal"><i class="fas fa-wifi"></i></div>
+                    <h4>Modern Amenities</h4>
+                    <p>High-speed Wi-Fi, housekeeping & more</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="hero-feature-card" reveal-delay-4>
+                    <div class="feature-icon-circle icon-green"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Safe & Secure</h4>
+                    <p>Your safety is our priority</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ═══════════ CATEGORY CARDS ═══════════ -->
+        <section class="category-cards-section">
+            <div class="category-cards-container">
+                <!-- Card 1 -->
+                <div class="category-card" onclick="location.href='locations'">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=75" alt="Working Professionals">
+                    <div class="category-overlay">
+                        <span>Working Professionals</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="category-card" onclick="location.href='corporate'">
+                    <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=75" alt="Corporate Employees">
+                    <div class="category-overlay">
+                        <span>Corporate Employees</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="category-card" onclick="location.href='locations'">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=75" alt="Consultants">
+                    <div class="category-overlay">
+                        <span>Consultants</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="category-card" onclick="location.href='locations'">
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=600&q=75" alt="Business Travelers">
+                    <div class="category-overlay">
+                        <span>Business Travelers</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- Card 5 -->
+                <div class="category-card" onclick="location.href='locations'">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=75" alt="Interns">
+                    <div class="category-overlay">
+                        <span>Interns</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- Card 6 -->
+                <div class="category-card" onclick="location.href='locations'">
+                    <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=600&q=75" alt="Startup Founders">
+                    <div class="category-overlay">
+                        <span>Startup Founders</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- Card 7 -->
+                <div class="category-card" onclick="location.href='locations'">
+                    <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=600&q=75" alt="Hybrid Workers">
+                    <div class="category-overlay">
+                        <span>Hybrid Workers</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+                <!-- Card 8 -->
+                <div class="category-card" onclick="location.href='locations'">
+                    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=75" alt="Relocating Professionals">
+                    <div class="category-overlay">
+                        <span>Relocating Professionals</span>
+                        <div class="category-arrow"><i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ VALUE PROPS — Horizontal Icon Strip ═══════════ -->
+        <section class="value-strip">
+            <div class="value-strip__inner">
+                <div class="value-strip__item">
+                    <div class="value-strip__icon"><div style="font-size: 32px; color: var(--primary); margin-bottom: 15px;" data-style="font-size: 32px; color: var(--primary); margin-bottom: 15px;"><i class="fas fa-couch"></i></div></div>
+                    <div>
+                        <h4>Fully Furnished</h4>
+                        <p>Move-in ready rooms with premium furniture, AC, and appliances</p>
+                    </div>
+                </div>
+                <div class="value-strip__item">
+                    <div class="value-strip__icon"><i class="fas fa-wifi"></i></div>
+                    <div>
+                        <h4>High-Speed Wi-Fi</h4>
+                        <p>Dedicated internet for seamless work-from-home productivity</p>
+                    </div>
+                </div>
+                <div class="value-strip__item">
+                    <div class="value-strip__icon"><i class="fas fa-broom"></i></div>
+                    <div>
+                        <h4>Daily Housekeeping</h4>
+                        <p>Professional cleaning and linen change services included</p>
+                    </div>
+                </div>
+                <div class="value-strip__item">
+                    <div class="value-strip__icon"><i class="fas fa-bolt"></i></div>
+                    <div>
+                        <h4>Power Backup</h4>
+                        <p>Uninterrupted electricity with full-building generator backup</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ ACCOMMODATION TYPES — Image Cards ═══════════ -->
+        <section class="accom-section">
+            <div class="accom-section__inner">
+                <div class="section-header">
+                    <span class="section-header__tag">Our Accommodations</span>
+                    <h2 class="section-header__title">Designed For Modern Living</h2>
+                    <p class="section-header__desc">From premium executive rooms to fully independent studio suites — choose the living space that matches your lifestyle.</p>
+                </div>
+                <div class="accom-grid">
+                    <div class="accom-card" onclick="location.href='locations'">
+                        <div class="accom-card__img" style="background-image: url('images/connectivity-gurugram.webp');" data-style="background-image: url('images/connectivity-gurugram.webp');"></div>
+                        <div class="accom-card__overlay">
+                            <span class="accom-card__type">Executive Rooms</span>
+                            <p class="accom-card__desc">Fully furnished luxury rooms in premium co-living settings with daily housekeeping and high-speed Wi-Fi.</p>
+                            <span class="accom-card__link">Explore <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="accom-card" onclick="location.href='locations'">
+                        <div class="accom-card__img" style="background-image: url('images/connectivity-gurgaon.webp');" data-style="background-image: url('images/connectivity-gurgaon.webp');"></div>
+                        <div class="accom-card__overlay">
+                            <span class="accom-card__type">Studio Suites</span>
+                            <p class="accom-card__desc">Self-contained 1 BHK with private kitchen, balcony, and dedicated dressing zone for total independence.</p>
+                            <span class="accom-card__link">Explore <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="accom-card" onclick="location.href='locations'">
+                        <div class="accom-card__img" style="background-image: url('images/best-living-experience.webp');" data-style="background-image: url('images/best-living-experience.webp');"></div>
+                        <div class="accom-card__overlay">
+                            <span class="accom-card__type">Premium Suites</span>
+                            <p class="accom-card__desc">Spacious 1 BHK with bathtub, washing machine, premium interiors, and private balcony living areas.</p>
+                            <span class="accom-card__link">Explore <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ WHY RUSHA — Alternating Image+Text Blocks ═══════════ -->
+        <section class="why-v2">
+            <div class="why-v2__inner">
+                <div class="section-header">
+                    <span class="section-header__tag">The Rusha Experience</span>
+                    <h2 class="section-header__title">Why Residents Choose Us</h2>
+                    <p class="section-header__desc">At Rusha Stays, we take care of everyday essentials so you can focus on your career, personal growth and the experiences that matter most.</p>
+                </div>
+
+                <div class="why-v2__block">
+                    <div class="why-v2__img-wrap">
+                        <img src="images/connectivity-gurugram.webp" alt="Connectivity">
+                    </div>
+                    <div class="why-v2__text">
+                        <span class="why-v2__num">01</span>
+                        <h3>Best for Connectivity</h3>
+                        <p class="why-v2__highlight">Stay connected to everything that matters.</p>
+                        <p>Properties strategically located across Sector 28, Sector 42 and Sushant Lok Phase 1 with upcoming locations in Sector 43 and Sector 55. Seamless access to DLF Cyber City, Cyber Hub, Udyog Vihar, Golf Course Road, MG Road Metro Station, Ambience Mall and NH-48.</p>
+                    </div>
+                </div>
+
+                <div class="why-v2__block why-v2__block--reverse">
+                    <div class="why-v2__img-wrap">
+                        <img src="images/stress-free-experience.webp" alt="Simplify Life">
+                    </div>
+                    <div class="why-v2__text">
+                        <span class="why-v2__num">02</span>
+                        <h3>Let Rusha Simplify Life</h3>
+                        <p class="why-v2__highlight">Modern professionals deserve more time for what truly matters.</p>
+                        <p>Fully furnished accommodations, daily housekeeping, high-speed Wi-Fi, power backup, secure access, dedicated resident support and thoughtfully designed living spaces. From move-in to move-out — completely hassle-free.</p>
+                    </div>
+                </div>
+
+                <div class="why-v2__block">
+                    <div class="why-v2__img-wrap">
+                        <img src="images/connectivity-gurgaon.webp" alt="Home and Heart">
+                    </div>
+                    <div class="why-v2__text">
+                        <span class="why-v2__num">03</span>
+                        <h3>Home Is Where The Heart Is</h3>
+                        <p class="why-v2__highlight">A home is more than just a place to stay.</p>
+                        <p>Warm, welcoming and professionally managed living spaces where residents can relax, recharge and truly feel at home while pursuing their personal and professional goals.</p>
+                    </div>
+                </div>
+
+                <div class="why-v2__block why-v2__block--reverse">
+                    <div class="why-v2__img-wrap">
+                        <img src="images/homestyle-meals.webp" alt="Homestyle Meals">
+                    </div>
+                    <div class="why-v2__text">
+                        <span class="why-v2__num">04</span>
+                        <h3>Homestyle Meals</h3>
+                        <p class="why-v2__highlight">Good food makes every stay better.</p>
+                        <p>Selected properties offer freshly prepared meals inspired by home-style cooking — wholesome breakfasts, comforting dinners and weekend lunch options, bringing convenience and flavour to everyday living.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ TESTIMONIALS ═══════════ -->
+        <section class="testimonial-carousel-section">
+            <h2>What Our Residents Say</h2>
+            <div class="carousel-viewport">
+                <div class="carousel-track" id="testimonial-track">
+                    <div class="carousel-slide">
+                        <div class="carousel-card">
+                            <span class="carousel-quote-icon"><i class="fas fa-quote-right"></i></span>
+                            <div class="carousel-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <p class="carousel-quote">"Staying at Rusha Stays has been an absolute delight! The rooms are clean, the staff is courteous, and the location is perfect for working professionals. Highly recommended for anyone looking for a comfortable and hassle-free PG in Gurugram (Gurgaon)!"</p>
+                            <div class="carousel-user">
+                                <div class="carousel-avatar">AS</div>
+                                <div class="carousel-info">
+                                    <h4>Amit Sharma</h4>
+                                    <span>IT Professional</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="carousel-card">
+                            <span class="carousel-quote-icon"><i class="fas fa-quote-right"></i></span>
+                            <div class="carousel-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <p class="carousel-quote">"The amenities and the home-cooked food are amazing. It is very hard to find a serviced residence in DLF Phase 1 / Sector 28 that feels like home, has high speed internet and power backup. Super responsive management team!"</p>
+                            <div class="carousel-user">
+                                <div class="carousel-avatar">AY</div>
+                                <div class="carousel-info">
+                                    <h4>Alexa Young</h4>
+                                    <span>Chartered Accountant</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="carousel-card">
+                            <span class="carousel-quote-icon"><i class="fas fa-quote-right"></i></span>
+                            <div class="carousel-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <p class="carousel-quote">"Highly professional management! The transition from a traditional PG to Rusha Stays has been seamless. The co-working space, fast Wi-Fi, and weekly housekeeping are perfect for my hybrid work schedule."</p>
+                            <div class="carousel-user">
+                                <div class="carousel-avatar">RM</div>
+                                <div class="carousel-info">
+                                    <h4>Rohan Mehta</h4>
+                                    <span>Product Manager</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-slide">
+                        <div class="carousel-card">
+                            <span class="carousel-quote-icon"><i class="fas fa-quote-right"></i></span>
+                            <div class="carousel-rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                            <p class="carousel-quote">"Safe, secure, and beautiful rooms. The community events and shared lounge area make it easy to network with other corporate professionals. Booking and check-in were completely online and smooth!"</p>
+                            <div class="carousel-user">
+                                <div class="carousel-avatar">SP</div>
+                                <div class="carousel-info">
+                                    <h4>Sneha Patel</h4>
+                                    <span>Software Engineer</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="carousel-btn" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+                <div class="carousel-dots" id="carousel-dots">
+                    <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+                    <span class="carousel-dot" onclick="goToSlide(1)"></span>
+                    <span class="carousel-dot" onclick="goToSlide(2)"></span>
+                    <span class="carousel-dot" onclick="goToSlide(3)"></span>
+                </div>
+                <button class="carousel-btn" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- ═══════════ CTA BAND ═══════════ -->
+        <section class="cta-band">
+            <div class="cta-band__inner">
+                <div class="cta-band__text">
+                    <h2>Ready to Experience Hassle-Free Living?</h2>
+                    <p>Explore our managed residences across prime Gurugram (Gurgaon) locations. Call or WhatsApp us on <a href="https://wa.me/919205859444" target="_blank" style="color: #fff; text-decoration: underline; font-weight: 700;" data-style="color: #fff; text-decoration: underline; font-weight: 700;" rel="noopener noreferrer">+91-9205859444</a>. Move in within 24 hours.</p>
+                </div>
+                <div class="cta-band__actions">
+                    <a href="locations" class="btn-primary" style="font-size: 16px; padding: 16px 36px;" data-style="font-size: 16px; padding: 16px 36px;">Browse Locations</a>
+                    <button class="btn-outline" onclick="openCallbackModal()" style="font-size: 16px; padding: 16px 36px; color: #fff; border-color: rgba(255,255,255,0.4);" data-style="font-size: 16px; padding: 16px 36px; color: #fff; border-color: rgba(255,255,255,0.4);">Request a Call Back</button>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="property-card-template">
+        <div class="property-card" onclick="location.href='{id}'" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.3s ease;" data-style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-sm); cursor: pointer; transition: all 0.3s ease;">
+            <!-- Image Container -->
+            <div class="card-image" style="background-image: url('{image}'); height: 240px; background-size: cover; background-position: center; position: relative;" data-style="background-image: url('{image}'); height: 240px; background-size: cover; background-position: center; position: relative;">
+                <div class="card-badge" style="position: absolute; top: 16px; left: 16px; background-color: var(--primary); color: var(--white); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;" data-style="position: absolute; top: 16px; left: 16px; background-color: var(--primary); color: var(--white); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Rusha Stays</div>
+            </div>
+            <!-- Card Body Content -->
+            <div class="card-content" style="padding: 24px; display: flex; flex-direction: column; gap: 12px;" data-style="padding: 24px; display: flex; flex-direction: column; gap: 12px;">
+                <div>
+                    <!-- Bold Highlighted Title -->
+                    <h3 style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: var(--text-heading); margin-bottom: 6px; line-height: 1.3;" data-style="font-family: var(--font-heading); font-size: 19px; font-weight: 800; color: var(--text-heading); margin-bottom: 6px; line-height: 1.3;">{roomType}</h3>
+                    <!-- Highlighted Locality -->
+                    <p style="font-size: 13.5px; color: var(--primary); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;" data-style="font-size: 13.5px; color: var(--primary); font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                        <i class="fas fa-map-marker-alt"></i> {locality}, Gurugram (Gurgaon)
+                    </p>
+                </div>
+                
+                <div class="card-footer-row">
+                    <span style="font-size: 13px; color: var(--text-body); font-weight: 500;" data-style="font-size: 13px; color: var(--text-body); font-weight: 500;"><i class="fas fa-vector-square" style="color: var(--primary); margin-right: 5px;" data-style="color: var(--primary); margin-right: 5px;"></i> {size}</span>
+                    <span style="background-color: rgba(200, 56, 40, 0.08); color: var(--primary); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; font-family: 'Poppins', sans-serif;" data-style="background-color: rgba(200, 56, 40, 0.08); color: var(--primary); padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; font-family: 'Poppins', sans-serif;">{occupancy}</span>
+                </div>
+
+                <div class="card-footer-row">
+                    <div style="font-size: 14px; font-weight: 700; color: var(--text-heading); font-family: 'Poppins', sans-serif;" data-style="font-size: 14px; font-weight: 700; color: var(--text-heading); font-family: 'Poppins', sans-serif;">
+                        {pricingHtml}
+                    </div>
+                    <button class="btn-share" onclick="event.stopPropagation(); shareProperty('{id}')" style="background: none; border: none; font-size: 13px; color: var(--text-body); cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600; transition: color 0.3s;" data-style="background: none; border: none; font-size: 13px; color: var(--text-body); cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 600; transition: color 0.3s;"><i class="fas fa-share-alt"></i> Share</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+    <script>
+        // Modal Trigger functions
+        function openCallbackModal() {
+            document.getElementById('callback-modal').classList.add('active');
+        }
+
+        let modalTimeoutId = null;
+
+        
+        function closeCallbackModal(e) {
+        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
+        if (modalTimeoutId) {
+        clearTimeout(modalTimeoutId);
+        modalTimeoutId = null;
+        }
+        document.getElementById('callback-modal').classList.remove('active');
+        // Reset states
+        setTimeout(() => {
+        document.getElementById('callbackForm').style.display = 'flex';
+        document.getElementById('modal-success-state').style.display = 'none';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'block';
+        document.getElementById('callbackForm').reset();
+        }, 300);
+        }
+        }
+
+        function handleCallbackSubmit(e) {
+        e.preventDefault();
+        // Simulate form submission
+        document.getElementById('callbackForm').style.display = 'none';
+        document.getElementById('modal-success-state').style.display = 'block';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'none';
+
+        // Auto close modal after 15 seconds if not clicked manually
+        modalTimeoutId = setTimeout(() => {
+        closeCallbackModal(true);
+        }, 15000);
+        }
+
+// Homepage Callback Form Submit Handler
+        function handleHomepageCallbackSubmit(e) {
+            e.preventDefault();
+            document.getElementById('homepageCallbackForm').style.display = 'none';
+            document.getElementById('homepage-callback-success').style.display = 'flex';
+            
+            // Revert after 5 seconds
+            setTimeout(() => {
+                document.getElementById('homepageCallbackForm').style.display = 'flex';
+                document.getElementById('homepage-callback-success').style.display = 'none';
+                document.getElementById('homepageCallbackForm').reset();
+            }, 5000);
+        }
+
+        // Share functionality
+        function shareProperty(id) {
+            app.shareProperty(id);
+        }
+
+        // Testimonial Carousel Scripting
+        let currentSlide = 0;
+        let carouselInterval = null;
+        
+        function updateCarousel() {
+            const track = document.getElementById('testimonial-track');
+            if(!track) return;
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            // Update dots
+            const dots = document.querySelectorAll('.carousel-dot');
+            dots.forEach((dot, idx) => {
+                if (idx === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            const track = document.getElementById('testimonial-track');
+            if(!track) return;
+            const slidesCount = track.children.length;
+            currentSlide = (currentSlide + 1) % slidesCount;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            const track = document.getElementById('testimonial-track');
+            if(!track) return;
+            const slidesCount = track.children.length;
+            currentSlide = (currentSlide - 1 + slidesCount) % slidesCount;
+            updateCarousel();
+        }
+
+        function goToSlide(slideIdx) {
+            currentSlide = slideIdx;
+            updateCarousel();
+        }
+
+        window.initCarousel = function() {
+            currentSlide = 0;
+            updateCarousel();
+            
+            if (carouselInterval) clearInterval(carouselInterval);
+            carouselInterval = setInterval(nextSlide, 6000);
+
+            // Reset auto-play interval on click
+            document.querySelectorAll('.carousel-btn, .carousel-dot').forEach(el => {
+                el.addEventListener('click', () => {
+                    clearInterval(carouselInterval);
+                    carouselInterval = setInterval(nextSlide, 8000); // Resume auto-play with longer delay
+                });
+            });
+        }
+    </script>
+
+    <!-- Floating WhatsApp Live Chat -->
+    <a href="https://wa.me/919205859444" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+        <span>Live Chat</span>
+    </a>
+</body>
+</html>

@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="sitemap" type="application/xml" href="https://rushastays.com/sitemap.xml">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rusha Stays FAQs | Managed Accommodation Gurgaon</title>
+    <meta name="description" content="Rusha Stays FAQs. Get answers on booking terms, security deposits, amenities, and room services in Sector 28 and 42 Gurugram.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="styles-v6.css">
+    
+    <style>
+        /* LUXURY SYSTEM VARIABLES */
+        :root {
+            --primary: #C63A2D;
+            --primary-hover: #A02D20;
+            --bg-main: #FAF7F2;
+            --card-bg: #FFFFFF;
+            --text-heading: #222222;
+            --text-body: #666666;
+            --border-color: #E8E3DC;
+            --font-heading: 'Poppins', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            
+            /* Shadows & Transitions */
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+            --shadow-md: 0 10px 20px rgba(0,0,0,0.03);
+            --shadow-lg: 0 20px 40px rgba(0,0,0,0.04);
+            --shadow-hover: 0 24px 48px rgba(198, 58, 45, 0.08);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* RESET & GENERAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-body);
+            font-family: var(--font-body);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ACCESSIBILITY: SKIP LINK */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            left: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 2000;
+            font-family: var(--font-heading);
+            font-weight: 500;
+            text-decoration: none;
+            transition: top 0.3s;
+        }
+
+        .skip-link:focus {
+            top: 20px;
+        }
+
+        /* HERO SECTION */
+        .hero-section {
+            padding: 100px 24px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .hero-tag {
+            font-family: var(--font-heading);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            background: rgba(198, 58, 45, 0.08);
+            padding: 6px 16px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--text-heading);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero-description {
+            font-size: 16px;
+            color: var(--text-body);
+            margin-bottom: 36px;
+            max-width: 540px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-image-container {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            aspect-ratio: 1/1;
+            max-width: 340px;
+            width: 100%;
+            justify-self: center;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .hero-image-container:hover .hero-image {
+            transform: scale(1.05);
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-family: var(--font-heading);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+        .scroll-indicator:hover {
+            color: var(--primary-hover);
+            transform: translateX(-50%) translateY(2px);
+        }
+        .scroll-indicator i {
+            font-size: 16px;
+            animation: bounceScroll 2s infinite;
+        }
+        @keyframes bounceScroll {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-6px); }
+            60% { transform: translateY(-3px); }
+        }
+
+        /* SEARCH BAR SECTION */
+        .search-section {
+            padding: 40px 24px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 75px;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-container {
+            max-width: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 24px 18px 60px;
+            border-radius: 100px;
+            border: 1.5px solid var(--border-color);
+            font-family: var(--font-body);
+            font-size: 16px;
+            color: var(--text-heading);
+            background-color: var(--bg-main);
+            transition: var(--transition);
+            outline: none;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            background-color: var(--card-bg);
+            box-shadow: 0 8px 30px rgba(198, 58, 45, 0.05);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-body);
+            font-size: 18px;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .search-input:focus + .search-icon {
+            color: var(--primary);
+        }
+
+        /* CATEGORY NAVIGATION */
+        .category-nav-section {
+            padding: 15px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .category-nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .category-chip {
+            background-color: var(--card-bg);
+            color: var(--text-body);
+            border: 1px solid var(--border-color);
+            padding: 10px 24px;
+            border-radius: 100px;
+            font-family: var(--font-heading);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-chip:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .category-chip.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(198, 58, 45, 0.2);
+        }
+
+        /* FAQ ACCORDION SECTION */
+        .faq-section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 24px 50px;
+        }
+
+        .category-group {
+            margin-bottom: 30px;
+            scroll-margin-top: 140px;
+        }
+
+        .category-heading {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1.5px solid var(--border-color);
+            position: relative;
+        }
+
+        .category-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -1.5px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .faq-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(198, 58, 45, 0.15);
+        }
+
+        .faq-trigger {
+            width: 100%;
+            padding: 24px 30px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-heading);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            outline: none;
+        }
+
+        .faq-question {
+            transition: var(--transition);
+        }
+
+        .faq-card:hover .faq-question {
+            color: var(--primary);
+        }
+
+        .faq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--bg-main);
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .faq-card.open .faq-icon {
+            background-color: var(--primary);
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 0 30px;
+        }
+
+        .faq-answer {
+            padding-bottom: 24px;
+            color: var(--text-body);
+            font-size: 15px;
+            line-height: 1.8;
+            border-top: 1px solid transparent;
+            transition: var(--transition);
+        }
+
+        .faq-card.open .faq-content { max-height: 1500px !important; padding-bottom: 20px; }
+
+        .faq-card.open .faq-answer {
+            border-top-color: var(--border-color);
+            padding-top: 20px;
+        }
+
+        /* HIGHLIGHT FOR SEARCH */
+        .highlight {
+            background-color: rgba(198, 58, 45, 0.1);
+            color: var(--primary);
+            padding: 0 2px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* NO RESULTS CONTAINER */
+        .no-results {
+            text-align: center;
+            padding: 60px 24px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .no-results h4 {
+            font-family: var(--font-heading);
+            font-size: 20px;
+            color: var(--text-heading);
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: var(--text-body);
+            font-size: 15px;
+        }
+
+        /* BOTTOM CTA: STILL HAVE QUESTIONS */
+        .still-questions-section {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 45px 24px;
+        }
+
+        .still-questions-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .still-questions-text h2 {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .still-questions-text p {
+            font-size: 16px;
+            color: var(--text-body);
+        }
+
+        .cta-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .cta-card {
+            background-color: var(--bg-main);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 24px 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cta-card:hover {
+            transform: translateY(-4px);
+            background-color: var(--card-bg);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .cta-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: rgba(198, 58, 45, 0.08);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+
+        .cta-card:hover .cta-card-icon {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .cta-card h4 {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+
+        .cta-card span {
+            font-size: 13px;
+            color: var(--text-body);
+        }
+
+        /* LOCATIONS CTA */
+        .locations-section {
+            padding: 50px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .locations-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .locations-header h2 {
+            font-family: var(--font-heading);
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .locations-header p {
+            font-size: 16px;
+            color: var(--text-body);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .location-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px 24px;
+            text-align: center;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .location-card.active-loc:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .location-card-icon {
+            font-size: 24px;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .location-card.active-loc:hover .location-card-icon {
+            transform: scale(1.15);
+        }
+
+        .location-card h3 {
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-heading);
+        }
+
+        .location-badge {
+            background-color: rgba(198, 58, 45, 0.08);
+            color: var(--primary);
+            font-size: 11px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .location-card.coming-soon {
+            opacity: 0.65;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .location-card.coming-soon .location-card-icon {
+            color: var(--text-body);
+        }
+
+        .location-card.coming-soon .location-badge {
+            background-color: var(--border-color);
+            color: var(--text-body);
+        }
+
+        /* FINAL CTA SECTION */
+        .final-cta-section {
+            background-color: var(--bg-main);
+            padding: 40px 24px 10px;
+            text-align: center;
+        }
+        .final-cta-card {
+            background: linear-gradient(90deg, #E55C3E 0%, rgba(249, 217, 118, 0.95) 45%, rgba(255, 252, 248, 0.35) 100%);
+            border-radius: 28px;
+            padding: 50px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 0 20px 45px rgba(229, 92, 62, 0.15);
+            border: 1px solid rgba(229, 92, 62, 0.2);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .final-cta-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .final-cta-card h2 {
+            color: #222222 !important;
+            font-size: 34px !important;
+            font-weight: 700;
+            margin-bottom: 16px !important;
+            letter-spacing: -0.5px;
+            font-family: var(--font-heading);
+        }
+        .final-cta-card p {
+            color: #333333 !important;
+            font-size: 16px !important;
+            max-width: 600px;
+            margin: 0 auto 30px !important;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+        .final-cta-card .btn-primary {
+            background-color: #222222 !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+            border: none;
+        }
+        .final-cta-card .btn-primary:hover {
+            background-color: #000000 !important;
+            transform: translateY(-2px);
+        }
+        .final-cta-card .btn-outline-primary {
+            border-color: #222222;
+            color: #222222;
+            background-color: transparent;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+            border: 2px solid #222222;
+        }
+        .final-cta-card .btn-outline-primary:hover {
+            background-color: #222222;
+            color: #ffffff;
+            border-color: #222222;
+        }
+        .premium-footer {
+            margin-top: 20px !important;
+        }
+
+        .final-cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-cta-section h2 {
+            font-family: var(--font-heading);
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .final-cta-section p {
+            font-size: 18px;
+            color: var(--text-body);
+            margin-bottom: 40px;
+        }
+
+        .final-cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* Premium Footer Styles */
+
+        /* ======== MOBILE RESPONSIVE FAQ PAGE STYLES ======== */
+        @media (max-width: 991px) {
+            .hero-section {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+                padding-top: 20px !important;
+                padding-bottom: 20px !important;
+                text-align: center !important;
+            }
+            .hero-content {
+                align-items: center !important;
+                text-align: center !important;
+            }
+            .hero-image-container {
+                display: none !important;
+            }
+            .hero-image {
+                display: none !important;
+            }
+            .scroll-indicator {
+                display: none !important;
+            }
+            .hero-actions {
+                justify-content: center !important;
+                width: 100% !important;
+                gap: 10px !important;
+            }
+            .hero-actions .btn-primary,
+            .hero-actions .btn-outline {
+                width: auto !important;
+                max-width: 100% !important;
+                text-align: center !important;
+                padding: 12px 22px !important;
+                font-size: 14px !important;
+            }
+            .ask-grid {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+            .still-questions-container {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+                text-align: center !important;
+            }
+            .cta-cards {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 12px !important;
+            }
+            .locations-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 12px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* ---- Hero Section ---- */
+            .hero-section {
+                padding: 16px 16px 20px !important;
+                gap: 16px !important;
+            }
+            .hero-tag {
+                font-size: 11px !important;
+                padding: 5px 12px !important;
+                margin-bottom: 12px !important;
+            }
+            .hero-title {
+                font-size: 24px !important;
+                line-height: 1.25 !important;
+                margin-bottom: 12px !important;
+                letter-spacing: -0.5px !important;
+            }
+            .hero-title br { display: none !important; }
+            .hero-description {
+                font-size: 13.5px !important;
+                margin-bottom: 20px !important;
+                line-height: 1.6 !important;
+                max-width: 100% !important;
+            }
+            .hero-actions {
+                flex-direction: row !important;
+                gap: 10px !important;
+            }
+            .hero-actions .btn-primary,
+            .hero-actions .btn-outline {
+                padding: 11px 20px !important;
+                font-size: 13px !important;
+            }
+
+            /* ---- Search Bar ---- */
+            .search-section {
+                padding: 16px 12px !important;
+                top: 65px !important;
+            }
+            .search-container {
+                max-width: 100% !important;
+            }
+            .search-input {
+                padding: 14px 16px 14px 44px !important;
+                font-size: 14px !important;
+            }
+            .search-icon {
+                left: 16px !important;
+                font-size: 15px !important;
+            }
+
+            /* ---- Category Chips (horizontal scroll) ---- */
+            .category-nav-section {
+                display: none !important;
+            }
+            .category-nav-container {
+                display: flex !important;
+                overflow-x: auto !important;
+                scrollbar-width: none !important;
+                -webkit-overflow-scrolling: touch !important;
+                flex-wrap: nowrap !important;
+                padding-bottom: 6px !important;
+                gap: 8px !important;
+            }
+            .category-nav-container::-webkit-scrollbar {
+                display: none !important;
+            }
+            .category-chip {
+                flex-shrink: 0 !important;
+                font-size: 12px !important;
+                padding: 7px 14px !important;
+            }
+
+            /* ---- FAQ Accordion Cards ---- */
+            .faq-section {
+                padding: 20px 12px 40px !important;
+            }
+            .category-heading {
+                font-size: 18px !important;
+                margin-bottom: 16px !important;
+                padding-bottom: 8px !important;
+            }
+            .accordion-container {
+                gap: 10px !important;
+            }
+            .faq-card {
+                border-radius: 12px !important;
+            }
+            .faq-trigger {
+                padding: 16px 16px !important;
+                font-size: 14px !important;
+                gap: 12px !important;
+            }
+            .faq-icon {
+                width: 28px !important;
+                height: 28px !important;
+                font-size: 10px !important;
+            }
+            .faq-content {
+                padding: 0 16px !important;
+            }
+            .faq-answer {
+                font-size: 13px !important;
+                line-height: 1.7 !important;
+                padding-bottom: 16px !important;
+            }
+            .faq-card.open .faq-answer {
+                padding-top: 14px !important;
+            }
+
+            /* ---- Still Have Questions CTA ---- */
+            .still-questions-section {
+                padding: 30px 12px !important;
+            }
+            .still-questions-text h2 {
+                font-size: 22px !important;
+                margin-bottom: 10px !important;
+            }
+            .still-questions-text p {
+                font-size: 13.5px !important;
+            }
+            .cta-cards {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 10px !important;
+            }
+            .cta-card {
+                padding: 16px 8px !important;
+                gap: 8px !important;
+                border-radius: 12px !important;
+            }
+            .cta-card-icon {
+                width: 38px !important;
+                height: 38px !important;
+                font-size: 15px !important;
+            }
+            .cta-card h4 {
+                font-size: 12px !important;
+            }
+            .cta-card span {
+                font-size: 10.5px !important;
+            }
+
+            /* ---- Locations Grid ---- */
+            .locations-section {
+                padding: 30px 12px !important;
+            }
+            .locations-header h2 {
+                font-size: 22px !important;
+            }
+            .locations-header p {
+                font-size: 13px !important;
+            }
+            .locations-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 10px !important;
+            }
+            .location-card {
+                padding: 20px 12px !important;
+                border-radius: 14px !important;
+                gap: 10px !important;
+            }
+            .location-card h3 {
+                font-size: 13px !important;
+            }
+            .location-badge {
+                font-size: 9px !important;
+                padding: 3px 8px !important;
+            }
+
+            /* ---- Final CTA Banner ---- */
+            .final-cta-section {
+                padding: 30px 12px 10px !important;
+            }
+            .final-cta-card {
+                padding: 30px 20px !important;
+                border-radius: 20px !important;
+            }
+            .final-cta-card h2 {
+                font-size: 22px !important;
+                margin-bottom: 10px !important;
+            }
+            .final-cta-card p {
+                font-size: 13.5px !important;
+                margin-bottom: 20px !important;
+            }
+            .final-cta-actions {
+                gap: 10px !important;
+            }
+            .final-cta-actions .btn-primary,
+            .final-cta-actions .btn-outline-primary {
+                padding: 11px 22px !important;
+                font-size: 13px !important;
+                border-radius: 24px !important;
+            }
+
+            /* ---- Ask cards ---- */
+            .ask-card {
+                padding: 20px 16px !important;
+            }
+            .ask-card h3 {
+                font-size: 18px !important;
+            }
+            .ask-card p {
+                font-size: 13px !important;
+            }
+        }
+
+        /* Desktop-only overrides for Still Have Questions Section */
+        @media (min-width: 1025px) {
+            .still-questions-section {
+                padding: 65px 24px;
+            }
+            .still-questions-container {
+                gap: 60px;
+            }
+            .cta-card {
+                padding: 36px 28px;
+                gap: 16px;
+            }
+            .cta-card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            .cta-card h4 {
+                font-size: 18px;
+            }
+            .cta-card span {
+                font-size: 14.5px;
+            }
+        }
+    </style>
+
+    <link rel="canonical" href="https://rushastays.com/faqs.html">
+
+    <!-- Open Graph / Facebook -->
+
+
+
+
+<!-- Twitter -->
+
+
+
+
+<!-- Favicon -->
+    <link rel="icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="shortcut icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="apple-touch-icon" href="images/rusha-stays-logo.webp">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rushastays.com/faqs">
+    <meta property="og:title" content="FAQs — Rusha Stays | Frequently Asked Questions">
+    <meta property="og:description" content="Find answers to common questions about Rusha Stays — booking process, amenities, pricing, move-in and more.">
+    <meta property="og:image" content="https://rushastays.com/images/question-mark.webp">
+    <meta property="og:site_name" content="Rusha Stays">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rushastays.com/faqs">
+    <meta name="twitter:title" content="FAQs — Rusha Stays | Frequently Asked Questions">
+    <meta name="twitter:description" content="Find answers to common questions about Rusha Stays — booking process, amenities, pricing, move-in and more.">
+    <meta name="twitter:image" content="https://rushastays.com/images/question-mark.webp">
+</head>
+<body>
+
+    <!-- ACCESSIBILITY: SKIP LINK -->
+    <a href="#main-content" class="skip-link">Skip to Main Content</a>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo cursor-pointer" onclick="location.href='/'">
+                <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo" class="logo-img">
+            </div>
+            <div class="nav-right">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        
+                        <li><a href="faqs" class="active">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </nav>
+                <a href="https://wa.me/919205859444" target="_blank" class="contact-number" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i><span class="contact-text">Call us on </span><span class="contact-num-only">9205859444</span></a>
+                <button class="btn-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                <div class="hamburger" onclick="app.toggleSidebar()">
+                    <span class="hamburger-text">Menu</span><i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="app.toggleSidebar()"></div>
+    <div class="sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="close-btn" onclick="app.toggleSidebar()">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index" onclick="app.toggleSidebar()">Home</a></li>
+            <li><a href="locations" onclick="app.toggleSidebar()">Locations</a></li>
+            <li><a href="corporate" onclick="app.toggleSidebar()">Corporate Stays</a></li>
+            <li><a href="about" onclick="app.toggleSidebar()">About Us</a></li>
+            
+                        <li><a href="faqs" class="active">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+            <li><a class="active-tab text-primary" href="https://wa.me/919205859444" target="_blank" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i> Call us on 9205859444</a></li>
+        </ul>
+        <button class="btn-primary mt-20-full" onclick="app.toggleSidebar(); openCallbackModal()">Request a Call Back</button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main id="main-content">
+
+        <!-- HERO SECTION -->
+        <section class="hero-section">
+            <div class="hero-content reveal-element">
+                <span class="hero-tag">Frequently Asked Questions</span>
+                <h1 class="hero-title">Have Questions About <br><span class="text-primary">Rusha Stays?</span></h1>
+                <p class="hero-description">
+                    Here are some of the most commonly asked queries to help you understand our offerings, amenities, and why we are the best choice for professionally managed accommodation solutions In Gurugram (Gurgaon).
+                </p>
+                <div class="hero-actions" style="margin-top: 10px;" data-style="margin-top: 10px;">
+                    <button class="btn-primary" onclick="var t=document.getElementById('category-nav');if(t&&t.offsetParent!==null){t.scrollIntoView({behavior:'smooth',block:'start'})}else{document.querySelector('.faq-section').scrollIntoView({behavior:'smooth',block:'start'})}" style="padding: 14px 28px; border-radius: 100px; font-weight: 600; font-family: var(--font-heading); font-size: 15px; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer;" data-style="padding: 14px 28px; border-radius: 100px; font-weight: 600; font-family: var(--font-heading); font-size: 15px; display: flex; align-items: center; gap: 8px; border: none; cursor: pointer;"><i class="fas fa-chevron-down"></i> Browse Questions</button>
+                    <button class="btn-outline" onclick="openCallbackModal()" style="border: 1.5px solid var(--border-color); background: transparent; color: var(--text-heading); padding: 14px 28px; border-radius: 100px; font-weight: 600; font-family: var(--font-heading); font-size: 15px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 8px;" data-style="border: 1.5px solid var(--border-color); background: transparent; color: var(--text-heading); padding: 14px 28px; border-radius: 100px; font-weight: 600; font-family: var(--font-heading); font-size: 15px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 8px;">Contact Support</button>
+                </div>
+            </div>
+            <div class="hero-image-container reveal-element">
+                <img src="images/question-mark.webp" alt="Rusha Stays FAQ support illustration" class="hero-image">
+            </div>
+            <div class="scroll-indicator" onclick="document.getElementById('category-nav').scrollIntoView({ behavior: 'smooth', block: 'start' })">
+                <span>Explore FAQs</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        
+
+        <!-- CATEGORY NAVIGATION -->
+        <section class="category-nav-section reveal-element" id="category-nav">
+            <div class="category-nav-container">
+                <button class="category-chip active" onclick="scrollToCategory('cat-about', this)">About</button>
+                <button class="category-chip" onclick="scrollToCategory('cat-locations', this)">Locations</button>
+                <button class="category-chip" onclick="scrollToCategory('cat-accommodation', this)">Accommodation</button>
+                <button class="category-chip" onclick="scrollToCategory('cat-corporate', this)">Corporate</button>
+                <button class="category-chip" onclick="scrollToCategory('cat-amenities', this)">Amenities</button>
+                <button class="category-chip" onclick="scrollToCategory('cat-booking', this)">Booking</button>
+            </div>
+        </section>
+
+        <!-- FAQ ACCORDION SECTION -->
+        <section class="faq-section">
+            
+            
+
+            <!-- Category 1: About -->
+            <div class="category-group" id="cat-about">
+                <h2 class="category-heading">About</h2>
+                <div class="accordion-container">
+                    
+                    <!-- Q1 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">1. What is Rusha Stays ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Rusha Stays offers professionally managed accommodation solutions in Gurugram (Gurgaon), including Executive Rooms, Executive Premium Rooms, King Room Suites, Studio Suites and Fully Furnished 1 BHK Suites. Our properties are designed for working professionals, consultants, startup founders, interns, remote workers, hybrid workers and relocating professionals seeking a comfortable, secure and hassle-free living experience.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q15 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">2. What is the difference between a traditional PG and Rusha Stays ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Unlike traditional PG accommodations, Rusha Stays offers professionally managed living spaces with premium furnishings, housekeeping services, security systems, high-speed Wi-Fi, lifestyle amenities and dedicated resident support.</p>
+                                <p class="mt-12">Depending on the property, residents can choose from private rooms, Studio Suites, King Room Suites or Fully Furnished 1 BHK Suites, allowing greater flexibility, privacy and comfort.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q18 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">3. Why choose Rusha Stays?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Rusha Stays combines the comfort of premium furnished living with the convenience of professional hospitality.</p>
+                                <p class="mt-12">Prime Gurugram (Gurgaon) locations, flexible stay options, fully furnished accommodations, modern amenities, housekeeping services, security features and dedicated resident support make Rusha Stays a preferred choice for professionals seeking a better way to live, work and stay in Gurugram (Gurgaon).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Category 2: Locations -->
+            <div class="category-group" id="cat-locations">
+                <h2 class="category-heading">Locations</h2>
+                <div class="accordion-container">
+                    
+                    <!-- Q2 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">4. Which locations does Rusha Stays operate in?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Rusha Stays currently offers accommodation in Sector 28, Sector 42 and Sushant Lok Phase 1, Gurugram (Gurgaon), with new locations coming soon in Sector 43 and Sector 55. Each property is strategically located near major business hubs, metro stations, shopping destinations and lifestyle centres.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q6 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">5. Do you offer accommodation near Cyber City and Udyog Vihar?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Rusha Stays offers fully furnished rooms, executive suites, studio apartments and managed accommodations with convenient access to DLF Cyber City, Cyber Hub, Udyog Vihar, Global Business Park, One Horizon Center, Golf Course Road and other major corporate hubs across Gurugram (Gurgaon).</p>
+                                <p class="mt-12">Our properties are preferred by corporate employees, consultants, startup founders, interns, hybrid workers and relocating professionals looking to reduce commute times while enjoying a comfortable and professionally managed living experience.</p>
+                                <p class="mt-12">Whether you work in Cyber City, Udyog Vihar, Cyber Hub, One Horizon Center or surrounding business districts, Rusha Stays provides well-connected accommodation options designed around the needs of modern professionals.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q7 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">6. Do you offer accommodation near Golf Course Road, MG Road Metro Station and Galleria Market?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Selected Rusha Stays properties are strategically located near Golf Course Road, MG Road Metro Station, Sikanderpur Metro Station, Galleria Market, DLF Phase 1, Hamilton Road and MGF Mega City Mall, providing excellent connectivity to business hubs, shopping destinations, restaurants, cafés and healthcare facilities.</p>
+                                <p class="mt-12">Residents also benefit from proximity to established residential communities such as MLA Apartments, Jan Pratinidhi Apartments, Ridgewood Estate and Green Avenue, along with convenient access to the upcoming Apollo Hospital and other lifestyle destinations.</p>
+                                <p class="mt-12">These locations offer the perfect balance of convenience, connectivity and comfort for professionals seeking premium accommodation in Gurugram (Gurgaon).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q9 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">7. Do you offer accommodation near DLF Phase 1 and Sikanderpur Metro Station?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Selected Rusha Stays properties are conveniently located near DLF Phase 1, Sikanderpur Metro Station, MG Road Metro Station, Golf Course Road and Galleria Market, offering excellent access to business hubs, transportation networks and lifestyle destinations across Gurugram (Gurgaon).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Category 3: Accommodation -->
+            <div class="category-group" id="cat-accommodation">
+                <h2 class="category-heading">Accommodation</h2>
+                <div class="accordion-container">
+                    
+                    <!-- Q3 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">8. What types of accommodation are available at Rusha Stays?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Depending on the location, residents can choose from:</p>
+                                <ul style="margin-top: 12px; margin-left: 20px; list-style-type: disc;" data-style="margin-top: 12px; margin-left: 20px; list-style-type: disc;">
+                                    <li>Executive Rooms</li>
+                                    <li>Executive Premium Rooms</li>
+                                    <li>King Room Suites</li>
+                                    <li>Studio Suites</li>
+                                    <li>Fully Furnished 1 BHK Suites</li>
+                                    <li>Twin Sharing Options</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q4 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">9. Which Rusha Stays property is best for me ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Executive Rooms are ideal for professionals seeking a comfortable and affordable managed living experience.</p>
+                                <p class="mt-12">Executive Premium Rooms offer additional space and upgraded features for residents looking for greater comfort.</p>
+                                <p class="mt-12">King Room Suites are designed for professionals who prefer spacious private accommodation with premium amenities.</p>
+                                <p class="mt-12">Studio Suites provide an independent living experience with enhanced privacy and convenience.</p>
+                                <p class="mt-12">Fully Furnished 1 BHK Suites are best suited for long-term residents, corporate executives, consultants and professionals seeking complete independence and a home-like environment.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q5 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">10. Is Rusha Stays suitable for working professionals ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Rusha Stays is specifically designed for corporate employees, consultants, startup founders, interns, hybrid workers, remote professionals and individuals relocating to Gurugram (Gurgaon) for work assignments.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q8 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">11. Do you provide fully furnished Studio Suites in Gurugram (Gurgaon) ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Rusha Stays offers fully furnished Studio Suites and 1 BHK Suites equipped with modern furniture, high-speed Wi-Fi, appliances, housekeeping support and essential amenities. These accommodations are ideal for professionals seeking greater privacy and flexibility than a traditional PG.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Category 4: Corporate -->
+            <div class="category-group" id="cat-corporate">
+                <h2 class="category-heading">Corporate</h2>
+                <div class="accordion-container">
+                    
+                    <!-- Q10 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">12. Do you provide corporate accommodation in Gurugram (Gurgaon) ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Rusha Stays offers accommodation solutions for companies, consultants, project teams, relocating employees, startup teams and business travellers requiring short-term or long-term stays.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q11 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">13. Can companies book multiple rooms ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Companies can reserve multiple rooms, suites or accommodation units for project teams, consultants, relocating employees and corporate staff. For bulk booking requirements, our team can provide customized accommodation solutions.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q16 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">14. Do you offer accommodation for relocating professionals and corporate transfers?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Rusha Stays is a preferred choice for professionals relocating to Gurugram (Gurgaon) for employment, project assignments, business expansion or corporate transfers. Our move-in-ready accommodations help residents settle quickly without the challenges of setting up a new home.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Category 5: Amenities -->
+            <div class="category-group" id="cat-amenities">
+                <h2 class="category-heading">Amenities</h2>
+                <div class="accordion-container">
+                    
+                    <!-- Q12 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">15. Are meals available?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Selected Rusha Stays properties offer freshly prepared breakfast and dinner along with weekend lunch options. Food services may vary depending on the property and room category.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q13 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">16. Is housekeeping included?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. Daily housekeeping services are available at most Rusha Stays properties to ensure a clean, comfortable and hassle-free living experience.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Q14 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">17. Is high-speed Wi-Fi available ?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Yes. All Rusha Stays accommodations are equipped with high-speed Wi-Fi suitable for remote work, virtual meetings, entertainment and everyday connectivity needs.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Category 6: Booking -->
+            <div class="category-group" id="cat-booking">
+                <h2 class="category-heading">Booking</h2>
+                <div class="accordion-container">
+                    
+                    <!-- Q17 -->
+                    <div class="faq-card">
+                        <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                            <span class="faq-question">18. Can I schedule a property visit before booking?</span>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </button>
+                        <div class="faq-content">
+                            <div class="faq-answer">
+                                <p>Absolutely. Prospective residents can schedule a property tour, request a video walkthrough or speak with our accommodation advisors before making a booking decision.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- STILL HAVE QUESTIONS CTA -->
+        <section class="still-questions-section">
+            <div class="still-questions-container">
+                <div class="still-questions-text reveal-element">
+                    <h2>Still Have Questions?</h2>
+                    <p>Contact our support team directly. We are here to help you find the perfect managed stay in Gurugram (Gurgaon).</p>
+                </div>
+                <div class="cta-cards reveal-element">
+                    <a href="https://wa.me/919205859444" target="_blank" class="cta-card" rel="noopener noreferrer">
+                        <div class="cta-card-icon"><i class="fas fa-phone-alt"></i></div>
+                        <h4>Call Us</h4>
+                        <span>+91 92058 59444</span>
+                    </a>
+                    <a href="https://wa.me/919205859444?text=Hi%20Rusha%20Stays,%20I%20have%20some%20questions%20about%20your%20accommodations." target="_blank" class="cta-card" rel="noopener noreferrer">
+                        <div class="cta-card-icon"><i class="fab fa-whatsapp"></i></div>
+                        <h4>WhatsApp</h4>
+                        <span>Chat Instantly</span>
+                    </a>
+                    <div class="cta-card" style="cursor: pointer;" data-style="cursor: pointer;" onclick="openCallbackModal()">
+                        <div class="cta-card-icon"><i class="fas fa-headset"></i></div>
+                        <h4>Request Callback</h4>
+                        <span>Leave Your Number</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LOCATIONS CTA -->
+        <section class="locations-section">
+            <div class="locations-header reveal-element">
+                <h2>Explore Locations</h2>
+                <p>Explore Locations Across <strong>Sector 28</strong>, <strong>Sector 42</strong>, <strong>Sushant Lok Phase 1</strong>, <strong>Sector 43</strong> and <strong>Sector 55</strong></p>
+            </div>
+            <div class="locations-grid reveal-element">
+                <a href="locations?locality=Sector%2028" class="location-card active-loc">
+                    <div class="location-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Sector 28</h3>
+                    <span class="location-badge">Active</span>
+                </a>
+                <a href="locations?locality=Sector%2042" class="location-card active-loc">
+                    <div class="location-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Sector 42</h3>
+                    <span class="location-badge">Active</span>
+                </a>
+                <a href="locations?locality=Sushant%20Lok%20Phase%201" class="location-card active-loc">
+                    <div class="location-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Sushant Lok Phase 1</h3>
+                    <span class="location-badge">Active</span>
+                </a>
+                <div class="location-card coming-soon">
+                    <div class="location-card-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Sector 43</h3>
+                    <span class="location-badge">Coming Soon</span>
+                </div>
+                <div class="location-card coming-soon">
+                    <div class="location-card-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Sector 55</h3>
+                    <span class="location-badge">Coming Soon</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA SECTION -->
+        <section class="final-cta-section">
+            <div class="final-cta-card reveal-element">
+                <h2>Find Your Perfect Stay in Gurugram (Gurgaon)</h2>
+                <p>Managed Living | Executive Suites | Studio Apartments | Corporate Accommodation</p>
+                <div class="final-cta-actions">
+                    <a href="index" class="btn-primary">Explore Properties</a>
+                    <button class="btn-outline-primary" onclick="openCallbackModal()">Contact Us</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="premium-footer">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo">
+                    </div>
+                    <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
+                    
+                
+                    <div class="footer-social-block footer-social-block">
+                        <span class="label-caps">Follow Us</span>
+                        <div class="d-flex-gap-12">
+                            <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=100088761680648&mibextid=ZbWKwL" target="_blank" class="social-icon-btn facebook" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                                <div class="footer-col">
+                    <h4>Explore Stays</h4>
+                    <ul class="footer-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                                          <h4>Properties</h4>
+                      <ul class="footer-links">
+                          <li><a href="sector-42-1-bhk-suite">Sector 42 Suite</a></li>
+                          <li><a href="sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
+                          <li><a href="sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                          <li class="mt-8"><span style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 43 (Upcoming)</span></li>
+                          <li><span style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; opacity: 0.6; border: 1px solid rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 55 (Upcoming)</span></li>
+                      </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                      <ul class="footer-contact-info">
+                          <li>
+                              <i class="fas fa-phone-alt mt-2px"></i>
+                              <a href="https://wa.me/919205859444" target="_blank" class="prop-detail-label" rel="noopener noreferrer">Call us on +91-9205859444</a>
+                          </li>
+                          <li>
+                              <i class="fas fa-envelope mt-2px"></i>
+                              <a href="mailto:rushastays@gmail.com" class="prop-detail-label">rushastays@gmail.com</a>
+                          </li>
+                          <li class="mt-15-block">
+                              <button class="btn-primary btn-sidebar-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                          </li>
+                      </ul>
+                </div>
+            </div>
+                        <div class="footer-bottom">
+                <p>&copy; 2023 Rusha Stays. All rights reserved.</p><p style="margin-top: 4px; font-weight: normal; color: var(--text-muted);" data-style="margin-top: 4px; font-weight: normal; color: var(--text-muted);">Established in 2023, serving guests with a 99% satisfaction rate.</p>
+                <a href="https://wa.me/918470990283" target="_blank" class="dev-badge" rel="noopener noreferrer">
+                    <span>Designed &amp; Developed by <strong>Vipul Jain</strong></span>
+                    <span class="d-inline-flex-nowrap">
+                        <i class="fab fa-whatsapp text-whatsapp"></i>
+                        <strong>8470990283</strong>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALLBACK MODAL popup -->
+    <div class="modal-overlay" id="callback-modal" onclick="closeCallbackModal(event)">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeCallbackModal(event)">&times;</button>
+            <div class="modal-header">
+                <h3>Request a Callback</h3>
+                <p>Fill out the form below and our hospitality advisors will reach out to you shortly.</p>
+            </div>
+            <form class="modal-form" id="callbackForm" onsubmit="handleCallbackSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" placeholder="e.g. +91 99999 99999" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" placeholder="e.g. rahul@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-interest">Property of Interest</label>
+                    <select id="modal-interest" class="form-control">
+                        <option value="General Enquiry">General Enquiry</option>
+                        <option value="Sector 28 - 1 BHK Suite">Sector 28, Gurugram - 1 BHK Suite</option>
+                        <option value="Sector 28 - King Room Suite">Sector 28, Gurugram - King Room Suite</option>
+                        <option value="Sector 28 - Executive Premium Rooms">Sector 28, Gurugram - Executive Premium Rooms</option>
+                        <option value="Sector 28 - Executive Rooms">Sector 28, Gurugram - Executive Rooms</option>
+                        <option value="Sector 42 - 1 BHK Suite">Sector 42, Gurugram - 1 BHK Suite</option>
+                        <option value="Sushant Lok - 1 BHK Studio">Sushant Lok Phase 1, Gurugram - 1 BHK Studio</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary" style="margin-top: 10px;" data-style="margin-top: 10px;">Submit Request</button>
+            </form>
+            <div class="success-state" id="successState">
+                <div class="success-icon"><i class="fas fa-check"></i></div>
+                <h4>Request Received!</h4>
+                <p>Thank you for reaching out. An advisor from Rusha Stays will call you shortly.</p>
+                <button class="btn-primary mt-12" onclick="closeCallbackModal(event)">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // ACCORDION DYNAMIC HEIGHT TOGGLE
+        function toggleAccordion(button) {
+            const card = button.closest('.faq-card');
+            const isOpen = card.classList.contains('open');
+
+            // Close all
+            document.querySelectorAll('.faq-card').forEach(c => {
+                c.classList.remove('open');
+                const trigger = c.querySelector('.faq-trigger');
+                if (trigger) trigger.setAttribute('aria-expanded', 'false');
+            });
+
+            // Open clicked
+            if (!isOpen) {
+                card.classList.add('open');
+                button.setAttribute('aria-expanded', 'true');
+            }
+        }
+        
+        // SCROLL REVEAL ANIMATIONS
+        const revealElements = document.querySelectorAll('.reveal-element');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target); // Reveal only once
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // MOBILE SIDEBAR TOGGLE
+
+        // CATEGORY SCROLL AND HIGHLIGHT
+        function scrollToCategory(id, button) {
+            const target = document.getElementById(id);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            // Highlight active chip
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            button.classList.add('active');
+        }
+
+        // INTERSECTION OBSERVER FOR DYNAMIC CHIP HIGHLIGHTING ON SCROLL
+        const categoryGroups = document.querySelectorAll('.category-group');
+        const categoryChips = document.querySelectorAll('.category-chip');
+        
+        const scrollObserverOptions = {
+            root: null,
+            rootMargin: '-10% 0px -75% 0px', // Trigger when header is in the upper zone
+            threshold: 0
+        };
+
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    
+                    // Match with chip
+                    categoryChips.forEach(chip => {
+                        const onclickStr = chip.getAttribute('onclick');
+                        if (onclickStr && onclickStr.includes(id)) {
+                            categoryChips.forEach(c => c.classList.remove('active'));
+                            chip.classList.add('active');
+                            
+                            // Scroll chips bar on mobile for visibility
+                            const container = document.querySelector('.category-nav-container');
+                            const offsetLeft = chip.offsetLeft - (container.offsetWidth / 2) + (chip.offsetWidth / 2);
+                            container.scrollTo({ left: offsetLeft, behavior: 'smooth' });
+                        }
+                    });
+                }
+            });
+        }, scrollObserverOptions);
+
+        categoryGroups.forEach(group => scrollObserver.observe(group));
+
+        // CALLBACK MODAL HANDLERS
+        function openCallbackModal() {
+            document.getElementById('callback-modal').classList.add('active');
+            document.body.style.overflow = 'hidden'; // Disable background scroll
+            
+            // Reset form states
+            document.getElementById('callbackForm').style.display = 'flex';
+            document.getElementById('successState').style.display = 'none';
+            document.getElementById('callbackForm').reset();
+        }
+
+        let modalTimeoutId = null;
+
+        
+        function closeCallbackModal(e) {
+        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
+        if (modalTimeoutId) {
+        clearTimeout(modalTimeoutId);
+        modalTimeoutId = null;
+        }
+        document.getElementById('callback-modal').classList.remove('active');
+        // Reset states
+        setTimeout(() => {
+        document.getElementById('callbackForm').style.display = 'flex';
+        document.getElementById('modal-success-state').style.display = 'none';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'block';
+        document.getElementById('callbackForm').reset();
+        }, 300);
+        }
+        }
+
+        function handleCallbackSubmit(e) {
+        e.preventDefault();
+        // Simulate form submission
+        document.getElementById('callbackForm').style.display = 'none';
+        document.getElementById('modal-success-state').style.display = 'block';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'none';
+
+        // Auto close modal after 15 seconds if not clicked manually
+        modalTimeoutId = setTimeout(() => {
+        closeCallbackModal(true);
+        }, 15000);
+        }
+
+</script>
+
+    <!-- SEO FAQ Schema (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "1. What is Rusha Stays ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rusha Stays offers professionally managed accommodation solutions in Gurugram (Gurgaon), including Executive Rooms, Executive Premium Rooms, King Room Suites, Studio Suites and Fully Furnished 1 BHK Suites. Our properties are designed for working professionals, consultants, startup founders, interns, remote workers, hybrid workers and relocating professionals seeking a comfortable, secure and hassle-free living experience."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "2. Which locations does Rusha Stays operate in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rusha Stays currently offers accommodation in Sector 28, Sector 42 and Sushant Lok Phase 1, Gurugram (Gurgaon), with new locations coming soon in Sector 43 and Sector 55. Each property is strategically located near major business hubs, metro stations, shopping destinations and lifestyle centres."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "3. What types of accommodation are available at Rusha Stays?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Depending on the location, residents can choose from: Executive Rooms, Executive Premium Rooms, King Room Suites, Studio Suites, Fully Furnished 1 BHK Suites, and Twin Sharing Options."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "4. Which Rusha Stays property is best for me ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Executive Rooms are ideal for professionals seeking a comfortable and affordable managed living experience. Executive Premium Rooms offer additional space and upgraded features for residents looking for greater comfort. King Room Suites are designed for professionals who prefer spacious private accommodation with premium amenities. Studio Suites provide an independent living experience with enhanced privacy and convenience. Fully Furnished 1 BHK Suites are best suited for long-term residents, corporate executives, consultants and professionals seeking complete independence and a home-like environment."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "5. Is Rusha Stays suitable for working professionals ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Rusha Stays is specifically designed for corporate employees, consultants, startup founders, interns, hybrid workers, remote professionals and individuals relocating to Gurugram (Gurgaon) for work assignments."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "6. Do you offer accommodation near Cyber City and Udyog Vihar?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Rusha Stays offers fully furnished rooms, executive suites, studio apartments and managed accommodations with convenient access to DLF Cyber City, Cyber Hub, Udyog Vihar, Global Business Park, One Horizon Center, Golf Course Road and other major corporate hubs across Gurugram (Gurgaon). Our properties are preferred by corporate employees, consultants, startup founders, interns, hybrid workers and relocating professionals looking to reduce commute times while enjoying a comfortable and professionally managed living experience. Whether you work in Cyber City, Udyog Vihar, Cyber Hub, One Horizon Center or surrounding business districts, Rusha Stays provides well-connected accommodation options designed around the needs of modern professionals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "7. Do you offer accommodation near Golf Course Road, MG Road Metro Station and Galleria Market?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Selected Rusha Stays properties are strategically located near Golf Course Road, MG Road Metro Station, Sikanderpur Metro Station, Galleria Market, DLF Phase 1, Hamilton Road and MGF Mega City Mall, providing excellent connectivity to business hubs, shopping destinations, restaurants, cafés and healthcare facilities. Residents also benefit from proximity to established residential communities such as MLA Apartments, Jan Pratinidhi Apartments, Ridgewood Estate and Green Avenue, along with convenient access to the upcoming Apollo Hospital and other lifestyle destinations. These locations offer the perfect balance of convenience, connectivity and comfort for professionals seeking premium accommodation in Gurugram (Gurgaon)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "8. Do you provide fully furnished Studio Suites in Gurugram (Gurgaon) ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Rusha Stays offers fully furnished Studio Suites and 1 BHK Suites equipped with modern furniture, high-speed Wi-Fi, appliances, housekeeping support and essential amenities. These accommodations are ideal for professionals seeking greater privacy and flexibility than a traditional PG."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "9. Do you offer accommodation near DLF Phase 1 and Sikanderpur Metro Station?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Selected Rusha Stays properties are conveniently located near DLF Phase 1, Sikanderpur Metro Station, MG Road Metro Station, Golf Course Road and Galleria Market, offering excellent access to business hubs, transportation networks and lifestyle destinations across Gurugram (Gurgaon)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "10. Do you provide corporate accommodation in Gurugram (Gurgaon) ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Rusha Stays offers accommodation solutions for companies, consultants, project teams, relocating employees, startup teams and business travellers requiring short-term or long-term stays."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "11. Can companies book multiple rooms ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Companies can reserve multiple rooms, suites or accommodation units for project teams, consultants, relocating employees and corporate staff. For bulk booking requirements, our team can provide customized accommodation solutions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "12. Are meals available?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Selected Rusha Stays properties offer freshly prepared breakfast and dinner along with weekend lunch options. Food services may vary depending on the property and room category."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "13. Is housekeeping included?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Daily housekeeping services are available at most Rusha Stays properties to ensure a clean, comfortable and hassle-free living experience."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "14. Is high-speed Wi-Fi available ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All Rusha Stays accommodations are equipped with high-speed Wi-Fi suitable for remote work, virtual meetings, entertainment and everyday connectivity needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "15. What is the difference between a traditional PG and Rusha Stays ?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unlike traditional PG accommodations, Rusha Stays offers professionally managed living spaces with premium furnishings, housekeeping services, security systems, high-speed Wi-Fi, lifestyle amenities and dedicated resident support. Depending on the property, residents can choose from private rooms, Studio Suites, King Room Suites or Fully Furnished 1 BHK Suites, allowing greater flexibility, privacy and comfort."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "16. Do you offer accommodation for relocating professionals and corporate transfers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Rusha Stays is a preferred choice for professionals relocating to Gurugram (Gurgaon) for employment, project assignments, business expansion or corporate transfers. Our move-in-ready accommodations help residents settle quickly without the challenges of setting up a new home."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "17. Can I schedule a property visit before booking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. Prospective residents can schedule a property tour, request a video walkthrough or speak with our accommodation advisors before making a booking decision."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "18. Why choose Rusha Stays?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rusha Stays combines the comfort of premium furnished living with the convenience of professional hospitality. Prime Gurugram (Gurgaon) locations, flexible stay options, fully furnished accommodations, modern amenities, housekeeping services, security features and dedicated resident support make Rusha Stays a preferred choice for professionals seeking a better way to live, work and stay in Gurugram (Gurgaon)."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+
+    <!-- Floating WhatsApp Live Chat -->
+    <a href="https://wa.me/919205859444" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+        <span>Live Chat</span>
+    </a>
+</body>
+</html>

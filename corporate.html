@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="sitemap" type="application/xml" href="https://rushastays.com/sitemap.xml">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Stays in Gurugram (Gurgaon) | Rusha Stays</title>
+    <meta name="description" content="Rusha Stays offers managed corporate accommodation and executive rooms in Gurugram (Gurgaon) for business travelers and relocating employees.">
+    <link rel="stylesheet" href="styles-v6.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Corporate Stays in Gurugram (Gurgaon)",
+        "description": "Flexible managed corporate accommodation and employee housing solutions in Gurugram (Gurgaon) near Golf Course Road & DLF Cyber City.",
+        "url": "https://rushastays.com/corporate.html",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Rusha Stays",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "images/rusha-stays-logo.webp"
+            }
+        }
+    }
+    </script>
+
+    <style>
+        /* ═══════════ CORPORATE PAGE STYLES ═══════════ */
+
+        /* Hero — original light style */
+        .corp-hero {
+            position: relative;
+            padding: 40px 24px 75px;
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            box-sizing: border-box;
+        }
+        .corp-hero-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+        .corp-hero-badge {
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            background: rgba(198, 58, 45, 0.08);
+            padding: 6px 16px;
+            border-radius: 100px;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .corp-hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #1a1a1a;
+            letter-spacing: -1.5px;
+            margin-bottom: 10px;
+        }
+        .corp-hero-sub-red {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .corp-hero-sub {
+            font-size: 14px;
+            color: var(--text-body);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .corp-hero-btns {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .corp-hero-img-main {
+            width: 100%;
+            height: 460px;
+            object-fit: cover;
+            border-radius: 24px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+        .corp-hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 460px; /* Tall aspect ratio to fit vertical phone images */
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            background-color: var(--card-bg);
+        }
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 1s ease-in-out;
+            overflow: hidden;
+        }
+        .carousel-slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        .carousel-slide.last-active {
+            opacity: 1;
+            z-index: 1;
+        }
+        .carousel-slide img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cover entire area of the tall container */
+            z-index: 2;
+        }
+
+        .corp-hero-scroll-indicator {
+            bottom: 45px !important;
+            z-index: 20 !important;
+        }
+        @media (max-width: 991px) {
+            .corp-hero-scroll-indicator {
+                display: none !important;
+            }
+        }
+
+        /* Stats Bar */
+        .corp-stats-bar {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            padding: 24px 30px;
+            max-width: 1100px;
+            margin: -60px auto 30px;
+            position: relative;
+            z-index: 10;
+            box-sizing: border-box;
+        }
+        .corp-stats-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+        .corp-stat {
+            text-align: center;
+            padding: 20px;
+            border-right: 1px solid var(--border-color);
+        }
+        .corp-stat:last-child { border-right: none; }
+        .corp-stat-num {
+            height: 44px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 40px;
+            font-weight: 900;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .corp-stat-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section utilities */
+        .corp-section { padding: 50px 24px; max-width: 1200px; margin: 0 auto; }
+        .corp-section-bg { padding: 50px 24px; background: var(--card-bg); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .corp-section-dark { padding: 50px 24px; background: #FDF5F3; border-top: 1px solid rgba(200,56,40,0.12); border-bottom: 1px solid rgba(200,56,40,0.12); }
+        .corp-section-inner { max-width: 1200px; margin: 0 auto; }
+        .corp-label {
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
+            color: var(--primary); margin-bottom: 12px; font-family: 'Poppins', sans-serif;
+        }
+        .corp-h2 {
+            font-size: clamp(28px, 3.5vw, 42px);
+            font-weight: 800;
+            color: var(--text-heading);
+            line-height: 1.2;
+            margin-bottom: 16px;
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: -0.3px;
+        }
+        .corp-lead {
+            font-size: 15.5px; color: var(--text-body); line-height: 1.6;
+            margin: 0 auto 40px; max-width: 760px; text-align: center;
+        }
+
+        /* Who We Serve */
+        .serve-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px; }
+        .serve-card {
+            background: #fff; padding: 32px 24px; border-radius: 16px;
+            border: 1px solid var(--border-color); transition: all 0.3s;
+        }
+        .serve-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+        .serve-icon { font-size: 28px; color: var(--primary); margin-bottom: 16px; }
+        .serve-card h3 { font-size: 18px; font-weight: 700; color: var(--text-heading); margin-bottom: 10px; font-family: 'Poppins', sans-serif; }
+        .serve-card p { font-size: 13.5px; color: var(--text-body); line-height: 1.5; }
+
+        /* Accommodation Formats */
+        .corp-format-card {
+            background: #fff; border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 24px; box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+        .corp-format-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+
+        /* Locations */
+        .loc-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; align-items: center; }
+        .loc-prop-list { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+        .loc-prop-item {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 16px; background: var(--bg-main); border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+        .loc-prop-dot {
+            width: 24px; height: 24px; border-radius: 50%; background: rgba(200,56,40,0.1);
+            color: var(--primary); display: flex; align-items: center; justify-content: center;
+            font-size: 12px; flex-shrink: 0; margin-top: 2px;
+        }
+        .loc-prop-item strong { font-size: 15px; color: var(--text-heading); display: block; margin-bottom: 3px; }
+        .loc-prop-item span { font-size: 13px; color: var(--text-body); }
+        .loc-img-wrap { border-radius: 24px; overflow: hidden; position: relative; border: 1px solid var(--border-color); }
+        .loc-img-wrap img { width: 100%; height: 350px; object-fit: cover; display: block; }
+        .loc-img-badge {
+            position: absolute; top: 20px; left: 20px;
+            background: #fff; border: 1px solid var(--border-color);
+            padding: 8px 16px; border-radius: 100px;
+            font-size: 13px; color: var(--text-heading); font-weight: 600;
+            display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-sm);
+        }
+        .hub-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+        .hub-tag {
+            background: #fff; border: 1.5px solid var(--border-color);
+            padding: 9px 18px; border-radius: 100px;
+            font-size: 13.5px; color: var(--text-heading); font-weight: 600;
+            transition: all 0.25s ease;
+            cursor: default;
+        }
+        .hub-tag:hover { border-color: var(--primary); color: var(--primary); background: rgba(200,56,40,0.04); }
+
+        /* Why Choose — dark section */
+        .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .why-img { border-radius: 24px; overflow: hidden; position: relative; }
+        .why-img img { width: 100%; height: 460px; object-fit: cover; display: block; border-radius: 24px; }
+        .why-img-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 70%);
+            border-radius: 24px;
+            z-index: 2;
+        }
+        .why-img-caption {
+            position: absolute; bottom: 24px; left: 24px; right: 24px;
+            color: #ffffff !important;
+            z-index: 5;
+        }
+        .why-img-caption h4 {
+            font-size: 20px; font-weight: 800; font-family: 'Poppins', sans-serif; margin-bottom: 4px;
+            color: #ffffff !important;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+        }
+        .why-img-caption p {
+            font-size: 13.5px; opacity: 0.95;
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+        .why-checks { display: flex; flex-direction: column; gap: 18px; margin-top: 36px; }
+        .why-check-item {
+            display: flex; align-items: flex-start; gap: 14px;
+            padding: 18px 20px;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            transition: all 0.3s;
+        }
+        .why-check-item:hover { border-color: var(--primary); transform: translateX(4px); }
+        .why-check-icon {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(200,56,40,0.08); color: var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 12px; flex-shrink: 0; margin-top: 2px;
+        }
+        .why-check-item strong { font-size: 15px; color: var(--text-heading); display: block; margin-bottom: 4px; }
+        .why-check-item span { font-size: 13px; color: var(--text-body); line-height: 1.4; }
+
+        /* Ideal For */
+        .ideal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 50px; }
+        .ideal-card {
+            background: #fff;
+            padding: 30px 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        .ideal-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--primary); }
+        .ideal-card-icon { font-size: 28px; color: var(--primary); margin-bottom: 16px; }
+        .ideal-card h3 { font-size: 18px; font-weight: 700; color: var(--text-heading); margin-bottom: 10px; font-family: 'Poppins', sans-serif; }
+        .ideal-card p { font-size: 13.5px; color: var(--text-body); line-height: 1.5; }
+
+        /* Process steps */
+        .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 60px; position: relative; }
+        .process-grid::before {
+            content: '';
+            position: absolute;
+            top: 25px; left: 12.5%; right: 12.5%;
+            height: 2px; background: var(--border-color);
+            z-index: 1;
+        }
+        .process-step { text-align: center; position: relative; z-index: 2; }
+        .process-num {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: #fff; border: 2px solid var(--primary);
+            color: var(--primary); font-family: 'Poppins', sans-serif;
+            font-size: 18px; font-weight: 800;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px; transition: all 0.3s;
+        }
+        .process-step:hover .process-num { background: var(--primary); color: #fff; transform: scale(1.1); }
+        .process-step h3 { font-size: 16.5px; font-weight: 700; color: var(--text-heading); margin-bottom: 8px; font-family: 'Poppins', sans-serif; }
+        .process-step p { font-size: 13px; color: var(--text-body); line-height: 1.4; padding: 0 16px; }
+
+        /* Responsive */
+        @media (max-width: 991px) {
+            .corp-hero-inner, .loc-grid, .why-grid { grid-template-columns: 1fr; gap: 40px; }
+            .corp-hero-img-main, .corp-hero-carousel { height: 400px !important; }
+            .corp-hero h1 { font-size: 34px; }
+            .corp-stats-bar {
+                margin: -50px 16px 20px;
+                padding: 16px 20px;
+            }
+            .corp-stats-inner { grid-template-columns: repeat(2,1fr); }
+            .corp-stat { border-right: none; border-bottom: 1px solid var(--border-color); }
+            .corp-stat:nth-child(odd) { border-right: 1px solid var(--border-color); }
+            .corp-stat:last-child { border-bottom: none; }
+            .process-grid { grid-template-columns: repeat(2,1fr); gap: 30px; }
+            .process-grid::before { display: none; }
+            .why-img img { height: 300px; }
+            .serve-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .corp-hero { padding: 24px 16px 40px !important; text-align: center; }
+            .corp-hero-badge { margin-bottom: 12px !important; }
+            .corp-hero h1 { font-size: 28px; text-align: center; margin-bottom: 16px !important; }
+            .corp-hero-sub-red { text-align: center; margin-bottom: 8px !important; }
+            .corp-hero-sub { text-align: center; margin-bottom: 24px !important; }
+            .corp-hero-btns { flex-direction: column; align-items: center; gap: 12px !important; }
+            .corp-hero-btns a, .corp-hero-btns button { width: 100%; justify-content: center; }
+            .corp-stats-inner { grid-template-columns: repeat(2,1fr); }
+            .process-grid { grid-template-columns: 1fr; gap: 24px; }
+            .serve-grid { grid-template-columns: 1fr; }
+            
+            /* Center section headings and intro text */
+            .corp-label { text-align: center; display: block; }
+            .corp-h2 { text-align: center; }
+            .corp-lead { text-align: center; margin-left: auto; margin-right: auto; }
+            
+            /* Center serve cards and accommodation formats */
+            .serve-card { text-align: center; }
+            .serve-icon { display: flex; justify-content: center; align-items: center; }
+            .corp-format-card { text-align: center; }
+            .corp-format-card > div:first-child { display: flex; justify-content: center; align-items: center; }
+            .ideal-card { text-align: center; }
+            .ideal-card-icon { display: flex; justify-content: center; align-items: center; }
+        }
+
+        /* ═══════════ CSS LOAD & SCROLL REVEAL ANIMATIONS ═══════════ */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+        .animate-fade-in {
+            animation: fadeIn 1s ease both;
+        }
+        
+        /* Staggered delays */
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        
+        /* Native IntersectionObserver scroll animations */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .reveal-on-scroll.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scoped layout classes to prevent layout shift and FOUC */
+        .corp-main {
+            padding-top: 90px;
+            background-color: var(--bg-main);
+        }
+        .corp-carousel-wrapper {
+            position: relative;
+        }
+        .corp-stat-num-text {
+            font-size: 26px !important;
+        }
+        .mb-0 {
+            margin-bottom: 0 !important;
+        }
+        .opacity-60 {
+            opacity: 0.6;
+        }
+        .gray-dot {
+            background: rgba(0,0,0,0.06) !important;
+            color: #999 !important;
+        }
+        .mt-28 {
+            margin-top: 28px;
+        }
+        .corp-hubs-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-heading);
+            margin-bottom: 12px;
+        }
+        .border-y {
+            border-top: 1px solid rgba(200,56,40,0.12);
+            border-bottom: 1px solid rgba(200,56,40,0.12);
+        }
+        .corp-features-divider {
+            margin-top: 30px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .corp-features-title {
+            font-family: var(--font-heading);
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--text-heading);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+        .corp-footer-cta {
+            text-align: center;
+            padding-bottom: 30px;
+            padding-top: 20px;
+        }
+        .corp-footer-lead {
+            margin: 0 auto 24px !important;
+            font-size: 15px !important;
+            text-align: center !important;
+        }
+        .corp-btns-center {
+            justify-content: center !important;
+        }
+        .corp-btn-wa {
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+        }
+        .corp-btn-view {
+            text-decoration: none !important;
+            display: inline-block !important;
+            text-align: center !important;
+            line-height: 24px !important;
+        }
+    </style>
+
+    <link rel="canonical" href="https://rushastays.com/corporate.html">
+
+    <!-- Open Graph / Facebook -->
+
+
+
+
+<!-- Twitter -->
+
+
+
+
+<!-- Favicon -->
+    <link rel="icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="shortcut icon" type="image/webp" href="images/rusha-stays-logo.webp">
+    <link rel="apple-touch-icon" href="images/rusha-stays-logo.webp">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rushastays.com/corporate">
+    <meta property="og:title" content="Corporate Stays — Rusha Stays | Executive Accommodations in Gurugram">
+    <meta property="og:description" content="Premium corporate housing solutions for businesses, consultants & relocating professionals. Fully managed, fully furnished stays in Gurugram.">
+    <meta property="og:image" content="https://rushastays.com/images/corporate-hero-room.webp">
+    <meta property="og:site_name" content="Rusha Stays">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://rushastays.com/corporate">
+    <meta name="twitter:title" content="Corporate Stays — Rusha Stays | Executive Accommodations in Gurugram">
+    <meta name="twitter:description" content="Premium corporate housing solutions for businesses, consultants & relocating professionals. Fully managed, fully furnished stays in Gurugram.">
+    <meta name="twitter:image" content="https://rushastays.com/images/corporate-hero-room.webp">
+</head>
+<body>
+    <!-- HEADER NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo cursor-pointer" onclick="location.href='/'">
+                <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo" class="logo-img">
+            </div>
+            <div class="nav-right">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate" class="active">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </nav>
+                <a href="https://wa.me/919205859444" target="_blank" class="contact-number" rel="noopener noreferrer"><i class="fas fa-phone-alt"></i><span class="contact-text">Call us on </span><span class="contact-num-only">9205859444</span></a>
+                <button class="btn-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                <div class="hamburger" onclick="toggleSidebar()">
+                    <span class="hamburger-text">Menu</span><i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar" id="mobile-sidebar">
+        <div class="sidebar-header">
+            <h3>Menu</h3>
+            <button class="close-btn" onclick="toggleSidebar()">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index" onclick="toggleSidebar()">Home</a></li>
+            <li><a href="locations" onclick="toggleSidebar()">Locations</a></li>
+            <li><a href="corporate" onclick="toggleSidebar()">Corporate Stays</a></li>
+            <li><a href="about" onclick="toggleSidebar()">About Us</a></li>
+            <li><a href="faqs" onclick="toggleSidebar()">FAQs</a></li>
+            <li><a href="blog" onclick="toggleSidebar()">Blogs</a></li>
+            <li><a href="https://wa.me/919205859444" target="_blank" class="text-primary" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a></li>
+        </ul>
+        <button class="btn-primary mt-20-full" onclick="toggleSidebar(); openCallbackModal()">Request a Call Back</button>
+    </div>
+
+    <!-- HERO SECTION -->
+    <main class="corp-main">
+    <section class="corp-hero">
+        <div class="corp-hero-inner">
+            <div>
+                <span class="corp-hero-badge animate-fade-in-up delay-1">B2B Corporate Solutions</span>
+                <h1 class="animate-fade-in-up delay-2">Corporate Stays <br><span class="text-primary">in Gurugram (Gurgaon)</span></h1>
+                <p class="corp-hero-sub-red animate-fade-in-up delay-3">Flexible Corporate Accommodation Solutions for Modern Businesses</p>
+                <p class="corp-hero-sub animate-fade-in-up delay-4">Rusha Stays provides professionally managed corporate accommodation solutions across prime locations in Gurugram (Gurgaon). Whether you are relocating employees, onboarding new team members, accommodating project staff, hosting consultants, or managing long-term business travel requirements, we offer fully furnished accommodation designed to support productivity, comfort and convenience.<br><br>Our portfolio includes Executive Rooms, Premium Rooms, King Room Suites, Studio Suites and Fully Furnished 1 BHK Suites across strategically located properties in Gurgaon.</p>
+                <div class="corp-hero-btns animate-fade-in-up delay-5">
+                    <button class="btn-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                    <a href="locations" class="btn-outline-primary corp-btn-view">View Properties</a>
+                </div>
+            </div>
+            <div class="corp-carousel-wrapper">
+                <div class="corp-hero-carousel animate-fade-in delay-3">
+                    <div class="carousel-slide">
+                        <img src="images/corp-amenities.webp" alt="Gurugram Corporate Stays Amenities">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-2.webp" alt="Fully Furnished Corporate Suites Gurugram">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-3.webp" alt="Rusha Stays Premium Managed Suites">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-4.webp" alt="Managed Executive Rooms Gurgaon">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-5.webp" alt="Luxury Furnished Studio Suite Gurgaon">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-bathroom.webp" alt="Premium Luxury Attached Bathroom Gurgaon">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-6.webp" alt="Premium Managed Service Apartments Gurgaon">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-7.webp" alt="Relocation Housing Solutions Gurgaon">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-8.webp" alt="Fully Furnished Twin Beds Suite Gurgaon">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-studio.webp" alt="Luxury Open Plan Studio Suite Gurgaon">
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="images/corp-room-9.webp" alt="Executive Serviced Apartment Gurgaon">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bouncing Scroll Down Indicator -->
+        <div class="scroll-down-indicator corp-hero-scroll-indicator animate-fade-in delay-5" onclick="document.querySelector('.corp-stats-bar').scrollIntoView({ behavior: 'smooth' });">
+            <span>Scroll to explore</span><br>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="corp-stats-bar">
+        <div class="corp-stats-inner">
+            <div class="corp-stat">
+                <div class="corp-stat-num corp-stat-num-text">Top-Notch</div>
+                <div class="corp-stat-label">Modern Amenities</div>
+            </div>
+            <div class="corp-stat">
+                <div class="corp-stat-num">5+</div>
+                <div class="corp-stat-label">Prime Locations</div>
+            </div>
+            <div class="corp-stat">
+                <div class="corp-stat-num">24/7</div>
+                <div class="corp-stat-label">Resident Support</div>
+            </div>
+            <div class="corp-stat">
+                <div class="corp-stat-num">100%</div>
+                <div class="corp-stat-label">Fully Furnished</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WHO WE SERVE -->
+    <section>
+        <div class="corp-section">
+            <div class="text-center">
+                <div class="corp-label">Tailored Solutions</div>
+                <h2 class="corp-h2">Who We Serve</h2>
+                <p class="corp-lead margin-auto-center">Providing tailor-made corporate housing solutions for a wide range of business verticals and professional needs.</p>
+            </div>
+            <div class="serve-grid">
+                <div class="serve-card">
+                    <div class="serve-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Corporate Employees</h3>
+                    <p>Comfortable, fully furnished accommodation close to Gurugram (Gurgaon)'s major business hubs.</p>
+                </div>
+                <div class="serve-card">
+                    <div class="serve-icon"><i class="fas fa-truck-moving"></i></div>
+                    <h3>Relocating Professionals</h3>
+                    <p>Move-in-ready residences for employees relocating to Gurugram (Gurgaon) — zero setup stress from Day 1.</p>
+                </div>
+                <div class="serve-card">
+                    <div class="serve-icon"><i class="fas fa-users-cog"></i></div>
+                    <h3>Project Teams</h3>
+                    <p>Flexible accommodation solutions for project-based assignments and temporary deployments across Gurgaon.</p>
+                </div>
+                <div class="serve-card">
+                    <div class="serve-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>Startup Teams</h3>
+                    <p>Scalable housing options for expanding teams and new office setup phases in prime Gurugram (Gurgaon) sectors.</p>
+                </div>
+                <div class="serve-card">
+                    <div class="serve-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Interns & Graduate Trainees</h3>
+                    <p>Professionally managed stays for internship and training programs.</p>
+                </div>
+                <div class="serve-card">
+                    <div class="serve-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>Consultants & Business Travellers</h3>
+                    <p>Premium stays for consultants, auditors, trainers and visiting professionals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACCOMMODATION FORMATS -->
+    <section class="corp-section-bg">
+        <div class="corp-section-inner">
+            <div class="text-center">
+                <div class="corp-label">Flexible Spaces</div>
+                <h2 class="corp-h2">Accommodation Formats</h2>
+                <p class="corp-lead margin-auto-center">Choose from a variety of furnished formats designed to meet corporate preferences, duration needs, and budget requirements.</p>
+            </div>
+            <div class="corp-format-grid grid-autofit-24">
+                <div class="corp-format-card">
+                    <div class="icon-primary-lg"><i class="fas fa-door-open"></i></div>
+                    <h3 class="heading-sm">Executive Rooms</h3>
+                    <p class="body-sm">Independent premium rooms with attached bathrooms, housekeeping, and access to common lounge areas.</p>
+                </div>
+                <div class="corp-format-card">
+                    <div class="icon-primary-lg"><i class="fas fa-bed"></i></div>
+                    <h3 class="heading-sm">1 BHK Serviced Suites</h3>
+                    <p class="body-sm">Private living area, fully equipped kitchenette, and separate bedroom — ideal for relocations and stays.</p>
+                </div>
+                <div class="corp-format-card">
+                    <div class="icon-primary-lg"><i class="fas fa-square-envelope"></i></div>
+                    <h3 class="heading-sm">Studio Suites</h3>
+                    <p class="body-sm">Compact open-plan layouts combining living, kitchen, and bedroom space, perfect for single travelers.</p>
+                </div>
+                <div class="corp-format-card">
+                    <div class="icon-primary-lg"><i class="fas fa-building"></i></div>
+                    <h3 class="heading-sm">Entire Apartments</h3>
+                    <p class="body-sm">Multi-room apartments for team stays, leadership travel, or group project stays in premium sectors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATIONS -->
+    <section>
+        <div class="corp-section">
+            <div class="loc-grid">
+                <div>
+                    <div class="corp-label">Where We Operate</div>
+                    <h2 class="corp-h2">Prime Gurugram (Gurgaon)<br>Locations</h2>
+                    <p class="corp-lead mb-0">Strategically located near all major corporate, commercial, and transportation districts — with seamless access to DLF Cyber City, Golf Course Road, and MG Road.</p>
+                    <div class="loc-prop-list">
+                        <div class="loc-prop-item">
+                            <div class="loc-prop-dot"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <strong>Sector 28, Gurugram (Gurgaon)</strong>
+                                <span>Executive Rooms, King Suites &amp; 1 BHK — near Cyber Hub &amp; NH-48</span>
+                            </div>
+                        </div>
+                        <div class="loc-prop-item">
+                            <div class="loc-prop-dot"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <strong>Sector 42, Gurugram (Gurgaon)</strong>
+                                <span>Premium Furnished 1 BHK Suites — near Golf Course Road</span>
+                            </div>
+                        </div>
+                        <div class="loc-prop-item">
+                            <div class="loc-prop-dot"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <strong>Sushant Lok Phase 1</strong>
+                                <span>Studio Suites — opposite Galleria Market, near MG Road Metro</span>
+                            </div>
+                        </div>
+                        <div class="loc-prop-item opacity-60">
+                            <div class="loc-prop-dot gray-dot"><i class="fas fa-clock"></i></div>
+                            <div>
+                                <strong>Sector 43 &amp; Sector 55</strong>
+                                <span>Coming Soon — contact us to pre-book</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="loc-img-wrap">
+                        <img src="images/gurugram-cybercity.webp" alt="Gurugram (Gurgaon) Corporate Skyline">
+                        <div class="loc-img-badge">
+                            <i class="fas fa-city"></i>
+                            Gurugram (Gurgaon), Haryana
+                        </div>
+                    </div>
+                    <div class="mt-28">
+                        <p class="corp-hubs-title">Nearby Corporate Hubs</p>
+                        <div class="hub-tags">
+                            <span class="hub-tag">DLF Cyber City</span>
+                            <span class="hub-tag">Golf Course Road</span>
+                            <span class="hub-tag">MG Road</span>
+                            <span class="hub-tag">Horizon Center</span>
+                            <span class="hub-tag">Udyog Vihar</span>
+                            <span class="hub-tag">Galleria Market</span>
+                            <span class="hub-tag">Ambience Mall</span>
+                            <span class="hub-tag">NH-48</span>
+                            <span class="hub-tag">Cyber Hub</span>
+                            <span class="hub-tag">Sikanderpur</span>
+                            <span class="hub-tag">Global Business Park</span>
+                            <span class="hub-tag">Sushant Lok</span>
+                            <span class="hub-tag">DLF Phase-1</span>
+                            <span class="hub-tag">Hamilton Road</span>
+                            <span class="hub-tag">Sector-29</span>
+                            <span class="hub-tag">MGF Mega City Mall</span>
+                            <span class="hub-tag">Golf Course Extension Road</span>
+                            <span class="hub-tag">Secure Access</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY CHOOSE US -->
+    <section class="corp-section-dark border-y">
+        <div class="corp-section-inner">
+            <div class="why-grid">
+                <div class="why-img">
+                    <img src="images/corp-managed.webp" alt="Premium Managed Living Gurugram (Gurgaon)">
+                    <div class="why-img-overlay"></div>
+                    <div class="why-img-caption">
+                        <h4>Professionally Managed</h4>
+                        <p>Every property operated to the highest hospitality standards</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="corp-label">Why Rusha Stays</div>
+                    <h2 class="corp-h2">Why Companies<br>Choose Rusha Stays</h2>
+                    <div class="why-checks">
+                        <div class="why-check-item">
+                            <div class="why-check-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <strong>Prime Gurugram (Gurgaon) Locations</strong>
+                                <span>Close to DLF Cyber City, Golf Course Road, and major metro stations</span>
+                            </div>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="why-check-icon"><i class="fas fa-couch"></i></div>
+                            <div>
+                                <strong>Fully Furnished &amp; Move-In Ready</strong>
+                                <span>Zero setup time — employees walk in and start working the same day</span>
+                            </div>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="why-check-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                            <div>
+                                <strong>Hassle-Free Experience</strong>
+                                <span>Dedicated property managers, regular professional housekeeping, and 24/7 support.</span>
+                            </div>
+                        </div>
+                        <div class="why-check-item">
+                            <div class="why-check-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                            <div>
+                                <strong>Consolidated Billing</strong>
+                                <span>Simplified corporate invoicing, complete GST compliance, and clear monthly billing.</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="corp-features-divider">
+                        <h4 class="corp-features-title">Add-on Features</h4>
+                        <div class="flex-wrap-gap-12">
+                            <span class="pill-card"><i class="fas fa-wifi text-primary"></i> Wi-Fi</span>
+                            <span class="pill-card"><i class="fas fa-video text-primary"></i> CCTV</span>
+                            <span class="pill-card"><i class="fas fa-bolt text-primary"></i> Power Backup</span>
+                            <span class="pill-card"><i class="fas fa-car text-primary"></i> Parking</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IDEAL FOR -->
+    <section class="corp-section-bg">
+        <div class="corp-section-inner">
+            <div class="text-center">
+                <div class="corp-label">Designed for Business</div>
+                <h2 class="corp-h2">Ideal Accommodations For</h2>
+            </div>
+            <div class="ideal-grid">
+                <div class="ideal-card">
+                    <div class="ideal-card-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Business Executives</h3>
+                    <p>Premium independent suites near commercial centers for senior managers and executives.</p>
+                </div>
+                <div class="ideal-card">
+                    <div class="ideal-card-icon"><i class="fas fa-users"></i></div>
+                    <h3>Project Teams</h3>
+                    <p>Shared or multiple rooms in a single property for project members, onboarding cohorts, or consultants.</p>
+                </div>
+                <div class="ideal-card">
+                    <div class="ideal-card-icon"><i class="fas fa-plane-arrival"></i></div>
+                    <h3>Business Travelers</h3>
+                    <p>Flexible short-term and extended stay housing for employees visiting Gurugram (Gurgaon) for work.</p>
+                </div>
+                <div class="ideal-card">
+                    <div class="ideal-card-icon"><i class="fas fa-home"></i></div>
+                    <h3>Relocating Employees</h3>
+                    <p>Comfortable transition home for employees and their families relocating to the city.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section>
+        <div class="corp-section">
+            <div class="text-center">
+                <div class="corp-label">Simple Onboarding</div>
+                <h2 class="corp-h2">Our Booking Process</h2>
+                <p class="corp-lead margin-auto-center">Four straightforward steps to secure premium accommodation for your team members.</p>
+            </div>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="process-num">1</div>
+                    <h3>Requirements</h3>
+                    <p>Share team size, budget, location preference, and duration.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-num">2</div>
+                    <h3>Proposal</h3>
+                    <p>Receive curated options matching your corporate criteria.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-num">3</div>
+                    <h3>Lease / Setup</h3>
+                    <p>Confirm pricing terms, sign agreement, and complete setup.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-num">4</div>
+                    <h3>Move-In</h3>
+                    <p>Employees move into ready rooms with dedicated support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="corp-section corp-footer-cta">
+        <div class="corp-cta-card">
+            <h2 class="corp-h2 mb-12">Streamline Your Corporate Housing Today</h2>
+            <p class="corp-lead corp-footer-lead">Partner with Rusha Stays to provide comfortable, productivity-focused accommodation for your team members in Gurugram (Gurgaon).</p>
+            <div class="corp-hero-btns corp-btns-center">
+                <a href="https://wa.me/919205859444" target="_blank" class="btn-primary corp-btn-wa" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
+                <button class="btn-outline-primary" onclick="openCallbackModal()">Request a Call Back</button>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- PREMIUM FOOTER -->
+    <footer class="premium-footer mt-0">
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <img src="images/rusha-stays-logo.webp" alt="Rusha Stays Logo">
+                    </div>
+                    <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
+                
+                    <div class="footer-social-block footer-social-block">
+                        <span class="label-caps">Follow Us</span>
+                        <div class="d-flex-gap-12">
+                            <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://www.facebook.com/profile.php?id=100088761680648&mibextid=ZbWKwL" target="_blank" class="social-icon-btn facebook" aria-label="Follow us on Facebook" rel="noopener noreferrer">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                                <div class="footer-col">
+                    <h4>Explore Stays</h4>
+                    <ul class="footer-links">
+                        <li><a href="index">Home</a></li>
+                        <li><a href="locations">Locations</a></li>
+                        <li><a href="corporate">Corporate Stays</a></li>
+                        <li><a href="about">About Us</a></li>
+                        <li><a href="faqs">FAQs</a></li>
+                        <li><a href="blog">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Properties</h4>
+                    <ul class="footer-links">
+                        <li><a href="sector-42-1-bhk-suite">Sector 42 Suite</a></li>
+                        <li><a href="sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
+                        <li><a href="sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                        <li class="mt-8"><span class="tag-pill-gray">Sector 43 (Upcoming)</span></li>
+                        <li><span class="tag-pill-gray">Sector 55 (Upcoming)</span></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-contact-info">
+                        <li>
+                            <i class="fas fa-phone-alt mt-2px"></i>
+                            <a href="https://wa.me/919205859444" target="_blank" class="prop-detail-label" rel="noopener noreferrer">Call us on +91-9205859444</a>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope mt-2px"></i>
+                            <a href="mailto:rushastays@gmail.com" class="prop-detail-label">rushastays@gmail.com</a>
+                        </li>
+                        <li class="mt-15-block">
+                            <button class="btn-primary btn-sidebar-primary" onclick="openCallbackModal()">Request a Call Back</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                        <div class="footer-bottom">
+                <p>&copy; 2023 Rusha Stays. All rights reserved.</p><p style="margin-top: 4px; font-weight: normal; color: var(--text-muted);" data-style="margin-top: 4px; font-weight: normal; color: var(--text-muted);">Established in 2023, serving guests with a 99% satisfaction rate.</p>
+                <a href="https://wa.me/918470990283" target="_blank" class="dev-badge" rel="noopener noreferrer">
+                    <span>Designed &amp; Developed by <strong>Vipul Jain</strong></span>
+                    <span class="d-inline-flex-nowrap">
+                        <i class="fab fa-whatsapp text-whatsapp"></i>
+                        <strong>8470990283</strong>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CALLBACK MODAL -->
+    <div class="modal-overlay" id="callback-modal" onclick="closeCallbackModal(event)">
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeCallbackModal(event)">&times;</button>
+            <div class="modal-header">
+                <h3>Request a Callback</h3>
+                <p>Fill out the form below and our hospitality advisors will reach out to you shortly.</p>
+            </div>
+            <form class="modal-form" id="callbackForm" onsubmit="handleCallbackSubmit(event)">
+                <div class="form-group">
+                    <label for="modal-name">Your Name</label>
+                    <input type="text" id="modal-name" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-phone">Phone Number</label>
+                    <input type="tel" id="modal-phone" class="form-control" placeholder="e.g. +91 98765 43210" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-email">Email Address</label>
+                    <input type="email" id="modal-email" class="form-control" placeholder="e.g. rahul@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="modal-interest">Property of Interest</label>
+                    <select id="modal-interest" class="form-control">
+                        <option value="General Enquiry">General Enquiry</option>
+                        <option value="Sector 28 - 1 BHK Suite">Sector 28, Gurugram - 1 BHK Suite</option>
+                        <option value="Sector 28 - King Room Suite">Sector 28, Gurugram - King Room Suite</option>
+                        <option value="Sector 28 - Executive Premium Rooms">Sector 28, Gurugram - Executive Premium Rooms</option>
+                        <option value="Sector 28 - Executive Rooms">Sector 28, Gurugram - Executive Rooms</option>
+                        <option value="Sector 42 - 1 BHK Suite">Sector 42, Gurugram - 1 BHK Suite</option>
+                        <option value="Sushant Lok - 1 BHK Studio">Sushant Lok Phase 1, Gurugram - 1 BHK Studio</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary w-100">Submit Request</button>
+            </form>
+            <div class="modal-success-state d-none" id="modal-success-state">
+                <div class="success-icon-wrap">
+                    <div class="success-icon-pulse"></div>
+                    <div class="success-icon-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                </div>
+                <h3 class="success-title">Request Received!</h3>
+                <p class="success-subtitle">We have successfully received your callback details.</p>
+                <div class="success-advisor-badge">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Our advisor will call you shortly!</span>
+                </div>
+                <div>
+                    <button class="btn-success-close" onclick="closeCallbackModal(true)">Got It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://wa.me/919205859444" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+        <span>Live Chat</span>
+    </a>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('mobile-sidebar').classList.toggle('open');
+            document.getElementById('sidebar-overlay').classList.toggle('active');
+        }
+
+        function openCallbackModal() {
+            document.getElementById('callback-modal').classList.add('active');
+        }
+
+        let modalTimeoutId = null;
+
+        
+        function closeCallbackModal(e) {
+        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
+        if (modalTimeoutId) {
+        clearTimeout(modalTimeoutId);
+        modalTimeoutId = null;
+        }
+        document.getElementById('callback-modal').classList.remove('active');
+        // Reset states
+        setTimeout(() => {
+        document.getElementById('callbackForm').style.display = 'flex';
+        document.getElementById('modal-success-state').style.display = 'none';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'block';
+        document.getElementById('callbackForm').reset();
+        }, 300);
+        }
+        }
+
+        function handleCallbackSubmit(e) {
+        e.preventDefault();
+        // Simulate form submission
+        document.getElementById('callbackForm').style.display = 'none';
+        document.getElementById('modal-success-state').style.display = 'block';
+        const modalHeader = document.querySelector('#callback-modal .modal-header');
+        if (modalHeader) modalHeader.style.display = 'none';
+
+        // Auto close modal after 15 seconds if not clicked manually
+        modalTimeoutId = setTimeout(() => {
+        closeCallbackModal(true);
+        }, 15000);
+        }
+
+// Counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.corp-stat-num');
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                const isNum = parseInt(target);
+                if (!isNaN(isNum)) {
+                    let count = 0;
+                    const step = Math.ceil(isNum / 40);
+                    const timer = setInterval(() => {
+                        count += step;
+                        if (count >= isNum) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = count + (target.includes('+') ? '+' : target.includes('%') ? '%' : '');
+                        }
+                    }, 40);
+                }
+            });
+        }
+        // Trigger on scroll
+        const statsEl = document.querySelector('.corp-stats-bar');
+        if (statsEl) {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { animateCounters(); obs.disconnect(); } });
+            }, { threshold: 0.3 });
+            obs.observe(statsEl);
+        }
+
+        // Native Scroll Reveal Observer
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.serve-card, .corp-format-card, .ideal-card, .loc-prop-item, .process-step, .corp-h2, .corp-lead, .why-check-item, .loc-img-wrap, .why-img').forEach(el => {
+            el.classList.add('reveal-on-scroll');
+            revealObserver.observe(el);
+        });
+
+        // Corporate Hero Carousel Controller
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.querySelector('.corp-hero-carousel');
+            if (!carousel) return;
+            
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            if (slides.length <= 1) return;
+            
+            // Set first slide active
+            slides[0].classList.add('active');
+            
+            let currentIndex = 0;
+            
+            setInterval(() => {
+                const nextIndex = (currentIndex + 1) % slides.length;
+                
+                // Remove last-active from all
+                slides.forEach(slide => slide.classList.remove('last-active'));
+                
+                // Current active becomes last-active (keeps opacity: 1 and sits underneath)
+                slides[currentIndex].classList.remove('active');
+                slides[currentIndex].classList.add('last-active');
+                
+                // Next slide becomes active (fades in on top)
+                slides[nextIndex].classList.add('active');
+                
+                currentIndex = nextIndex;
+            }, 4000);
+        });
+    </script>
+    <script src="app.js" defer></script>
+</body>
+</html>
