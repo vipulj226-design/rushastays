@@ -156,11 +156,14 @@ const app = {
         </div>`;
         
         let html = '';
+        const isSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
+        const linkPrefix = isSubfolder ? '' : 'properties/';
 
         properties.forEach(p => {
+            const propUrl = `${linkPrefix}${p.id}.html`;
             html += cardTemplate
-                .replace(/{id}/g, p.id)
-                .replace(/{image}/g, p.image)
+                .replace(/{id}/g, propUrl)
+                .replace(/{image}/g, isSubfolder ? '../' + p.image : p.image)
                 .replace(/{locality}/g, p.locality)
                 .replace(/{occupancy}/g, p.occupancy)
                 .replace(/{roomType}/g, p.roomType)
@@ -271,7 +274,8 @@ const app = {
         }
 
         if (filtered.length === 1) {
-            location.href = `${filtered[0].id}.html`;
+            const isSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
+            location.href = isSubfolder ? `${filtered[0].id}.html` : `properties/${filtered[0].id}.html`;
         } else if (filtered.length > 1) {
             const hasLocationsGrid = document.getElementById('locations-properties-grid') !== null;
             if (!hasLocationsGrid) {
