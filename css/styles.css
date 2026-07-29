@@ -507,7 +507,7 @@ ul { list-style: none; }
                         rgba(232, 221, 212, 0.8) 58%, 
                         rgba(232, 221, 212, 0.2) 72%, 
                         rgba(232, 221, 212, 0) 85%),
-                      url('images/woman_sofa_hero.jpg');
+                      url('images/woman_sofa_hero.webp');
     background-size: 100% 100%, cover; /* Corrected multiple background syntax */
     background-position: left center, right -120px top;
     background-repeat: no-repeat, no-repeat;
@@ -2507,7 +2507,7 @@ ul { list-style: none; }
     .hero-v2 {
         padding: 20px 16px 30px !important; /* Optimized top/bottom padding */
         background: linear-gradient(180deg, rgba(232, 221, 212, 0.8) 0%, rgba(232, 221, 212, 0.55) 60%, rgba(232, 221, 212, 0.2) 100%),
-                    url('images/woman_sofa_hero.jpg');
+                    url('images/woman_sofa_hero.webp');
         background-size: cover;
         background-position: right center;
         min-height: 480px !important; /* Increased height of the hero section for mobile to create spacing */
@@ -3941,7 +3941,7 @@ ul { list-style: none; }
 }
 .locations-hero {
     padding: 50px 24px 60px;
-    background: linear-gradient(90deg, #E55C3E 0%, rgba(249, 217, 118, 0.95) 45%, rgba(255, 252, 248, 0.35) 100%), url('images/woman_sofa_hero.jpg');
+    background: linear-gradient(90deg, #E55C3E 0%, rgba(249, 217, 118, 0.95) 45%, rgba(255, 252, 248, 0.35) 100%), url('images/woman_sofa_hero.webp');
     background-size: cover;
     background-position: right center;
     background-repeat: no-repeat;
