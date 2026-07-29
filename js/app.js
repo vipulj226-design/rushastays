@@ -156,14 +156,15 @@ const app = {
         </div>`;
         
         let html = '';
-        const isSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
-        const linkPrefix = isSubfolder ? '' : 'properties/';
+        const isNestedSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
+        const linkPrefix = isNestedSubfolder ? '' : 'properties/';
+        const imagePrefix = isNestedSubfolder ? '../../' : '../';
 
         properties.forEach(p => {
             const propUrl = `${linkPrefix}${p.id}.html`;
             html += cardTemplate
                 .replace(/{id}/g, propUrl)
-                .replace(/{image}/g, isSubfolder ? '../' + p.image : p.image)
+                .replace(/{image}/g, imagePrefix + p.image)
                 .replace(/{locality}/g, p.locality)
                 .replace(/{occupancy}/g, p.occupancy)
                 .replace(/{roomType}/g, p.roomType)
