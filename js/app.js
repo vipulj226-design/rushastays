@@ -158,7 +158,7 @@ const app = {
         let html = '';
         const isNestedSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
         const linkPrefix = isNestedSubfolder ? '' : 'properties/';
-        const imagePrefix = isNestedSubfolder ? '../../' : '../';
+        const imagePrefix = isNestedSubfolder ? '../' : '';
 
         properties.forEach(p => {
             const propUrl = `${linkPrefix}${p.id}.html`;
