@@ -312,15 +312,22 @@ const app = {
             return;
         }
 
-        // --- DYNAMIC GALLERY INTEGRATION ---
-        let finalImages = property.images || [];
+        // Fix image paths for subfolder depth (e.g. properties/ or blog/)
+        const isSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
+        const fixImgPath = (url) => {
+            if (!url) return '';
+            if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
+            if (isSubfolder && !url.startsWith('../') && !url.startsWith('/')) return '../' + url;
+            return url;
+        };
+
+        let finalImages = (property.images || []).map(fixImgPath);
         try {
-            const galResp = await fetch('galleries.json?v=' + Date.now());
+            const galResp = await fetch('../galleries.json?v=' + Date.now());
             if (galResp.ok) {
                 const galData = await galResp.json();
                 if (galData[propertyId] && galData[propertyId].length > 0) {
-                    // Extract URLs from the Dynamic Gallery objects
-                    finalImages = galData[propertyId].map(img => img.url);
+                    finalImages = galData[propertyId].map(img => fixImgPath(img.url));
                 }
             }
         } catch(e) {
@@ -330,6 +337,7 @@ const app = {
         // Generate images carousel HTML
         let imagesHtml = '';
         let thumbnailsHtml = '';
+        const mainPropertyImg = fixImgPath(property.image);
         if (finalImages && finalImages.length > 0) {
             imagesHtml = finalImages.map((img, index) => 
                 `<img src="${img}" alt="Property Image ${index+1}" class="carousel-img ${index === 0 ? 'active' : ''}" style="width: 100%; height: 100%; object-fit: cover; display: ${index === 0 ? 'block' : 'none'}; border-radius: 20px;">`
@@ -340,7 +348,7 @@ const app = {
                 ).join('') + 
             `</div>`;
         } else {
-            imagesHtml = `<img src="${property.image}" alt="Property Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">`;
+            imagesHtml = `<img src="${mainPropertyImg}" alt="Property Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px;">`;
         }
 
         // Features & Amenities HTML
