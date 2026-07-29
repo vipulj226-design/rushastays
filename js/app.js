@@ -156,15 +156,15 @@ const app = {
         </div>`;
         
         let html = '';
-        const isNestedSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
-        const linkPrefix = isNestedSubfolder ? '' : 'properties/';
-        const imagePrefix = isNestedSubfolder ? '../' : '';
+        const isSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
+        const propLinkPrefix = isSubfolder ? '' : '/properties/';
 
         properties.forEach(p => {
-            const propUrl = `${linkPrefix}${p.id}.html`;
+            const propUrl = `${propLinkPrefix}${p.id}.html`;
+            const imgUrl = p.image.startsWith('/') ? p.image : '/' + p.image;
             html += cardTemplate
                 .replace(/{id}/g, propUrl)
-                .replace(/{image}/g, imagePrefix + p.image)
+                .replace(/{image}/g, imgUrl)
                 .replace(/{locality}/g, p.locality)
                 .replace(/{occupancy}/g, p.occupancy)
                 .replace(/{roomType}/g, p.roomType)
@@ -313,11 +313,10 @@ const app = {
         }
 
         // Fix image paths for subfolder depth (e.g. properties/ or blog/)
-        const isSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
         const fixImgPath = (url) => {
             if (!url) return '';
             if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
-            if (isSubfolder && !url.startsWith('../') && !url.startsWith('/')) return '../' + url;
+            if (!url.startsWith('/')) return '/' + url;
             return url;
         };
 
