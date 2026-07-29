@@ -363,7 +363,7 @@ const app = {
                 }
             }
         } catch(e) {
-            console.log('No dynamic gallery found, using static images.');
+            // Fallback: use static images from data.js
         }
 
         // Generate images carousel HTML
@@ -661,7 +661,7 @@ const app = {
         const email        = emailInput     ? emailInput.value.trim()     : '';
         const inquiry_type = interestSelect ? interestSelect.value.trim() : '';
 
-        console.log(`[Rusha Stays] Submitting lead for "${formType}":`, { name, phone, email, inquiry_type });
+
 
         // Show visual success state immediately (don't wait for API)
         this.showFormSuccessState(form);
@@ -687,7 +687,7 @@ const app = {
             ...extraData
         };
 
-        console.log('[Rusha Stays] Sending payload to Web3Forms:', payload);
+
 
         try {
             const response = await fetch('https://api.web3forms.com/submit', {
@@ -697,7 +697,7 @@ const app = {
             });
             const result = await response.json();
             if (result.success) {
-                console.log('[Rusha Stays] ✅ Lead sent successfully!', result);
+
             } else {
                 console.error('[Rusha Stays] ❌ Web3Forms error:', result);
             }
@@ -779,7 +779,7 @@ const app = {
                 text: 'Check out this premium managed accommodation on Rusha Stays!',
                 url: shareUrl
             }).catch(err => {
-                console.log('Native share cancelled or failed, using custom sharing dialog', err);
+
                 this.openCustomShareModal(shareUrl);
             });
         } else {
@@ -991,7 +991,7 @@ const app = {
                             <input type="email" id="${emailId}" class="form-control" placeholder="e.g. rahul@example.com" required>
                         `;
                         phoneGroup.parentNode.insertBefore(emailGroup, phoneGroup.nextSibling);
-                        console.log('Dynamically injected missing Email field in callbackForm popup modal');
+
                     }
                 }
             }
@@ -1016,7 +1016,7 @@ const app = {
                             <input type="email" id="sidebar-email" required placeholder="e.g. rahul@example.com" style="width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border-color); font-size: 13.5px; outline: none; background-color: var(--bg-main); font-family: 'Inter', sans-serif;">
                         `;
                         phoneGroup.parentNode.insertBefore(emailGroup, phoneGroup.nextSibling);
-                        console.log('Dynamically injected missing Email field in sidebarCallbackForm');
+
                     }
                 }
             }
@@ -1048,12 +1048,10 @@ const app = {
                     </div>
                 `;
                 footerCol.appendChild(socialDiv);
-                console.log('Dynamically injected missing social links in footer');
+
             }
         }
     },
-
-
 
     toggleSidebar() {
         document.getElementById('mobile-sidebar').classList.toggle('open');
