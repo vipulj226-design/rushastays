@@ -321,17 +321,6 @@ const app = {
         };
 
         let finalImages = (property.images || []).map(fixImgPath);
-        try {
-            const galResp = await fetch('../galleries.json?v=' + Date.now());
-            if (galResp.ok) {
-                const galData = await galResp.json();
-                if (galData[propertyId] && galData[propertyId].length > 0) {
-                    finalImages = galData[propertyId].map(img => fixImgPath(img.url));
-                }
-            }
-        } catch(e) {
-            // Fallback: use static images from data.js
-        }
 
         // Generate images carousel HTML
         let imagesHtml = '';
