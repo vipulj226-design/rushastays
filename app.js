@@ -39,37 +39,9 @@ if (typeof window !== 'undefined') {
 
 const app = {
     contentDiv: null,
-    cmsManifest: null,
-    
-    async loadCmsManifest() {
-        try {
-            // Append timestamp to avoid aggressive caching
-            const response = await fetch('cms.json?v=' + Date.now());
-            if (response.ok) {
-                this.cmsManifest = await response.json();
-                this.applyCmsGlobalOverrides();
-            }
-        } catch (e) {
-            console.log('CMS manifest not found or error loading:', e);
-        }
-    },
 
-    applyCmsGlobalOverrides() {
-        if (!this.cmsManifest || !this.cmsManifest.globals) return;
-        
-        const g = this.cmsManifest.globals;
-        // Update contact links
-        if (g.phone) {
-            document.querySelectorAll('a[href^="tel:"]').forEach(el => el.href = `tel:${g.phone.value}`);
-            document.querySelectorAll('.phone-text').forEach(el => el.textContent = g.phone.value);
-        }
-        if (g.whatsapp) {
-            document.querySelectorAll('a[href^="https://wa.me"]').forEach(el => el.href = `https://wa.me/${g.whatsapp.value}`);
-        }
-    },
 
     async init() {
-        await this.loadCmsManifest();
         this.contentDiv = document.getElementById('app-content');
         
         if (document.getElementById('home-template')) {
@@ -328,23 +300,7 @@ const app = {
         }
         let property = propertiesData.find(p => p.id === propertyId);
         
-        // --- CMS OVERRIDES (Merge from cms.json) ---
-        if (this.cmsManifest && this.cmsManifest.properties) {
-            const cmsProp = this.cmsManifest.properties.find(p => p.id === propertyId);
-            if (cmsProp) {
-                // Merge text/simple fields
-                if (cmsProp.roomType) property.roomType = cmsProp.roomType;
-                if (cmsProp.locality) property.locality = cmsProp.locality;
-                if (cmsProp.occupancy) property.occupancy = cmsProp.occupancy;
-                if (cmsProp.size) property.size = cmsProp.size;
-                if (cmsProp.pricingHtml) property.pricingHtml = cmsProp.pricingHtml;
-                if (cmsProp.priceVal) property.priceVal = cmsProp.priceVal;
-                if (cmsProp.aboutShort) property.aboutShort = cmsProp.aboutShort;
-                if (cmsProp.aboutFull) property.aboutFull = cmsProp.aboutFull;
-                if (cmsProp.neighbourhoodText) property.neighbourhoodText = cmsProp.neighbourhoodText;
-                if (cmsProp.googleMapEmbed) property.googleMapEmbed = cmsProp.googleMapEmbed;
-            }
-        }
+
 
         if (!property) {
             this.contentDiv.innerHTML = '<div style="padding: 100px 24px; text-align: center;"><h2>Property not found.</h2><br><a href="locations" class="btn-primary">Back to Locations</a></div>';
