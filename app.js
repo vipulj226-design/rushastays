@@ -293,25 +293,40 @@ const app = {
             alert('No properties found for this selection.');
         }
     },
-    renderPropertyDetails(propertyId) {
+    async renderPropertyDetails(propertyId) {
         if (!this.contentDiv) {
             this.contentDiv = document.getElementById('app-content');
         }
         const property = propertiesData.find(p => p.id === propertyId);
         if (!property) {
-            this.contentDiv.innerHTML = '<div style="padding: 100px 24px; text-align: center;"><h2>Property not found.</h2><br><a href=locations" class="btn-primary">Back to Locations</a></div>';
+            this.contentDiv.innerHTML = '<div style="padding: 100px 24px; text-align: center;"><h2>Property not found.</h2><br><a href="locations" class="btn-primary">Back to Locations</a></div>';
             return;
+        }
+
+        // --- DYNAMIC GALLERY INTEGRATION ---
+        let finalImages = property.images || [];
+        try {
+            const galResp = await fetch('galleries.json?v=' + Date.now());
+            if (galResp.ok) {
+                const galData = await galResp.json();
+                if (galData[propertyId] && galData[propertyId].length > 0) {
+                    // Extract URLs from the Dynamic Gallery objects
+                    finalImages = galData[propertyId].map(img => img.url);
+                }
+            }
+        } catch(e) {
+            console.log('No dynamic gallery found, using static images.');
         }
 
         // Generate images carousel HTML
         let imagesHtml = '';
         let thumbnailsHtml = '';
-        if (property.images && property.images.length > 0) {
-            imagesHtml = property.images.map((img, index) => 
+        if (finalImages && finalImages.length > 0) {
+            imagesHtml = finalImages.map((img, index) => 
                 `<img src="${img}" alt="Property Image ${index+1}" class="carousel-img ${index === 0 ? 'active' : ''}" style="width: 100%; height: 100%; object-fit: cover; display: ${index === 0 ? 'block' : 'none'}; border-radius: 20px;">`
             ).join('');
             thumbnailsHtml = `<div id="prop-carousel-thumbnails" style="display: flex; gap: 10px; margin-top: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -ms-overflow-style: none;">` + 
-                property.images.map((img, index) => 
+                finalImages.map((img, index) => 
                 `<img src="${img}" onclick="app.goToCarouselImage(${index})" class="thumb-img" style="width: 80px; height: 60px; object-fit: cover; border-radius: 8px; cursor: pointer; border: 2px solid ${index === 0 ? 'var(--primary)' : 'transparent'}; opacity: ${index === 0 ? '1' : '0.6'}; transition: all 0.2s; flex-shrink: 0;" alt="Thumb ${index+1}">`
                 ).join('') + 
             `</div>`;
