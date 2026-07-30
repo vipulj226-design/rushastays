@@ -2,6 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+        (function() {
+            var path = window.location.pathname.toLowerCase();
+            if (path.length > 1 && path.endsWith('/')) {
+                path = path.slice(0, -1);
+            }
+            var redirects = {
+                '/why-serviced-apartments-are-replacing-pgs-in-gurugram': '/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html',
+                '/why-serviced-apartments-are-replacing-pgs-in-gurugram.html': '/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html',
+                '/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram': '/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html',
+                '/top-10-popular-places-in-gurugram': '/blog/top-10-popular-places-in-gurugram.html',
+                '/top-10-popular-places-in-gurugram.html': '/blog/top-10-popular-places-in-gurugram.html',
+                '/blog/top-10-popular-places-in-gurugram': '/blog/top-10-popular-places-in-gurugram.html',
+                '/blog': '/blog.html'
+            };
+            if (redirects[path]) {
+                window.location.replace(redirects[path]);
+            }
+        })();
+    </script>
     <link rel="sitemap" type="application/xml" href="https://rushastays.com/sitemap.xml">
     <meta name="description" content="The page you are looking for does not exist. Back to Rusha Stays premium managed accommodations in Gurugram.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
