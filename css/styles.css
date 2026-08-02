@@ -4026,3 +4026,5 @@ ul { list-style: none; }
 }
 
 .team-avatar-box img { object-fit: cover; object-position: top center !important; }
+
+.about-hero-img { background-position: top center !important; }
