@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+(function() {
+    if (window.location.pathname.endsWith('.html') && !window.location.pathname.endsWith('404.html')) {
+        var cleanPath = window.location.pathname.replace(/\.html$/, '');
+        if (cleanPath === '/index') cleanPath = '/';
+        window.history.replaceState(null, '', cleanPath + window.location.search + window.location.hash);
+    }
+})();
+</script>
     <meta charset="UTF-8">
     <link rel="sitemap" type="application/xml" href="https://rushastays.com/sitemap.xml">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
