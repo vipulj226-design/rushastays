@@ -4024,3 +4024,5 @@ ul { list-style: none; }
         text-align: center !important;
     }
 }
+
+.team-avatar-box img { object-fit: cover; object-position: top center !important; }
