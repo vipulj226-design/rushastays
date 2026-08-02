@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
     <script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for (let registration of registrations) { registration.unregister(); }
+  });
+}
+</script>
+    <script>
 (function() {
     if (window.location.pathname.endsWith('.html') && !window.location.pathname.endsWith('404.html')) {
         var cleanPath = window.location.pathname.replace(/\.html$/, '');
@@ -18,7 +25,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corporate Stays in Gurugram (Gurgaon) | Rusha Stays</title>
     <meta name="description" content="Rusha Stays offers managed corporate accommodation and executive rooms in Gurugram (Gurgaon) for business travelers and relocating employees.">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=2.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
@@ -1212,6 +1219,6 @@
             }, 4000);
         });
     </script>
-    <script src="js/app.js" defer></script>
+    <script src="js/app.js?v=2.0" defer></script>
 </body>
 </html>
