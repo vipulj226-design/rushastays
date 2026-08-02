@@ -72,18 +72,27 @@ const app = {
     },
 
     renderHome() {
-        const template = document.getElementById('home-template').innerHTML;
-        this.contentDiv.innerHTML = template;
-        this.animateHeroTitle();
+        // Preserve pre-rendered static HTML to eliminate Desktop CLS (Cumulative Layout Shift)
+        if (this.contentDiv && this.contentDiv.children.length > 0) {
+            if (typeof window.initCarousel === 'function') {
+                window.initCarousel();
+            }
+            this.initGlobalAnimations();
+            return;
+        }
+        const templateEl = document.getElementById('home-template');
+        if (templateEl) {
+            this.contentDiv.innerHTML = templateEl.innerHTML;
+        }
         this.renderPropertiesGrid(propertiesData, 'home-properties-grid');
         if (typeof window.initCarousel === 'function') {
             window.initCarousel();
         }
-
         this.initGlobalAnimations();
     },
 
     animateHeroTitle() {
+        return; // Retain static HTML title to eliminate layout reflow
         const titleEl = document.querySelector('.hero-v2__title');
         if (!titleEl) return;
         
@@ -122,6 +131,9 @@ const app = {
     renderPropertiesGrid(properties, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
+        if (container.children.length > 0 && properties === propertiesData) {
+            return; // Retain pre-rendered static cards for zero CLS
+        }
         
         const templateEl = document.getElementById('property-card-template');
         const cardTemplate = templateEl ? templateEl.innerHTML : `
