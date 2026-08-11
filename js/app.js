@@ -84,6 +84,21 @@ const app = {
             this.renderHome();
         } else if (document.getElementById('locations-properties-grid')) {
             this.renderPropertiesGrid(propertiesData, 'locations-properties-grid');
+        } else {
+            // Automatically detect and render property detail pages
+            const path = window.location.pathname;
+            let slug = '';
+            if (path.includes('/properties/')) {
+                slug = path.split('/properties/')[1].replace('.html', '').replace(/\/$/, '');
+            } else if (path.endsWith('.html')) {
+                const fname = path.split('/').pop().replace('.html', '');
+                if (fname && !['index', 'locations', 'about', 'corporate', 'faqs', 'blog', '404'].includes(fname)) {
+                    slug = fname;
+                }
+            }
+            if (slug) {
+                this.renderPropertyDetails(slug);
+            }
         }
         
         this.ensureEmailFieldsExist();
