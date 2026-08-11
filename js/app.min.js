@@ -1169,3 +1169,51 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
 });
+
+
+// ==============================================================================
+// GLOBAL WINDOW EVENT HANDLERS (for HTML onclick attributes)
+// ==============================================================================
+window.toggleSidebar = function() {
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    if (sidebar) sidebar.classList.toggle('open');
+    if (overlay) overlay.classList.toggle('active');
+};
+
+window.openCallbackModal = function() {
+    const modal = document.getElementById('callback-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+window.closeCallbackModal = function(e) {
+    if (e && e.target && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) {
+        return;
+    }
+    const modal = document.getElementById('callback-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+};
+
+window.shareProperty = function(id) {
+    if (typeof app !== 'undefined' && app.shareProperty) {
+        app.shareProperty(id);
+    }
+};
+
+window.toggleAccordion = function(el) {
+    const item = el ? (el.closest('.faq-item') || el.parentElement) : null;
+    if (item) {
+        item.classList.toggle('active');
+    }
+};
+
+window.scrollToCategory = function(catId) {
+    const el = document.getElementById(catId);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+};
