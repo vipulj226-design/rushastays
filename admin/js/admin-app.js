@@ -20,6 +20,24 @@ const State = {
 // INITIALIZATION & AUTH CHECK
 // ==============================================================================
 document.addEventListener('DOMContentLoaded', async () => {
+    // Add bulletproof event listener on sidebar nav items
+    const navContainer = document.querySelector('.sidebar-nav');
+    if (navContainer) {
+        navContainer.addEventListener('click', (e) => {
+            const btn = e.target.closest('.nav-item');
+            if (btn) {
+                const onclickAttr = btn.getAttribute('onclick');
+                if (onclickAttr && onclickAttr.includes('switchTab')) {
+                    const match = onclickAttr.match(/switchTab\(['"]([^'"]+)['"]\)/);
+                    if (match && match[1]) {
+                        e.preventDefault();
+                        switchTab(match[1]);
+                    }
+                }
+            }
+        });
+    }
+
     AdminAuth.init();
     
     // Check authentication
@@ -84,7 +102,10 @@ function switchTab(tabId) {
     document.querySelectorAll('.sidebar-nav .nav-item').forEach(btn => {
         btn.classList.remove('active');
     });
-    const activeBtn = document.querySelector(`.sidebar-nav .nav-item[onclick="switchTab('${tabId}')"]`);
+    
+    // Find active button by matching onclick or data-tab
+    let activeBtn = document.querySelector(`.sidebar-nav .nav-item[onclick*="'${tabId}'"]`) || 
+                    document.querySelector(`.sidebar-nav .nav-item[onclick*='"${tabId}"']`);
     if (activeBtn) activeBtn.classList.add('active');
 
     // Update tab panels
@@ -107,14 +128,20 @@ function switchTab(tabId) {
         seo: 'SEO & Metadata Center',
         settings: 'Global Site Configuration'
     };
-    document.getElementById('pageTitle').textContent = titles[tabId] || 'Admin Dashboard';
+    const titleEl = document.getElementById('pageTitle');
+    if (titleEl) titleEl.textContent = titles[tabId] || 'Admin Dashboard';
 
     // Close mobile sidebar if open
     const sidebar = document.getElementById('sidebar');
-    if (sidebar.classList.contains('mobile-open')) {
+    if (sidebar && sidebar.classList.contains('mobile-open')) {
         sidebar.classList.remove('mobile-open');
     }
+
+    if (tabId === 'seo') {
+        if (typeof renderSeoAuditTable === 'function') renderSeoAuditTable();
+    }
 }
+window.switchTab = switchTab;
 
 function toggleSidebar() {
     document.getElementById('sidebar').classList.toggle('mobile-open');
