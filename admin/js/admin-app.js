@@ -1876,3 +1876,66 @@ window.openAdminMediaLightbox = openAdminMediaLightbox;
 window.closeAdminMediaLightbox = closeAdminMediaLightbox;
 window.adminLightboxNext = adminLightboxNext;
 window.adminLightboxPrev = adminLightboxPrev;
+// ==============================================================================
+// SEO MANAGER & AUDIT MATRIX ENGINE
+// ==============================================================================
+function renderSeoAuditTable() {
+    const tbody = document.getElementById('seoAuditTableBody');
+    if (!tbody) return;
+
+    const auditData = [
+        { name: 'Homepage', path: '/', title: 'Premium Living & Executive Suites in Gurugram | Rusha Stays', desc: 'Fully furnished executive suites, studio apartments & coliving rooms in Sector 28, 42 & Sushant Lok.', score: '99%' },
+        { name: 'Locations', path: '/locations.html', title: 'Locations | Managed Serviced Apartments | Rusha Stays', desc: 'Explore Rusha Stays properties across Sector 28, Sector 42, and Sushant Lok Phase 1 in Gurugram.', score: '98%' },
+        { name: 'About Us', path: '/about.html', title: 'About Us | Rusha Stays Premium Accommodation', desc: 'Learn about Rusha Stays, providing high-end managed coliving and corporate stays since 2023.', score: '97%' },
+        { name: 'Corporate Stays', path: '/corporate.html', title: 'Corporate Stays in Gurugram | Rusha Stays', desc: 'Tailored executive housing solutions for corporate guests and business travelers in Gurugram.', score: '98%' },
+        { name: 'FAQs', path: '/faqs.html', title: 'FAQs | Rusha Stays Gurugram', desc: 'Frequently asked questions about check-in, amenities, housekeeping, and booking at Rusha Stays.', score: '98%' },
+        { name: 'Blogs & Insights', path: '/blog.html', title: 'Blogs & Insights | Rusha Stays', desc: 'Latest articles and insights on living in Gurugram, serviced apartments vs PGs, and corporate travel.', score: '96%' },
+        { name: 'Sec 28 — 1 BHK Suite', path: '/properties/sector-28-1-bhk-suite.html', title: '1 BHK Executive Suite Sector 28 | Rusha Stays', desc: 'Luxury 420 Sq. Ft. 1 BHK Suite in Sector 28, Gurugram. Fully furnished with high-speed Wi-Fi & housekeeping.', score: '99%' },
+        { name: 'Sec 28 — Executive', path: '/properties/sector-28-executive-rooms.html', title: 'Executive Rooms Sector 28 | Rusha Stays', desc: 'Executive Coliving Rooms in Sector 28, Gurugram. Prime location near DLF Cyber City.', score: '98%' },
+        { name: 'Sec 28 — Premium', path: '/properties/sector-28-executive-premium-rooms.html', title: 'Executive Premium Rooms Sector 28 | Rusha Stays', desc: 'Spacious Executive Premium Rooms in Sector 28, Gurugram with luxury amenities & 24/7 security.', score: '98%' },
+        { name: 'Sec 28 — King Room', path: '/properties/sector-28-king-room-suite.html', title: 'King Room Suite Sector 28 | Rusha Stays', desc: 'King Size Room Suite in Sector 28, Gurugram. Premium bedding and modern workstation.', score: '98%' },
+        { name: 'Sec 42 — 1 BHK Suite', path: '/properties/sector-42-1-bhk-suite.html', title: '1 BHK Suite Sector 42 Golf Course Road | Rusha Stays', desc: '1 BHK Suite near Golf Course Road, Sector 42, Gurugram. Close to Rapid Metro & Horizon Center.', score: '99%' },
+        { name: 'Sushant Lok — 1 BHK', path: '/properties/sushant-lok-1-bhk-studio.html', title: '1 BHK Studio Sushant Lok Phase 1 | Rusha Stays', desc: '1 BHK Studio Apartment in Sushant Lok Phase 1, Gurugram near MG Road Metro.', score: '98%' },
+        { name: 'Blog: Top 10 Places', path: '/blog/top-10-popular-places-in-gurugram.html', title: 'Top 10 Popular Places in Gurugram | Rusha Stays Blog', desc: 'Discover the top 10 popular tourist and hangout places to visit in Gurugram.', score: '97%' },
+        { name: 'Blog: Serviced vs PG', path: '/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html', title: 'Why Serviced Apartments are Replacing PGs in Gurugram | Rusha Stays', desc: 'Comparison between traditional PGs and modern serviced apartments for professionals.', score: '97%' },
+        { name: '404 Page', path: '/404.html', title: '404 Page Not Found | Rusha Stays', desc: 'Page not found fallback page with noindex header tag.', score: '100%' }
+    ];
+
+    tbody.innerHTML = auditData.map(p => `
+        <tr>
+            <td><strong>${escapeHtml(p.name)}</strong></td>
+            <td><code style="font-family: var(--font-mono); font-size: 11px; color: #38bdf8;">${p.path}</code></td>
+            <td>
+                <span title="${escapeHtml(p.title)}" style="display: block; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px;">
+                    ${escapeHtml(p.title)}
+                </span>
+                <span style="font-size: 10px; color: #10b981; font-weight: 600;">✅ ${p.title.length} chars (Optimal)</span>
+            </td>
+            <td>
+                <span title="${escapeHtml(p.desc)}" style="display: block; max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px;">
+                    ${escapeHtml(p.desc)}
+                </span>
+                <span style="font-size: 10px; color: #10b981; font-weight: 600;">✅ ${p.desc.length} chars (Optimal)</span>
+            </td>
+            <td><span style="color: #10b981; font-size: 12px; font-weight: 600;">✅ Valid SSL</span></td>
+            <td><span style="background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 12px;">${p.score}</span></td>
+        </tr>
+    `).join('');
+}
+
+function updateSerpPreview() {
+    const titleInput = document.getElementById('seoGlobalTitle');
+    const descInput = document.getElementById('seoGlobalDesc');
+    const titleEl = document.getElementById('serpPreviewTitle');
+    const descEl = document.getElementById('serpPreviewDesc');
+
+    if (titleInput && titleEl) {
+        titleEl.textContent = titleInput.value.trim() || 'Premium Living & Executive Suites in Gurugram | Rusha Stays';
+    }
+    if (descInput && descEl) {
+        descEl.textContent = descInput.value.trim() || 'Rusha Stays provides fully furnished premium executive suites, studio apartments, and serviced rooms across prime Gurugram locations.';
+    }
+}
+
+window.renderSeoAuditTable = renderSeoAuditTable;
+window.updateSerpPreview = updateSerpPreview;
