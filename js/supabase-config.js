@@ -11,11 +11,11 @@
  */
 
 window.SUPABASE_CONFIG = {
-    // Replace with your Supabase Project URL, e.g. "https://abcdefghijklmnopqrst.supabase.co"
-    url: window.localStorage.getItem('rusha_supabase_url') || "https://your-project-id.supabase.co",
+    // Supabase Project URL
+    url: window.localStorage.getItem('rusha_supabase_url') || "https://riplmhmadmehoeizbfiu.supabase.co",
     
-    // Replace with your Supabase Anon/Public Key
-    anonKey: window.localStorage.getItem('rusha_supabase_anon_key') || "your-anon-public-key-here"
+    // Supabase Anon/Public Key
+    anonKey: window.localStorage.getItem('rusha_supabase_anon_key') || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpcGxtaG1hZG1laG9laXpiZml1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MTcwNDksImV4cCI6MjEwMTk5MzA0OX0.hphvGVMbNRcEKRoN4MKxz1dwmbGJJ3hqeKhuk23vdvY"
 };
 
 // Check if Supabase has been configured with real credentials
