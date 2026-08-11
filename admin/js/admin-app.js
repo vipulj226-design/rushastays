@@ -71,6 +71,7 @@ async function loadAllData() {
         loadSiteSettings()
     ]);
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 // ==============================================================================
@@ -367,6 +368,7 @@ async function saveProperty(e) {
     closeModal('propertyModal');
     await loadProperties();
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 async function deleteProperty(id) {
@@ -388,6 +390,7 @@ async function deleteProperty(id) {
 
     await loadProperties();
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 // ==============================================================================
@@ -576,6 +579,7 @@ async function saveBlogPost(e) {
     closeModal('blogModal');
     await loadBlog();
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 async function deleteBlogPost(id) {
@@ -593,6 +597,7 @@ async function deleteBlogPost(id) {
     }
     await loadBlog();
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 // ==============================================================================
@@ -848,6 +853,7 @@ async function loadEnquiries() {
     State.enquiries = data;
     renderEnquiriesFullTable();
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 function renderEnquiriesFullTable() {
@@ -922,6 +928,7 @@ async function updateEnquiryStatus(id, newStatus) {
     const item = State.enquiries.find(e => e.id === id);
     if (item) item.status = newStatus;
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 async function deleteEnquiry(id) {
@@ -931,6 +938,7 @@ async function deleteEnquiry(id) {
     State.enquiries = State.enquiries.filter(e => e.id !== id);
     renderEnquiriesFullTable();
     updateDashboardStats();
+    initDragAndDropListeners();
 }
 
 // ==============================================================================
@@ -1648,3 +1656,80 @@ window.saveSeoSettings = typeof saveSeoSettings !== 'undefined' ? saveSeoSetting
 window.saveSiteSettings = typeof saveSiteSettings !== 'undefined' ? saveSiteSettings : function() {};
 window.testSupabaseConnection = typeof testSupabaseConnection !== 'undefined' ? testSupabaseConnection : function() {};
 window.copyToClipboard = typeof copyToClipboard !== 'undefined' ? copyToClipboard : function() {};
+
+// ==============================================================================
+// DRAG & DROP IMAGE UPLOAD ENGINE
+// ==============================================================================
+function initDragAndDropListeners() {
+    const dropzone = document.getElementById('mediaDropzone');
+    if (!dropzone) return;
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        }, false);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropzone.addEventListener(eventName, () => {
+            dropzone.style.borderColor = '#c83828';
+            dropzone.style.backgroundColor = 'rgba(200, 56, 40, 0.08)';
+            dropzone.style.transform = 'scale(1.01)';
+        }, false);
+    });
+
+    ['dragleave', 'dragend', 'drop'].forEach(eventName => {
+        dropzone.addEventListener(eventName, () => {
+            dropzone.style.borderColor = '';
+            dropzone.style.backgroundColor = '';
+            dropzone.style.transform = '';
+        }, false);
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt ? dt.files : null;
+        if (files && files.length > 0) {
+            handleMediaUpload(e);
+        }
+    }, false);
+}
+
+function triggerQuickUpload(targetInputId) {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.onchange = async (e) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+
+        const client = AdminAuth.getClient();
+        if (!client) {
+            showToast('Supabase connection required for Cloud Storage.', 'warning');
+            return;
+        }
+
+        const file = files[0];
+        const cleanName = `upload_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        
+        try {
+            showToast(`Uploading ${file.name}...`, 'info');
+            const { data, error } = await client.storage.from('media').upload(cleanName, file);
+            if (error) throw error;
+
+            const publicUrl = client.storage.from('media').getPublicUrl(cleanName).data.publicUrl;
+            const targetInput = document.getElementById(targetInputId);
+            if (targetInput) {
+                targetInput.value = publicUrl;
+                showToast('Image uploaded & URL auto-filled!', 'success');
+            }
+            await loadMedia();
+        } catch (err) {
+            showToast(`Upload failed: ${err.message}`, 'error');
+        }
+    };
+    fileInput.click();
+}
+
+window.triggerQuickUpload = typeof triggerQuickUpload !== 'undefined' ? triggerQuickUpload : function() {};
