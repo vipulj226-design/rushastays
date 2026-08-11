@@ -950,71 +950,78 @@ const app = {
         const email        = emailInput     ? emailInput.value.trim()     : '';
         const inquiry_type = interestSelect ? interestSelect.value.trim() : '';
 
-
-
-        // Show visual success state immediately (don't wait for API)
-        this.showFormSuccessState(form);
-
-        const accessKey = typeof SITE_CONFIG !== 'undefined' ? SITE_CONFIG.web3forms_access_key : '';
-        if (!accessKey || accessKey === 'YOUR_WEB3FORMS_ACCESS_KEY_HERE') {
-            console.warn('[Rusha Stays] Web3Forms key not set — simulation mode.');
-            return;
-        }
-
-        const payload = {
-            access_key: accessKey,
-            subject:    `New Lead — ${inquiry_type || formType} | Rusha Stays`,
-            from_name:  "Rusha Stays Website",
-            // Web3Forms uses 'email' as the reply-to; fallback to site email so the submission is never rejected
-            email:      email || "rushastays@gmail.com",
-            name:       name  || "Unknown",
-            "Phone":           phone        || "Not provided",
-            "Email (visitor)": email        || "Not provided",
-            "Inquiry Type":    inquiry_type || "Not specified",
-            "Form Source":     formType,
-            "Page URL":        window.location.href,
-            ...extraData
+        const leadObj = {
+            id: 'lead_' + Date.now(),
+            name: name || 'Website Visitor',
+            phone: phone || 'Not provided',
+            email: email || null,
+            property_interest: inquiry_type || extraData.property_id || formType || 'General Enquiry',
+            source_page: window.location.pathname || 'Homepage',
+            status: 'new',
+            created_at: new Date().toISOString()
         };
 
+        // Visual feedback
+        this.showFormSuccessState(form);
 
-
-        // Dual-Save: Record lead into Supabase Enquiries table if connected
+        // A. Always save to LocalStorage Backup
         try {
-            if (typeof window.getSupabaseClient === 'function') {
-                const supabaseClient = window.getSupabaseClient();
-                if (supabaseClient) {
-                    supabaseClient.from('enquiries').insert({
-                        name: name || 'Website Visitor',
-                        phone: phone || 'Not provided',
-                        email: email || null,
-                        property_interest: inquiry_type || extraData.property_id || formType || 'General Enquiry',
-                        source_page: window.location.pathname || 'Homepage',
+            const saved = JSON.parse(localStorage.getItem('rusha_local_enquiries') || '[]');
+            saved.unshift(leadObj);
+            localStorage.setItem('rusha_local_enquiries', JSON.stringify(saved));
+        } catch (e) {}
+
+        // B. Send to Supabase REST API directly (Guaranteed DB Insert)
+        const sbConfig = window.SUPABASE_CONFIG;
+        if (sbConfig && sbConfig.url && sbConfig.anonKey) {
+            try {
+                await fetch(`${sbConfig.url}/rest/v1/enquiries`, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': sbConfig.anonKey,
+                        'Authorization': `Bearer ${sbConfig.anonKey}`,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify({
+                        name: leadObj.name,
+                        phone: leadObj.phone,
+                        email: leadObj.email,
+                        property_interest: leadObj.property_interest,
+                        source_page: leadObj.source_page,
                         status: 'new'
-                    }).then(({ error }) => {
-                        if (error) console.warn('[Supabase Enquiry]', error.message);
-                    }).catch(err => {
-                        console.warn('[Supabase Enquiry Exception]', err);
-                    });
-                }
+                    })
+                });
+            } catch (sbErr) {
+                console.warn('[Supabase Enquiry Insert Exception]', sbErr);
             }
-        } catch (sbErr) {
-            console.warn('[Supabase Enquiry Init Error]', sbErr);
         }
 
-        try {
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-            const result = await response.json();
-            if (result.success) {
-
-            } else {
-                console.error('[Rusha Stays] ❌ Web3Forms error:', result);
+        // C. Send Email Notification via Web3Forms
+        const accessKey = typeof SITE_CONFIG !== 'undefined' ? SITE_CONFIG.web3forms_access_key : '';
+        if (accessKey && accessKey !== 'YOUR_WEB3FORMS_ACCESS_KEY_HERE') {
+            const payload = {
+                access_key: accessKey,
+                subject:    `New Lead — ${inquiry_type || formType} | Rusha Stays`,
+                from_name:  "Rusha Stays Website",
+                email:      email || "rushastays@gmail.com",
+                name:       name  || "Unknown",
+                "Phone":           phone        || "Not provided",
+                "Email (visitor)": email        || "Not provided",
+                "Inquiry Type":    inquiry_type || "Not specified",
+                "Form Source":     formType,
+                "Page URL":        window.location.href,
+                ...extraData
+            };
+            try {
+                await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (wErr) {
+                console.warn('[Web3Forms Email Error]', wErr);
             }
-        } catch (err) {
-            console.error('[Rusha Stays] ❌ Network error submitting lead:', err);
         }
     },
 

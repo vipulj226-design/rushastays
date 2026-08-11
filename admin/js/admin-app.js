@@ -850,10 +850,23 @@ async function loadEnquiries() {
         }
     }
 
+    // Merge LocalStorage backup enquiries if any exist
+    try {
+        const local = JSON.parse(localStorage.getItem('rusha_local_enquiries') || '[]');
+        if (local && local.length > 0) {
+            const existingPhones = new Set(data.map(d => (d.phone || '') + (d.name || '')));
+            local.forEach(l => {
+                const key = (l.phone || '') + (l.name || '');
+                if (!existingPhones.has(key)) {
+                    data.unshift(l);
+                }
+            });
+        }
+    } catch (e) {}
+
     State.enquiries = data;
     renderEnquiriesFullTable();
     updateDashboardStats();
-    initDragAndDropListeners();
 }
 
 function renderEnquiriesFullTable() {
