@@ -25,7 +25,11 @@ if ('serviceWorker' in navigator) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Living & Executive Suites in Gurugram | Rusha Stays</title>
     <meta name="description" content="Rusha Stays offers luxury fully-managed serviced suites and PG accommodations across Gurgaon near Golf Course Road & Cyber Hub. Tailored for professionals.">
-    <link rel="stylesheet" href="css/styles.css?v=3.0">
+        <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.min.css?v=3.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css?v=3.0">
 
     <link rel="canonical" href="https://rushastays.com/">
@@ -880,7 +884,7 @@ if ('serviceWorker' in navigator) {
         <section class="testimonial-carousel-section">
             <h2>What Our Residents Say</h2>
             <div class="carousel-viewport">
-                <div class="carousel-track" id="testimonial-track">
+                <div class="carousel-track" id="testimonial-track-tpl">
                     <div class="carousel-slide">
                         <div class="carousel-card">
                             <span class="carousel-quote-icon"><i class="fas fa-quote-right"></i></span>
@@ -941,7 +945,7 @@ if ('serviceWorker' in navigator) {
             </div>
             <div class="carousel-controls">
                 <button class="carousel-btn" onclick="prevSlide()" aria-label="Previous Slide"><i class="fas fa-chevron-left"></i></button>
-                <div class="carousel-dots" id="carousel-dots">
+                <div class="carousel-dots" id="carousel-dots-tpl">
                     <span class="carousel-dot active" onclick="goToSlide(0)"></span>
                     <span class="carousel-dot" onclick="goToSlide(1)"></span>
                     <span class="carousel-dot" onclick="goToSlide(2)"></span>
@@ -999,7 +1003,7 @@ if ('serviceWorker' in navigator) {
     </template>
 
     <script src="js/data.js?v=3.0"></script>
-    <script src="js/app.js?v=3.0"></script>
+    <script src="js/app.min.js?v=3.1"></script>
     <script>
         // Modal Trigger functions
         function openCallbackModal() {
