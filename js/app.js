@@ -55,24 +55,30 @@ const app = {
                         .eq('is_published', true)
                         .order('display_order', { ascending: true });
                     if (!error && liveProps && liveProps.length > 0) {
-                        window.propertiesData = liveProps.map(p => ({
-                            id: p.id,
-                            locality: p.locality,
-                            roomType: p.room_type,
-                            occupancy: p.occupancy,
-                            size: p.size,
-                            pricingHtml: p.pricing_html,
-                            priceVal: String(p.price_val),
-                            image: p.featured_image,
-                            images: p.gallery_images && p.gallery_images.length ? p.gallery_images : [p.featured_image],
-                            aboutShort: p.about_short,
-                            aboutFull: p.about_full,
-                            googleMapEmbed: p.google_map_embed,
-                            categories: p.categories || [],
-                            propertyAmenities: p.property_amenities || [],
-                            inSuiteFeatures: p.in_suite_features || [],
-                            landmarks: p.landmarks || []
-                        }));
+                        const staticList = window.propertiesData || [];
+                        window.propertiesData = liveProps.map(p => {
+                            const sf = staticList.find(s => s.id === p.id) || {};
+                            const mainImg = p.featured_image || sf.image || '/images/sector-28-1bhk/img-1.jpg';
+                            const galImgs = (p.gallery_images && p.gallery_images.length > 0) ? p.gallery_images : (sf.images && sf.images.length > 0 ? sf.images : [mainImg]);
+                            return {
+                                id: p.id,
+                                locality: p.locality || sf.locality,
+                                roomType: p.room_type || sf.roomType,
+                                occupancy: p.occupancy || sf.occupancy,
+                                size: p.size || sf.size,
+                                pricingHtml: p.pricing_html || sf.pricingHtml,
+                                priceVal: String(p.price_val || sf.priceVal || '0'),
+                                image: mainImg,
+                                images: galImgs,
+                                aboutShort: p.about_short || sf.aboutShort,
+                                aboutFull: p.about_full || sf.aboutFull,
+                                googleMapEmbed: p.google_map_embed || sf.googleMapEmbed,
+                                categories: p.categories || sf.categories || [],
+                                propertyAmenities: p.property_amenities || sf.propertyAmenities || [],
+                                inSuiteFeatures: p.in_suite_features || sf.inSuiteFeatures || [],
+                                landmarks: p.landmarks || sf.landmarks || []
+                            };
+                        });
                     }
                 } catch (err) {
                     console.warn('[Supabase] Properties sync fallback to static:', err);
@@ -441,10 +447,14 @@ const app = {
 
         // Fix image paths for subfolder depth (e.g. properties/ or blog/)
         const fixImgPath = (url) => {
-            if (!url) return '';
+            if (!url) return '/images/rusha-stays-logo.webp';
             if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url;
-            if (!url.startsWith('/')) return '/' + url;
-            return url;
+            let clean = url.replace(/^[\/.]+/, '');
+            const path = window.location.pathname;
+            if (path.includes('/properties/') || path.includes('/blog/')) {
+                return '../' + clean;
+            }
+            return '/' + clean;
         };
 
         let finalImages = (property.images || []).map(fixImgPath);
