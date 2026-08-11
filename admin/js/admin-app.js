@@ -1337,30 +1337,76 @@ function renderMediaGrid() {
     const q = (document.getElementById('mediaSearch')?.value || '').toLowerCase();
     const folder = (document.getElementById('mediaFolderFilter')?.value || '').toLowerCase();
 
-    const filtered = State.media.filter(m => {
-        const matchesQ = !q || m.file_name.toLowerCase().includes(q) || m.file_url.toLowerCase().includes(q);
-        const matchesFolder = !folder || 
-            (folder === 'cloud' && m.file_name.startsWith('cloud/')) ||
-            (folder !== 'cloud' && m.file_url.toLowerCase().includes(folder));
-        return matchesQ && matchesFolder;
-    });
+    // Categorization definitions
+    const categories = [
+        { key: 'sector-28-1bhk', title: '🏢 Sector 28 — 1 BHK Suite', badge: '7 Images' },
+        { key: 'sector-28-executive', title: '🛌 Sector 28 — Executive Rooms', badge: '17 Images' },
+        { key: 'sector-28-premium-rooms', title: '✨ Sector 28 — Executive Premium Rooms', badge: '3 Images' },
+        { key: 'king-room', title: '👑 Sector 28 — King Room Suite', badge: '5 Images' },
+        { key: 'sector-42', title: '🏢 Sector 42 — 1 BHK Suite', badge: '10 Images' },
+        { key: 'sushant-lok', title: '🏠 Sushant Lok Phase 1 — 1 BHK Studio', badge: '6 Images' },
+        { key: 'cloud', title: '☁️ Cloud Storage Uploads', badge: 'Supabase' },
+        { key: 'general', title: '🌐 General Site Banners & Logos', badge: 'Assets' }
+    ];
 
-    if (filtered.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #94a3b8; padding: 40px;">No images found matching search filter.</div>';
-        return;
-    }
+    // Helper to test if item belongs to category
+    const belongsTo = (m, key) => {
+        if (key === 'cloud') return m.file_name.startsWith('cloud/');
+        if (key === 'general') return !m.file_name.startsWith('cloud/') && !m.file_url.includes('/sector-') && !m.file_url.includes('/sushant-lok') && !m.file_url.includes('/king-room');
+        return m.file_url.toLowerCase().includes('/' + key + '/');
+    };
 
-    grid.innerHTML = filtered.map(m => `
-        <div class="image-preview-card" style="position: relative; border-radius: 8px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
-            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" style="width: 100%; height: 120px; object-fit: cover; display: block;" loading="lazy">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.85); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(m.file_name)}</span>
-                <button onclick="copyToClipboard('${m.file_url}')" title="Copy Image URL" style="background: rgba(255,255,255,0.15); border: none; color: #38bdf8; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 11px;">
+    // Card generator HTML
+    const makeCard = (m) => `
+        <div class="image-preview-card" style="position: relative; border-radius: 10px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
+            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" style="width: 100%; height: 125px; object-fit: cover; display: block;" loading="lazy">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.88); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(m.file_name.split('/').pop())}</span>
+                <button onclick="copyToClipboard('${m.file_url}')" title="Copy Image URL" style="background: rgba(56,189,248,0.2); border: 1px solid rgba(56,189,248,0.4); color: #38bdf8; cursor: pointer; padding: 3px 7px; border-radius: 4px; font-size: 11px; font-weight: 600;">
                     <i class="fas fa-copy"></i>
                 </button>
             </div>
         </div>
-    `).join('');
+    `;
+
+    // Filter media items by query and selected category
+    const filteredAll = State.media.filter(m => {
+        const matchesQ = !q || m.file_name.toLowerCase().includes(q) || m.file_url.toLowerCase().includes(q);
+        const matchesFolder = !folder || belongsTo(m, folder);
+        return matchesQ && matchesFolder;
+    });
+
+    if (filteredAll.length === 0) {
+        grid.style.display = 'block';
+        grid.innerHTML = '<div style="text-align: center; color: #94a3b8; padding: 40px; background: #0f172a; border-radius: 12px;">No images found matching search filter.</div>';
+        return;
+    }
+
+    grid.style.display = 'block';
+    let fullHtml = '';
+
+    categories.forEach(cat => {
+        const catItems = filteredAll.filter(m => belongsTo(m, cat.key));
+        if (catItems.length === 0) return;
+
+        fullHtml += `
+            <div class="subcat-media-group" style="margin-bottom: 28px; background: #0f172a; border: 1px solid #1e293b; padding: 18px; border-radius: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #334155;">
+                    <h4 style="font-size: 14px; font-weight: 700; color: #f8fafc; margin: 0; display: flex; align-items: center; gap: 8px;">
+                        ${cat.title}
+                    </h4>
+                    <span style="background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px;">
+                        ${catItems.length} Images
+                    </span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px;">
+                    ${catItems.map(makeCard).join('')}
+                </div>
+            </div>
+        `;
+    });
+
+    grid.innerHTML = fullHtml;
 }
 
 async function handleMediaUpload(e) {

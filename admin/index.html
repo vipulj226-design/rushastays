@@ -468,13 +468,24 @@
                                         <i class="fas fa-search"></i>
                                         <input type="text" class="search-input" id="mediaSearch" placeholder="Search images by name or path..." oninput="renderMediaGrid()">
                                     </div>
-                                    <select class="filter-select" id="mediaFolderFilter" onchange="renderMediaGrid()">
-                                        <option value="">All Media (74+ Images)</option>
-                                        <option value="sector-28">Sector 28 Images</option>
-                                        <option value="sector-42">Sector 42 Images</option>
-                                        <option value="sushant-lok">Sushant Lok Images</option>
-                                        <option value="king-room">King Room Suite</option>
-                                        <option value="cloud">Cloud Storage Uploads</option>
+                                                                        <select class="filter-select" id="mediaFolderFilter" onchange="renderMediaGrid()">
+                                        <option value="">All Subcategories (74+ Images)</option>
+                                        <optgroup label="Sector 28 (DLF Phase 1)">
+                                            <option value="sector-28-1bhk">Sector 28 — 1 BHK Suite (7 Images)</option>
+                                            <option value="sector-28-executive">Sector 28 — Executive Rooms (17 Images)</option>
+                                            <option value="sector-28-premium-rooms">Sector 28 — Executive Premium Rooms (3 Images)</option>
+                                            <option value="king-room">Sector 28 — King Room Suite (5 Images)</option>
+                                        </optgroup>
+                                        <optgroup label="Sector 42 (Golf Course Road)">
+                                            <option value="sector-42">Sector 42 — 1 BHK Suite (10 Images)</option>
+                                        </optgroup>
+                                        <optgroup label="Sushant Lok Phase 1">
+                                            <option value="sushant-lok">Sushant Lok Phase 1 — 1 BHK Studio (6 Images)</option>
+                                        </optgroup>
+                                        <optgroup label="General & Uploads">
+                                            <option value="general">General Banners & Assets (26 Images)</option>
+                                            <option value="cloud">Cloud Storage Uploads</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                                 <div class="image-preview-grid" id="mediaGalleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;">
