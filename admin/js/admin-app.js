@@ -1437,6 +1437,10 @@ async function handleMediaUpload(e) {
             if (error) throw error;
             showToast(`Uploaded: ${file.name}`, 'success');
         } catch (err) {
+            showToast(`Upload failed for ${file.name}: ${err.message}`, 'error');
+        }
+    }
+
     await loadMedia();
 }
 
