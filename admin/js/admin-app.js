@@ -1613,3 +1613,38 @@ function escapeHtml(str) {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#039;');
 }
+
+
+// ==============================================================================
+// EXPLICIT GLOBAL WINDOW BINDINGS (for HTML onclick handlers)
+// ==============================================================================
+window.switchTab = typeof switchTab !== 'undefined' ? switchTab : function() {};
+window.toggleSidebar = typeof toggleSidebar !== 'undefined' ? toggleSidebar : function() {};
+window.openModal = typeof openModal !== 'undefined' ? openModal : function() {};
+window.closeModal = typeof closeModal !== 'undefined' ? closeModal : function() {};
+window.openPropertyModal = typeof openPropertyModal !== 'undefined' ? openPropertyModal : function() {};
+window.saveProperty = typeof saveProperty !== 'undefined' ? saveProperty : function() {};
+window.deleteProperty = typeof deleteProperty !== 'undefined' ? deleteProperty : function() {};
+window.filterPropertiesTable = typeof filterPropertiesTable !== 'undefined' ? filterPropertiesTable : function() {};
+window.openBlogModal = typeof openBlogModal !== 'undefined' ? openBlogModal : function() {};
+window.saveBlogPost = typeof saveBlogPost !== 'undefined' ? saveBlogPost : function() {};
+window.deleteBlogPost = typeof deleteBlogPost !== 'undefined' ? deleteBlogPost : function() {};
+window.filterBlogTable = typeof filterBlogTable !== 'undefined' ? filterBlogTable : function() {};
+window.openFaqModal = typeof openFaqModal !== 'undefined' ? openFaqModal : function() {};
+window.saveFaq = typeof saveFaq !== 'undefined' ? saveFaq : function() {};
+window.deleteFaq = typeof deleteFaq !== 'undefined' ? deleteFaq : function() {};
+window.filterFaqsTable = typeof filterFaqsTable !== 'undefined' ? filterFaqsTable : function() {};
+window.openTestimonialModal = typeof openTestimonialModal !== 'undefined' ? openTestimonialModal : function() {};
+window.saveTestimonial = typeof saveTestimonial !== 'undefined' ? saveTestimonial : function() {};
+window.deleteTestimonial = typeof deleteTestimonial !== 'undefined' ? deleteTestimonial : function() {};
+window.filterEnquiriesTable = typeof filterEnquiriesTable !== 'undefined' ? filterEnquiriesTable : function() {};
+window.updateEnquiryStatus = typeof updateEnquiryStatus !== 'undefined' ? updateEnquiryStatus : function() {};
+window.deleteEnquiry = typeof deleteEnquiry !== 'undefined' ? deleteEnquiry : function() {};
+window.loadEnquiries = typeof loadEnquiries !== 'undefined' ? loadEnquiries : function() {};
+window.renderMediaGrid = typeof renderMediaGrid !== 'undefined' ? renderMediaGrid : function() {};
+window.handleMediaUpload = typeof handleMediaUpload !== 'undefined' ? handleMediaUpload : function() {};
+window.deleteMedia = typeof deleteMedia !== 'undefined' ? deleteMedia : function() {};
+window.saveSeoSettings = typeof saveSeoSettings !== 'undefined' ? saveSeoSettings : function() {};
+window.saveSiteSettings = typeof saveSiteSettings !== 'undefined' ? saveSiteSettings : function() {};
+window.testSupabaseConnection = typeof testSupabaseConnection !== 'undefined' ? testSupabaseConnection : function() {};
+window.copyToClipboard = typeof copyToClipboard !== 'undefined' ? copyToClipboard : function() {};
