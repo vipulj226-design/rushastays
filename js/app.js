@@ -182,9 +182,6 @@ const app = {
     renderPropertiesGrid(properties, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
-        if (container.children.length > 0 && properties === propertiesData) {
-            return; // Retain pre-rendered static cards for zero CLS
-        }
         
         const templateEl = document.getElementById('property-card-template');
         const cardTemplate = templateEl ? templateEl.innerHTML : `
@@ -218,14 +215,33 @@ const app = {
             </div>
         </div>`;
         
-        let html = '';
         const isSubfolder = window.location.pathname.includes('/properties/') || window.location.pathname.includes('/blog/');
         const propLinkPrefix = isSubfolder ? '' : '/properties/';
 
-        properties.forEach(p => {
+        // Group properties by locality: Sector 28 (with 4 subcategories), Sector 42, Sushant Lok Phase 1
+        const groupDefs = [
+            {
+                key: 'Sector 28',
+                title: '📍 Sector 28, Gurugram (DLF Phase 1)',
+                subcats: ['1 BHK Suite', 'Executive Rooms', 'Executive Premium Rooms', 'King Room Suite']
+            },
+            {
+                key: 'Sector 42',
+                title: '📍 Sector 42, Gurugram (Golf Course Road)',
+                subcats: ['1 BHK Suite']
+            },
+            {
+                key: 'Sushant Lok',
+                title: '📍 Sushant Lok Phase 1, Gurugram',
+                subcats: ['1 BHK Studio Suite']
+            }
+        ];
+
+        // Helper to render card HTML
+        const makeCard = (p) => {
             const propUrl = `${propLinkPrefix}${p.id}`;
             const imgUrl = p.image.startsWith('/') ? p.image : '/' + p.image;
-            html += cardTemplate
+            return cardTemplate
                 .replace(/{id}/g, propUrl)
                 .replace(/{image}/g, imgUrl)
                 .replace(/{locality}/g, p.locality)
@@ -233,9 +249,57 @@ const app = {
                 .replace(/{roomType}/g, p.roomType)
                 .replace(/{size}/g, p.size)
                 .replace(/{pricingHtml}/g, p.pricingHtml);
+        };
+
+        // If filtering by specific locality or search, render simple grid
+        if (properties.length < propertiesData.length && containerId !== 'locations-properties-grid') {
+            container.innerHTML = properties.map(makeCard).join('');
+            return;
+        }
+
+        // Render Grouped View by Locality and Subcategories
+        let fullHtml = '';
+
+        groupDefs.forEach(group => {
+            const groupProps = properties.filter(p => p.locality && p.locality.includes(group.key));
+            if (groupProps.length === 0) return;
+
+            const subcatBadges = group.subcats.map(s => 
+                `<span style="background: rgba(200,56,40,0.08); color: var(--primary); border: 1px solid rgba(200,56,40,0.2); padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; font-family: 'Poppins', sans-serif;"><i class="fas fa-bed" style="margin-right: 4px;"></i> ${s}</span>`
+            ).join(' ');
+
+            fullHtml += `
+                <div class="locality-group-block" style="margin-bottom: 48px; background: var(--card-bg, #ffffff); padding: 28px; border-radius: 24px; border: 1px solid var(--border-color, #e2e8f0); box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; border-bottom: 2px solid var(--primary); padding-bottom: 14px;">
+                        <h2 style="font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--text-heading); margin: 0;">${group.title}</h2>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                            <span style="font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-right: 4px;">Categories (${groupProps.length}):</span>
+                            ${subcatBadges}
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+                        ${groupProps.map(makeCard).join('')}
+                    </div>
+                </div>
+            `;
         });
 
-        container.innerHTML = html;
+        // Catch any ungrouped properties
+        const groupedIds = new Set();
+        groupDefs.forEach(g => properties.filter(p => p.locality && p.locality.includes(g.key)).forEach(p => groupedIds.add(p.id)));
+        const remaining = properties.filter(p => !groupedIds.has(p.id));
+        if (remaining.length > 0) {
+            fullHtml += `
+                <div class="locality-group-block" style="margin-bottom: 48px;">
+                    <h2 style="font-family: var(--font-heading); font-size: 22px; font-weight: 800; color: var(--text-heading); margin-bottom: 20px;">Other Managed Properties</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+                        ${remaining.map(makeCard).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        container.innerHTML = fullHtml;
     },
 
     activeFilter: null,

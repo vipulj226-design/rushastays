@@ -254,10 +254,14 @@ function filterPropertiesTable() {
     const loc = (document.getElementById('propLocalityFilter').value || '');
 
     const filtered = State.properties.filter(p => {
-        const matchesQ = (p.title || '').toLowerCase().includes(q) ||
+        const matchesQ = !q || (p.title || '').toLowerCase().includes(q) ||
                          (p.locality || '').toLowerCase().includes(q) ||
+                         (p.room_type || '').toLowerCase().includes(q) ||
                          (p.id || '').toLowerCase().includes(q);
-        const matchesLoc = !loc || (p.locality || '').includes(loc);
+        const matchesLoc = !loc || 
+                           (p.locality || '').includes(loc) ||
+                           (p.room_type || '').includes(loc) ||
+                           (p.id || '').includes(loc.toLowerCase().replace(/ /g, '-'));
         return matchesQ && matchesLoc;
     });
 

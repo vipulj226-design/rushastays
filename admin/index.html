@@ -217,10 +217,20 @@
                                     <input type="text" class="search-input" id="propSearch" placeholder="Search property name or locality..." oninput="filterPropertiesTable()">
                                 </div>
                                 <select class="filter-select" id="propLocalityFilter" onchange="filterPropertiesTable()">
-                                    <option value="">All Localities</option>
-                                    <option value="Sector 28">Sector 28 (DLF Phase 1)</option>
-                                    <option value="Sector 42">Sector 42 (Golf Course Rd)</option>
-                                    <option value="Sushant Lok Phase 1">Sushant Lok Phase 1</option>
+                                    <option value="">All Localities & Subcategories</option>
+                                    <optgroup label="Sector 28 (DLF Phase 1)">
+                                        <option value="Sector 28">All Sector 28 Properties (4 Subcategories)</option>
+                                        <option value="1 BHK Suite">Sector 28 — 1 BHK Suite</option>
+                                        <option value="Executive Rooms">Sector 28 — Executive Rooms</option>
+                                        <option value="Executive Premium Rooms">Sector 28 — Executive Premium Rooms</option>
+                                        <option value="King Room Suite">Sector 28 — King Room Suite</option>
+                                    </optgroup>
+                                    <optgroup label="Sector 42 (Golf Course Road)">
+                                        <option value="Sector 42">Sector 42 — 1 BHK Suite</option>
+                                    </optgroup>
+                                    <optgroup label="Sushant Lok Phase 1">
+                                        <option value="Sushant Lok">Sushant Lok Phase 1 — 1 BHK Studio Suite</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="table-responsive">
