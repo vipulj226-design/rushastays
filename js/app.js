@@ -455,7 +455,7 @@ const app = {
         const mainPropertyImg = fixImgPath(property.image);
         if (finalImages && finalImages.length > 0) {
             imagesHtml = finalImages.map((img, index) => 
-                `<img src="${img}" alt="Property Image ${index+1}" class="carousel-img ${index === 0 ? 'active' : ''}" style="width: 100%; height: 100%; object-fit: cover; display: ${index === 0 ? 'block' : 'none'}; border-radius: 20px;">`
+                `<img src="${img}" alt="Property Image ${index+1}" draggable="false" ondragstart="return false;" class="carousel-img ${index === 0 ? 'active' : ''}" style="width: 100%; height: 100%; object-fit: cover; display: ${index === 0 ? 'block' : 'none'}; border-radius: 20px;">`
             ).join('');
             thumbnailsHtml = `<div id="prop-carousel-thumbnails" style="display: flex; gap: 10px; margin-top: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -ms-overflow-style: none;">` + 
                 finalImages.map((img, index) => 
@@ -748,6 +748,12 @@ const app = {
     initCarouselSwipeListeners() {
         const wrapper = document.getElementById('prop-carousel-wrapper');
         if (!wrapper) return;
+
+        // Prevent native browser image drag
+        wrapper.querySelectorAll('img').forEach(img => {
+            img.draggable = false;
+            img.ondragstart = (e) => { e.preventDefault(); return false; };
+        });
 
         let startX = 0;
         let isDragging = false;

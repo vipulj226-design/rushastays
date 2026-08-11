@@ -1370,7 +1370,7 @@ function renderMediaGrid() {
         const cloudFileName = isCloud ? m.file_name.replace('cloud/', '') : '';
         return `
         <div class="image-preview-card" id="media-card-${escapeHtml(m.file_name).replace(/[^a-zA-Z0-9]/g, '-')}" style="position: relative; border-radius: 10px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
-            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" style="width: 100%; height: 125px; object-fit: cover; display: block;" loading="lazy">
+            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" onclick="openAdminMediaLightbox('${m.file_url.replace(/'/g, "\\'")}')" style="width: 100%; height: 125px; object-fit: cover; display: block; cursor: pointer;" title="Click to open Fullscreen Drag/Swipe View" loading="lazy" draggable="false" ondragstart="return false;">
             <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.92); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
                 <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(m.file_name.split('/').pop())}</span>
                 <div style="display: flex; gap: 4px;">
@@ -1733,3 +1733,133 @@ function triggerQuickUpload(targetInputId) {
 }
 
 window.triggerQuickUpload = typeof triggerQuickUpload !== 'undefined' ? triggerQuickUpload : function() {};
+
+// ==============================================================================
+// ADMIN FULLSCREEN MEDIA LIGHTBOX (with Drag & Touch Swipe)
+// ==============================================================================
+function openAdminMediaLightbox(startUrl) {
+    if (!State.media || State.media.length === 0) return;
+
+    const urls = State.media.map(m => m.file_url);
+    let currentIndex = urls.indexOf(startUrl);
+    if (currentIndex === -1) currentIndex = 0;
+
+    let lightbox = document.getElementById('admin-media-lightbox');
+    if (!lightbox) {
+        lightbox = document.createElement('div');
+        lightbox.id = 'admin-media-lightbox';
+        lightbox.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.96); z-index: 99999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(10px); color: #f8fafc;';
+        lightbox.innerHTML = `
+            <button onclick="closeAdminMediaLightbox()" style="position: absolute; top: 20px; right: 24px; background: rgba(255,255,255,0.1); border: none; color: #fff; font-size: 28px; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; z-index: 10;">&times;</button>
+
+            <!-- Left Chevron -->
+            <button onclick="adminLightboxPrev()" style="position: absolute; top: 50%; left: 24px; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: none; color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 10;" title="Previous Image (Left Drag / Left Arrow)"><i class="fas fa-chevron-left"></i></button>
+
+            <!-- Right Chevron -->
+            <button onclick="adminLightboxNext()" style="position: absolute; top: 50%; right: 24px; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: none; color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 10;" title="Next Image (Right Drag / Right Arrow)"><i class="fas fa-chevron-right"></i></button>
+
+            <!-- Main Image Wrapper -->
+            <div id="admin-lightbox-img-wrap" style="text-align: center; max-width: 90vw; max-height: 85vh; cursor: grab; user-select: none;">
+                <img id="admin-lightbox-img" src="" style="max-width: 85vw; max-height: 75vh; object-fit: contain; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);" draggable="false" ondragstart="return false;">
+                <div style="margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                    <span id="admin-lightbox-filename" style="font-size: 13px; font-weight: 600; color: #94a3b8;">—</span>
+                    <span id="admin-lightbox-counter" style="background: rgba(56,189,248,0.2); color: #38bdf8; border: 1px solid rgba(56,189,248,0.4); font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 20px;">1 / 1</span>
+                    <button id="admin-lightbox-copy-btn" onclick="" style="background: rgba(200,56,40,0.85); color: white; border: none; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-copy"></i> Copy URL
+                    </button>
+                </div>
+                <div style="font-size: 11px; color: #64748b; margin-top: 8px;">
+                    <i class="fas fa-arrows-left-right" style="color: #38bdf8;"></i> Drag Mouse Left / Right or Swipe ◄ ►
+                </div>
+            </div>
+        `;
+        document.body.appendChild(lightbox);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display !== 'flex') return;
+            if (e.key === 'Escape') closeAdminMediaLightbox();
+            if (e.key === 'ArrowRight') adminLightboxNext();
+            if (e.key === 'ArrowLeft') adminLightboxPrev();
+        });
+
+        // Mouse Drag & Touch Swipe
+        const wrap = document.getElementById('admin-lightbox-img-wrap');
+        let startX = 0;
+        let isDragging = false;
+
+        wrap.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+        wrap.addEventListener('touchend', (e) => {
+            const diff = startX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 35) {
+                if (diff > 0) adminLightboxNext(); else adminLightboxPrev();
+            }
+        }, { passive: true });
+
+        wrap.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+            wrap.style.cursor = 'grabbing';
+        });
+
+        wrap.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            wrap.style.cursor = 'grab';
+            const diff = startX - e.clientX;
+            if (Math.abs(diff) > 35) {
+                if (diff > 0) adminLightboxNext(); else adminLightboxPrev();
+            }
+        });
+
+        wrap.addEventListener('mouseleave', () => {
+            isDragging = false;
+            wrap.style.cursor = 'grab';
+        });
+    }
+
+    window._adminMediaUrls = urls;
+    window._adminMediaIndex = currentIndex;
+    updateAdminLightboxDisplay();
+    lightbox.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeAdminMediaLightbox() {
+    const lightbox = document.getElementById('admin-media-lightbox');
+    if (lightbox) lightbox.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function adminLightboxNext() {
+    if (!window._adminMediaUrls) return;
+    window._adminMediaIndex = (window._adminMediaIndex + 1) % window._adminMediaUrls.length;
+    updateAdminLightboxDisplay();
+}
+
+function adminLightboxPrev() {
+    if (!window._adminMediaUrls) return;
+    window._adminMediaIndex = (window._adminMediaIndex - 1 + window._adminMediaUrls.length) % window._adminMediaUrls.length;
+    updateAdminLightboxDisplay();
+}
+
+function updateAdminLightboxDisplay() {
+    const img = document.getElementById('admin-lightbox-img');
+    const counter = document.getElementById('admin-lightbox-counter');
+    const filenameSpan = document.getElementById('admin-lightbox-filename');
+    const copyBtn = document.getElementById('admin-lightbox-copy-btn');
+
+    if (!window._adminMediaUrls) return;
+    const url = window._adminMediaUrls[window._adminMediaIndex];
+    const item = State.media.find(m => m.file_url === url) || { file_name: url.split('/').pop() };
+
+    if (img) img.src = url;
+    if (counter) counter.textContent = `${window._adminMediaIndex + 1} / ${window._adminMediaUrls.length}`;
+    if (filenameSpan) filenameSpan.textContent = item.file_name.split('/').pop();
+    if (copyBtn) copyBtn.onclick = () => copyToClipboard(url);
+}
+
+window.openAdminMediaLightbox = openAdminMediaLightbox;
+window.closeAdminMediaLightbox = closeAdminMediaLightbox;
+window.adminLightboxNext = adminLightboxNext;
+window.adminLightboxPrev = adminLightboxPrev;
