@@ -493,14 +493,26 @@ const app = {
                 <!-- LEFT COLUMN -->
                 <div class="property-main-content">
                     
-                    <!-- Carousel -->
-                    <div class="property-carousel" style="position: relative; height: 380px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: var(--shadow-md);">
+                    <!-- Carousel with Drag, Touch Swipe & Nav Arrows -->
+                    <div class="property-carousel" id="prop-carousel-wrapper" style="position: relative; height: 400px; border-radius: 20px; overflow: hidden; margin-bottom: 20px; box-shadow: var(--shadow-md); touch-action: pan-y;">
                         <div class="carousel-badge" style="position: absolute; top: 20px; left: 20px; background-color: var(--primary); color: var(--white); padding: 6px 16px; border-radius: 100px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; z-index: 2;">Rusha Stays</div>
-                        <div id="prop-carousel-images" style="width: 100%; height: 100%; cursor: pointer;" onclick="app.nextCarouselImage()">
+                        
+                        <!-- Left Arrow Button -->
+                        <button onclick="event.stopPropagation(); app.prevCarouselImage()" title="Previous Image (Left Swipe)" style="position: absolute; top: 50%; left: 16px; transform: translateY(-50%); background: rgba(15,23,42,0.7); border: none; color: #fff; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; z-index: 5; backdrop-filter: blur(4px); transition: all 0.2s;" onmouseover="this.style.background='rgba(200,56,40,0.9)'" onmouseout="this.style.background='rgba(15,23,42,0.7)'">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <!-- Right Arrow Button -->
+                        <button onclick="event.stopPropagation(); app.nextCarouselImage()" title="Next Image (Right Swipe)" style="position: absolute; top: 50%; right: 16px; transform: translateY(-50%); background: rgba(15,23,42,0.7); border: none; color: #fff; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; z-index: 5; backdrop-filter: blur(4px); transition: all 0.2s;" onmouseover="this.style.background='rgba(200,56,40,0.9)'" onmouseout="this.style.background='rgba(15,23,42,0.7)'">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+
+                        <div id="prop-carousel-images" style="width: 100%; height: 100%; cursor: grab;" onclick="app.openLightbox()">
                             ${imagesHtml}
                         </div>
-                        <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(0,0,0,0.6); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; z-index: 2; pointer-events: none;">
-                            <i class="fas fa-camera"></i> Click to view more
+                        
+                        <div style="position: absolute; bottom: 20px; right: 20px; background: rgba(15,23,42,0.8); color: white; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; z-index: 2; pointer-events: none; backdrop-filter: blur(4px);">
+                            <i class="fas fa-arrows-left-right" style="color: #38bdf8; margin-right: 4px;"></i> Drag or Swipe ◄ ►
                         </div>
                     </div>
                     ${thumbnailsHtml}
@@ -672,6 +684,22 @@ const app = {
 
         this.contentDiv.innerHTML = detailsHtml;
         this.renderYouMayAlsoLike(propertyId);
+        this.initCarouselSwipeListeners();
+    },
+
+    prevCarouselImage() {
+        const container = document.getElementById('prop-carousel-images');
+        if (!container) return;
+        const images = container.querySelectorAll('img');
+        if (images.length <= 1) return;
+
+        let activeIndex = 0;
+        images.forEach((img, index) => {
+            if (img.style.display === 'block') activeIndex = index;
+        });
+
+        const prevIndex = (activeIndex - 1 + images.length) % images.length;
+        this.goToCarouselImage(prevIndex);
     },
 
     nextCarouselImage() {
@@ -687,6 +715,167 @@ const app = {
 
         const nextIndex = (activeIndex + 1) % images.length;
         this.goToCarouselImage(nextIndex);
+    },
+
+    goToCarouselImage(index) {
+        const container = document.getElementById('prop-carousel-images');
+        const thumbsContainer = document.getElementById('prop-carousel-thumbnails');
+        if (!container) return;
+        
+        const images = container.querySelectorAll('img');
+        if (images.length === 0 || index < 0 || index >= images.length) return;
+
+        images.forEach(img => img.style.display = 'none');
+        images[index].style.display = 'block';
+
+        if (thumbsContainer) {
+            const thumbs = thumbsContainer.querySelectorAll('img');
+            thumbs.forEach((thumb, i) => {
+                if (i === index) {
+                    thumb.style.border = '2px solid var(--primary)';
+                    thumb.style.opacity = '1';
+                } else {
+                    thumb.style.border = '2px solid transparent';
+                    thumb.style.opacity = '0.6';
+                }
+            });
+            if (thumbs[index]) {
+                thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+    },
+
+    initCarouselSwipeListeners() {
+        const wrapper = document.getElementById('prop-carousel-wrapper');
+        if (!wrapper) return;
+
+        let startX = 0;
+        let isDragging = false;
+
+        // Touch Events for Mobile Left/Right Swipe
+        wrapper.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        }, { passive: true });
+
+        wrapper.addEventListener('touchend', (e) => {
+            const endX = e.changedTouches[0].clientX;
+            const diffX = startX - endX;
+            if (Math.abs(diffX) > 35) {
+                if (diffX > 0) {
+                    this.nextCarouselImage(); // Swiped Left -> Next
+                } else {
+                    this.prevCarouselImage(); // Swiped Right -> Prev
+                }
+            }
+        }, { passive: true });
+
+        // Mouse Drag Events for Desktop Left/Right Drag
+        wrapper.addEventListener('mousedown', (e) => {
+            startX = e.clientX;
+            isDragging = true;
+            wrapper.style.cursor = 'grabbing';
+        });
+
+        wrapper.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            wrapper.style.cursor = 'grab';
+            const endX = e.clientX;
+            const diffX = startX - endX;
+            if (Math.abs(diffX) > 35) {
+                if (diffX > 0) {
+                    this.nextCarouselImage(); // Dragged Left -> Next
+                } else {
+                    this.prevCarouselImage(); // Dragged Right -> Prev
+                }
+            }
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            isDragging = false;
+            wrapper.style.cursor = 'grab';
+        });
+    },
+
+    openLightbox() {
+        const container = document.getElementById('prop-carousel-images');
+        if (!container) return;
+        const images = Array.from(container.querySelectorAll('img')).map(img => img.src);
+        if (images.length === 0) return;
+
+        let activeIndex = 0;
+        container.querySelectorAll('img').forEach((img, i) => {
+            if (img.style.display === 'block') activeIndex = i;
+        });
+
+        let lightbox = document.getElementById('property-lightbox');
+        if (!lightbox) {
+            lightbox = document.createElement('div');
+            lightbox.id = 'property-lightbox';
+            lightbox.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px);';
+            lightbox.innerHTML = `
+                <button onclick="app.closeLightbox()" style="position: absolute; top: 24px; right: 24px; background: rgba(255,255,255,0.1); border: none; color: #fff; font-size: 28px; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; z-index: 10;">&times;</button>
+                <button onclick="app.lightboxPrev()" style="position: absolute; top: 50%; left: 24px; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: none; color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 10;"><i class="fas fa-chevron-left"></i></button>
+                <button onclick="app.lightboxNext()" style="position: absolute; top: 50%; right: 24px; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: none; color: #fff; width: 50px; height: 50px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 10;"><i class="fas fa-chevron-right"></i></button>
+                <img id="lightbox-img" style="max-width: 90vw; max-height: 85vh; object-fit: contain; border-radius: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); transition: opacity 0.2s;" src="">
+                <div style="position: absolute; bottom: 24px; color: #fff; font-size: 14px; background: rgba(0,0,0,0.6); padding: 6px 16px; border-radius: 20px;">
+                    <span id="lightbox-counter">1 / 1</span> (Drag / Swipe ◄ ► or Press Arrow Keys)
+                </div>
+            `;
+            document.body.appendChild(lightbox);
+
+            // Lightbox Keydown listener
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.style.display !== 'flex') return;
+                if (e.key === 'Escape') this.closeLightbox();
+                if (e.key === 'ArrowRight') this.lightboxNext();
+                if (e.key === 'ArrowLeft') this.lightboxPrev();
+            });
+
+            // Lightbox Touch/Mouse Swipe
+            let lX = 0;
+            lightbox.addEventListener('touchstart', (e) => { lX = e.touches[0].clientX; }, { passive: true });
+            lightbox.addEventListener('touchend', (e) => {
+                const diff = lX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 40) {
+                    if (diff > 0) this.lightboxNext(); else this.lightboxPrev();
+                }
+            }, { passive: true });
+        }
+
+        window._lightboxImages = images;
+        window._lightboxIndex = activeIndex;
+        this.updateLightboxDisplay();
+        lightbox.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    },
+
+    closeLightbox() {
+        const lightbox = document.getElementById('property-lightbox');
+        if (lightbox) lightbox.style.display = 'none';
+        document.body.style.overflow = '';
+    },
+
+    lightboxNext() {
+        if (!window._lightboxImages) return;
+        window._lightboxIndex = (window._lightboxIndex + 1) % window._lightboxImages.length;
+        this.updateLightboxDisplay();
+    },
+
+    lightboxPrev() {
+        if (!window._lightboxImages) return;
+        window._lightboxIndex = (window._lightboxIndex - 1 + window._lightboxImages.length) % window._lightboxImages.length;
+        this.updateLightboxDisplay();
+    },
+
+    updateLightboxDisplay() {
+        const img = document.getElementById('lightbox-img');
+        const counter = document.getElementById('lightbox-counter');
+        if (img && window._lightboxImages) {
+            img.src = window._lightboxImages[window._lightboxIndex];
+            if (counter) counter.textContent = `${window._lightboxIndex + 1} / ${window._lightboxImages.length}`;
+            this.goToCarouselImage(window._lightboxIndex);
+        }
     },
 
     goToCarouselImage(index) {
