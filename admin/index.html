@@ -450,8 +450,24 @@
                             </div>
 
                             <div style="margin-top: 24px;">
-                                <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 12px;">Stored Media Files</h4>
-                                <div class="image-preview-grid" id="mediaGalleryGrid">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 12px;">
+                                    <h4 style="font-size: 14px; font-weight: 700; margin: 0;">Website & Storage Media Files</h4>
+                                </div>
+                                <div class="table-toolbar" style="margin-bottom: 16px;">
+                                    <div class="search-input-wrap">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" class="search-input" id="mediaSearch" placeholder="Search images by name or path..." oninput="renderMediaGrid()">
+                                    </div>
+                                    <select class="filter-select" id="mediaFolderFilter" onchange="renderMediaGrid()">
+                                        <option value="">All Media (74+ Images)</option>
+                                        <option value="sector-28">Sector 28 Images</option>
+                                        <option value="sector-42">Sector 42 Images</option>
+                                        <option value="sushant-lok">Sushant Lok Images</option>
+                                        <option value="king-room">King Room Suite</option>
+                                        <option value="cloud">Cloud Storage Uploads</option>
+                                    </select>
+                                </div>
+                                <div class="image-preview-grid" id="mediaGalleryGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px;">
                                     <!-- Loaded dynamically -->
                                 </div>
                             </div>

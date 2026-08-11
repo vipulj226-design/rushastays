@@ -934,14 +934,14 @@ async function deleteEnquiry(id) {
 // ==============================================================================
 async function loadMedia() {
     const client = AdminAuth.getClient();
-    let data = [];
+    let cloudFiles = [];
 
     if (client) {
         try {
-            const { data: files } = await client.storage.from('media').list('', { limit: 50 });
+            const { data: files } = await client.storage.from('media').list('', { limit: 100 });
             if (files) {
-                data = files.map(f => ({
-                    file_name: f.name,
+                cloudFiles = files.map(f => ({
+                    file_name: 'cloud/' + f.name,
                     file_url: client.storage.from('media').getPublicUrl(f.name).data.publicUrl,
                     file_size: f.metadata?.size || 0
                 }));
@@ -949,15 +949,380 @@ async function loadMedia() {
         } catch (err) {}
     }
 
-    if (data.length === 0) {
-        data = [
-            { file_name: 'luxury_apartment_living.webp', file_url: '/images/luxury_apartment_living.webp', file_size: 78000 },
-            { file_name: 'rusha-stays-logo.webp', file_url: '/images/rusha-stays-logo.webp', file_size: 24000 },
-            { file_name: 'sector-42/image-1.jpg', file_url: '/images/sector-42/image-1.jpg', file_size: 154000 }
-        ];
-    }
+    const siteImages = [
+        {
+                "file_name": "best-living-experience.webp",
+                "file_url": "/images/best-living-experience.webp",
+                "file_size": 11818
+        },
+        {
+                "file_name": "connectivity-gurgaon.webp",
+                "file_url": "/images/connectivity-gurgaon.webp",
+                "file_size": 14128
+        },
+        {
+                "file_name": "connectivity-gurugram.webp",
+                "file_url": "/images/connectivity-gurugram.webp",
+                "file_size": 19660
+        },
+        {
+                "file_name": "corp-amenities.webp",
+                "file_url": "/images/corp-amenities.webp",
+                "file_size": 127520
+        },
+        {
+                "file_name": "corp-bathroom.webp",
+                "file_url": "/images/corp-bathroom.webp",
+                "file_size": 76590
+        },
+        {
+                "file_name": "corp-managed.webp",
+                "file_url": "/images/corp-managed.webp",
+                "file_size": 56814
+        },
+        {
+                "file_name": "corp-room-2.webp",
+                "file_url": "/images/corp-room-2.webp",
+                "file_size": 52548
+        },
+        {
+                "file_name": "corp-room-3.webp",
+                "file_url": "/images/corp-room-3.webp",
+                "file_size": 60044
+        },
+        {
+                "file_name": "corp-room-4.webp",
+                "file_url": "/images/corp-room-4.webp",
+                "file_size": 35618
+        },
+        {
+                "file_name": "corp-room-5.webp",
+                "file_url": "/images/corp-room-5.webp",
+                "file_size": 32464
+        },
+        {
+                "file_name": "corp-room-6.webp",
+                "file_url": "/images/corp-room-6.webp",
+                "file_size": 32158
+        },
+        {
+                "file_name": "corp-room-7.webp",
+                "file_url": "/images/corp-room-7.webp",
+                "file_size": 56814
+        },
+        {
+                "file_name": "corp-room-8.webp",
+                "file_url": "/images/corp-room-8.webp",
+                "file_size": 44764
+        },
+        {
+                "file_name": "corp-room-9.webp",
+                "file_url": "/images/corp-room-9.webp",
+                "file_size": 50810
+        },
+        {
+                "file_name": "corp-studio.webp",
+                "file_url": "/images/corp-studio.webp",
+                "file_size": 76374
+        },
+        {
+                "file_name": "corporate-hero-room.webp",
+                "file_url": "/images/corporate-hero-room.webp",
+                "file_size": 73444
+        },
+        {
+                "file_name": "gurgaon_skyline.webp",
+                "file_url": "/images/gurgaon_skyline.webp",
+                "file_size": 119258
+        },
+        {
+                "file_name": "gurugram-cybercity.webp",
+                "file_url": "/images/gurugram-cybercity.webp",
+                "file_size": 119258
+        },
+        {
+                "file_name": "homestyle-meals.webp",
+                "file_url": "/images/homestyle-meals.webp",
+                "file_size": 43542
+        },
+        {
+                "file_name": "luxury_apartment_living.webp",
+                "file_url": "/images/luxury_apartment_living.webp",
+                "file_size": 123852
+        },
+        {
+                "file_name": "question-mark.webp",
+                "file_url": "/images/question-mark.webp",
+                "file_size": 30166
+        },
+        {
+                "file_name": "rd-sharma-wix.webp",
+                "file_url": "/images/rd-sharma-wix.webp",
+                "file_size": 18532
+        },
+        {
+                "file_name": "rusha-stays-logo.webp",
+                "file_url": "/images/rusha-stays-logo.webp",
+                "file_size": 6902
+        },
+        {
+                "file_name": "stress-free-experience.webp",
+                "file_url": "/images/stress-free-experience.webp",
+                "file_size": 25200
+        },
+        {
+                "file_name": "woman_sofa_hero.jpg",
+                "file_url": "/images/woman_sofa_hero.jpg",
+                "file_size": 77543
+        },
+        {
+                "file_name": "woman_sofa_hero.webp",
+                "file_url": "/images/woman_sofa_hero.webp",
+                "file_size": 32998
+        },
+        {
+                "file_name": "king-room/bathroom.jpg",
+                "file_url": "/images/king-room/bathroom.jpg",
+                "file_size": 284394
+        },
+        {
+                "file_name": "king-room/bedroom.jpg",
+                "file_url": "/images/king-room/bedroom.jpg",
+                "file_size": 142975
+        },
+        {
+                "file_name": "king-room/living-area.jpg",
+                "file_url": "/images/king-room/living-area.jpg",
+                "file_size": 153265
+        },
+        {
+                "file_name": "king-room/rooftop.jpg",
+                "file_url": "/images/king-room/rooftop.jpg",
+                "file_size": 286827
+        },
+        {
+                "file_name": "king-room/terrace.jpg",
+                "file_url": "/images/king-room/terrace.jpg",
+                "file_size": 210482
+        },
+        {
+                "file_name": "sector-28-1bhk/img-1.jpg",
+                "file_url": "/images/sector-28-1bhk/img-1.jpg",
+                "file_size": 87794
+        },
+        {
+                "file_name": "sector-28-1bhk/img-2.jpg",
+                "file_url": "/images/sector-28-1bhk/img-2.jpg",
+                "file_size": 81696
+        },
+        {
+                "file_name": "sector-28-1bhk/img-3.jpg",
+                "file_url": "/images/sector-28-1bhk/img-3.jpg",
+                "file_size": 94805
+        },
+        {
+                "file_name": "sector-28-1bhk/img-4.jpg",
+                "file_url": "/images/sector-28-1bhk/img-4.jpg",
+                "file_size": 66076
+        },
+        {
+                "file_name": "sector-28-1bhk/img-5.jpg",
+                "file_url": "/images/sector-28-1bhk/img-5.jpg",
+                "file_size": 79925
+        },
+        {
+                "file_name": "sector-28-1bhk/img-6.jpg",
+                "file_url": "/images/sector-28-1bhk/img-6.jpg",
+                "file_size": 121609
+        },
+        {
+                "file_name": "sector-28-1bhk/img-7.jpg",
+                "file_url": "/images/sector-28-1bhk/img-7.jpg",
+                "file_size": 381825
+        },
+        {
+                "file_name": "sector-28-executive/img-1.jpg",
+                "file_url": "/images/sector-28-executive/img-1.jpg",
+                "file_size": 37107
+        },
+        {
+                "file_name": "sector-28-executive/img-10.jpg",
+                "file_url": "/images/sector-28-executive/img-10.jpg",
+                "file_size": 63618
+        },
+        {
+                "file_name": "sector-28-executive/img-11.jpg",
+                "file_url": "/images/sector-28-executive/img-11.jpg",
+                "file_size": 79548
+        },
+        {
+                "file_name": "sector-28-executive/img-12.jpg",
+                "file_url": "/images/sector-28-executive/img-12.jpg",
+                "file_size": 87039
+        },
+        {
+                "file_name": "sector-28-executive/img-13.jpg",
+                "file_url": "/images/sector-28-executive/img-13.jpg",
+                "file_size": 48476
+        },
+        {
+                "file_name": "sector-28-executive/img-14.jpg",
+                "file_url": "/images/sector-28-executive/img-14.jpg",
+                "file_size": 39309
+        },
+        {
+                "file_name": "sector-28-executive/img-15.jpg",
+                "file_url": "/images/sector-28-executive/img-15.jpg",
+                "file_size": 67804
+        },
+        {
+                "file_name": "sector-28-executive/img-16.jpg",
+                "file_url": "/images/sector-28-executive/img-16.jpg",
+                "file_size": 39984
+        },
+        {
+                "file_name": "sector-28-executive/img-17.jpg",
+                "file_url": "/images/sector-28-executive/img-17.jpg",
+                "file_size": 35766
+        },
+        {
+                "file_name": "sector-28-executive/img-2.jpg",
+                "file_url": "/images/sector-28-executive/img-2.jpg",
+                "file_size": 71124
+        },
+        {
+                "file_name": "sector-28-executive/img-3.jpg",
+                "file_url": "/images/sector-28-executive/img-3.jpg",
+                "file_size": 51507
+        },
+        {
+                "file_name": "sector-28-executive/img-4.jpg",
+                "file_url": "/images/sector-28-executive/img-4.jpg",
+                "file_size": 63185
+        },
+        {
+                "file_name": "sector-28-executive/img-5.jpg",
+                "file_url": "/images/sector-28-executive/img-5.jpg",
+                "file_size": 112199
+        },
+        {
+                "file_name": "sector-28-executive/img-6.jpg",
+                "file_url": "/images/sector-28-executive/img-6.jpg",
+                "file_size": 74349
+        },
+        {
+                "file_name": "sector-28-executive/img-7.jpg",
+                "file_url": "/images/sector-28-executive/img-7.jpg",
+                "file_size": 138345
+        },
+        {
+                "file_name": "sector-28-executive/img-8.jpg",
+                "file_url": "/images/sector-28-executive/img-8.jpg",
+                "file_size": 102480
+        },
+        {
+                "file_name": "sector-28-executive/img-9.jpg",
+                "file_url": "/images/sector-28-executive/img-9.jpg",
+                "file_size": 96724
+        },
+        {
+                "file_name": "sector-28-premium-rooms/img-1.jpg",
+                "file_url": "/images/sector-28-premium-rooms/img-1.jpg",
+                "file_size": 96678
+        },
+        {
+                "file_name": "sector-28-premium-rooms/img-2.jpg",
+                "file_url": "/images/sector-28-premium-rooms/img-2.jpg",
+                "file_size": 119024
+        },
+        {
+                "file_name": "sector-28-premium-rooms/img-3.jpg",
+                "file_url": "/images/sector-28-premium-rooms/img-3.jpg",
+                "file_size": 97234
+        },
+        {
+                "file_name": "sector-42/image-1.jpg",
+                "file_url": "/images/sector-42/image-1.jpg",
+                "file_size": 145913
+        },
+        {
+                "file_name": "sector-42/image-10.jpg",
+                "file_url": "/images/sector-42/image-10.jpg",
+                "file_size": 432716
+        },
+        {
+                "file_name": "sector-42/image-2.jpg",
+                "file_url": "/images/sector-42/image-2.jpg",
+                "file_size": 81951
+        },
+        {
+                "file_name": "sector-42/image-3.jpg",
+                "file_url": "/images/sector-42/image-3.jpg",
+                "file_size": 108452
+        },
+        {
+                "file_name": "sector-42/image-4.jpg",
+                "file_url": "/images/sector-42/image-4.jpg",
+                "file_size": 185552
+        },
+        {
+                "file_name": "sector-42/image-5.jpg",
+                "file_url": "/images/sector-42/image-5.jpg",
+                "file_size": 63162
+        },
+        {
+                "file_name": "sector-42/image-6.jpg",
+                "file_url": "/images/sector-42/image-6.jpg",
+                "file_size": 181551
+        },
+        {
+                "file_name": "sector-42/image-7.jpg",
+                "file_url": "/images/sector-42/image-7.jpg",
+                "file_size": 186119
+        },
+        {
+                "file_name": "sector-42/image-8.jpg",
+                "file_url": "/images/sector-42/image-8.jpg",
+                "file_size": 169681
+        },
+        {
+                "file_name": "sector-42/image-9.jpg",
+                "file_url": "/images/sector-42/image-9.jpg",
+                "file_size": 215526
+        },
+        {
+                "file_name": "sushant-lok/bedroom-3.jpg",
+                "file_url": "/images/sushant-lok/bedroom-3.jpg",
+                "file_size": 93252
+        },
+        {
+                "file_name": "sushant-lok/bedroom-4.jpg",
+                "file_url": "/images/sushant-lok/bedroom-4.jpg",
+                "file_size": 146079
+        },
+        {
+                "file_name": "sushant-lok/exterior-1.jpg",
+                "file_url": "/images/sushant-lok/exterior-1.jpg",
+                "file_size": 77080
+        },
+        {
+                "file_name": "sushant-lok/kitchen-1.jpg",
+                "file_url": "/images/sushant-lok/kitchen-1.jpg",
+                "file_size": 143788
+        },
+        {
+                "file_name": "sushant-lok/living-1.jpg",
+                "file_url": "/images/sushant-lok/living-1.jpg",
+                "file_size": 159395
+        },
+        {
+                "file_name": "sushant-lok/lobby-1.jpg",
+                "file_url": "/images/sushant-lok/lobby-1.jpg",
+                "file_size": 102248
+        }
+];
 
-    State.media = data;
+    State.media = [...cloudFiles, ...siteImages];
     renderMediaGrid();
 }
 
@@ -965,12 +1330,28 @@ function renderMediaGrid() {
     const grid = document.getElementById('mediaGalleryGrid');
     if (!grid) return;
 
-    grid.innerHTML = State.media.map(m => `
-        <div class="image-preview-card" style="position: relative;">
-            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 6px; font-size: 10.5px; display: flex; justify-content: space-between; align-items: center;">
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70px;">${escapeHtml(m.file_name)}</span>
-                <button onclick="copyToClipboard('${m.file_url}')" title="Copy URL" style="background: transparent; border: none; color: #fff; cursor: pointer;">
+    const q = (document.getElementById('mediaSearch')?.value || '').toLowerCase();
+    const folder = (document.getElementById('mediaFolderFilter')?.value || '').toLowerCase();
+
+    const filtered = State.media.filter(m => {
+        const matchesQ = !q || m.file_name.toLowerCase().includes(q) || m.file_url.toLowerCase().includes(q);
+        const matchesFolder = !folder || 
+            (folder === 'cloud' && m.file_name.startsWith('cloud/')) ||
+            (folder !== 'cloud' && m.file_url.toLowerCase().includes(folder));
+        return matchesQ && matchesFolder;
+    });
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #94a3b8; padding: 40px;">No images found matching search filter.</div>';
+        return;
+    }
+
+    grid.innerHTML = filtered.map(m => `
+        <div class="image-preview-card" style="position: relative; border-radius: 8px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
+            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" style="width: 100%; height: 120px; object-fit: cover; display: block;" loading="lazy">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.85); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 120px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(m.file_name)}</span>
+                <button onclick="copyToClipboard('${m.file_url}')" title="Copy Image URL" style="background: rgba(255,255,255,0.15); border: none; color: #38bdf8; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 11px;">
                     <i class="fas fa-copy"></i>
                 </button>
             </div>
