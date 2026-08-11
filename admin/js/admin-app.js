@@ -1356,18 +1356,27 @@ function renderMediaGrid() {
         return m.file_url.toLowerCase().includes('/' + key + '/');
     };
 
-    // Card generator HTML
-    const makeCard = (m) => `
-        <div class="image-preview-card" style="position: relative; border-radius: 10px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
+    // Card generator HTML with Copy & Delete actions
+    const makeCard = (m) => {
+        const isCloud = m.file_name.startsWith('cloud/');
+        const cloudFileName = isCloud ? m.file_name.replace('cloud/', '') : '';
+        return `
+        <div class="image-preview-card" id="media-card-${escapeHtml(m.file_name).replace(/[^a-zA-Z0-9]/g, '-')}" style="position: relative; border-radius: 10px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
             <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" style="width: 100%; height: 125px; object-fit: cover; display: block;" loading="lazy">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.88); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 110px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(m.file_name.split('/').pop())}</span>
-                <button onclick="copyToClipboard('${m.file_url}')" title="Copy Image URL" style="background: rgba(56,189,248,0.2); border: 1px solid rgba(56,189,248,0.4); color: #38bdf8; cursor: pointer; padding: 3px 7px; border-radius: 4px; font-size: 11px; font-weight: 600;">
-                    <i class="fas fa-copy"></i>
-                </button>
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.92); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(m.file_name.split('/').pop())}</span>
+                <div style="display: flex; gap: 4px;">
+                    <button onclick="copyToClipboard('${m.file_url}')" title="Copy Image URL" style="background: rgba(56,189,248,0.2); border: 1px solid rgba(56,189,248,0.4); color: #38bdf8; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button onclick="deleteMedia('${m.file_name.replace(/'/g, "\\'")}', '${m.file_url.replace(/'/g, "\\'")}')" title="Remove Photo" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #ef4444; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+                        <i class="fas fa-trash-can"></i>
+                    </button>
+                </div>
             </div>
         </div>
     `;
+    };
 
     // Filter media items by query and selected category
     const filteredAll = State.media.filter(m => {
@@ -1428,11 +1437,36 @@ async function handleMediaUpload(e) {
             if (error) throw error;
             showToast(`Uploaded: ${file.name}`, 'success');
         } catch (err) {
-            showToast(`Upload failed for ${file.name}: ${err.message}`, 'error');
-        }
+    await loadMedia();
+}
+
+async function deleteMedia(fileName, fileUrl) {
+    if (!confirm(`Are you sure you want to remove photo: "${fileName.split('/').pop()}"?`)) {
+        return;
     }
 
-    await loadMedia();
+    const isCloud = fileName.startsWith('cloud/');
+    
+    if (isCloud) {
+        const client = AdminAuth.getClient();
+        if (client) {
+            const rawName = fileName.replace('cloud/', '');
+            try {
+                const { error } = await client.storage.from('media').remove([rawName]);
+                if (error) throw error;
+                showToast(`Image deleted from Supabase Storage: ${rawName}`, 'success');
+            } catch (err) {
+                showToast(`Cloud delete failed: ${err.message}`, 'error');
+                return;
+            }
+        }
+    } else {
+        showToast(`Photo "${fileName.split('/').pop()}" hidden from view.`, 'info');
+    }
+
+    // Remove from state and re-render grid
+    State.media = State.media.filter(m => m.file_name !== fileName && m.file_url !== fileUrl);
+    renderMediaGrid();
 }
 
 // ==============================================================================
