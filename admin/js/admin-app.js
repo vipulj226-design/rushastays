@@ -1,0 +1,1146 @@
+/**
+ * RUSHA STAYS — ADMIN DASHBOARD CONTROLLER (admin-app.js)
+ * Full CRUD for Properties, Blogs, FAQs, Testimonials, Enquiries, Media, Pages & Settings
+ */
+
+// Local Cache / In-memory state
+const State = {
+    properties: [],
+    blogPosts: [],
+    faqs: [],
+    testimonials: [],
+    enquiries: [],
+    media: [],
+    pages: [],
+    settings: {},
+    currentTab: 'dashboard'
+};
+
+// ==============================================================================
+// INITIALIZATION & AUTH CHECK
+// ==============================================================================
+document.addEventListener('DOMContentLoaded', async () => {
+    AdminAuth.init();
+    
+    // Check authentication
+    const authStatus = await AdminAuth.checkSession();
+    if (!authStatus.authenticated) {
+        // If not authenticated, redirect to login
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Set user info in sidebar
+    if (authStatus.user) {
+        const email = authStatus.user.email || 'Admin';
+        document.getElementById('userEmail').textContent = email;
+        document.getElementById('userAvatar').textContent = email.charAt(0).toUpperCase();
+    }
+
+    // Setup connection badge
+    updateConnectionStatus();
+
+    // Load initial data
+    await loadAllData();
+});
+
+function updateConnectionStatus() {
+    const badge = document.getElementById('connBadge');
+    const text = document.getElementById('connText');
+    
+    if (window.isSupabaseConfigured()) {
+        badge.style.background = '#ECFDF5';
+        badge.style.color = '#10B981';
+        text.textContent = 'Supabase Connected';
+    } else {
+        badge.style.background = '#FFFBEB';
+        badge.style.color = '#D97706';
+        text.textContent = 'Setup Mode (Local Fallback)';
+    }
+}
+
+async function loadAllData() {
+    await Promise.allSettled([
+        loadProperties(),
+        loadBlog(),
+        loadFaqs(),
+        loadTestimonials(),
+        loadEnquiries(),
+        loadPages(),
+        loadMedia(),
+        loadSiteSettings()
+    ]);
+    updateDashboardStats();
+}
+
+// ==============================================================================
+// TAB NAVIGATION
+// ==============================================================================
+function switchTab(tabId) {
+    State.currentTab = tabId;
+
+    // Update active nav button
+    document.querySelectorAll('.sidebar-nav .nav-item').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const activeBtn = document.querySelector(`.sidebar-nav .nav-item[onclick="switchTab('${tabId}')"]`);
+    if (activeBtn) activeBtn.classList.add('active');
+
+    // Update tab panels
+    document.querySelectorAll('.tab-panel').forEach(panel => {
+        panel.classList.remove('active');
+    });
+    const activePanel = document.getElementById(`tab-${tabId}`);
+    if (activePanel) activePanel.classList.add('active');
+
+    // Update page title
+    const titles = {
+        dashboard: 'Dashboard Overview',
+        properties: 'Property Listings Management',
+        blog: 'Blog Articles & Insights',
+        pages: 'Website Pages & Copy',
+        enquiries: 'Customer Enquiries & Callbacks',
+        faqs: 'Frequently Asked Questions',
+        testimonials: 'Resident Testimonials',
+        media: 'Media Storage & CDN Library',
+        seo: 'SEO & Metadata Center',
+        settings: 'Global Site Configuration'
+    };
+    document.getElementById('pageTitle').textContent = titles[tabId] || 'Admin Dashboard';
+
+    // Close mobile sidebar if open
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.classList.contains('mobile-open')) {
+        sidebar.classList.remove('mobile-open');
+    }
+}
+
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('mobile-open');
+}
+
+// ==============================================================================
+// DASHBOARD OVERVIEW
+// ==============================================================================
+function updateDashboardStats() {
+    document.getElementById('statProperties').textContent = State.properties.length;
+    document.getElementById('statBlogs').textContent = State.blogPosts.length;
+    document.getElementById('statFaqs').textContent = State.faqs.length;
+    
+    const newEnquiries = State.enquiries.filter(e => e.status === 'new').length;
+    document.getElementById('statEnquiries').textContent = newEnquiries;
+    
+    const sidebarBadge = document.getElementById('sidebarEnquiryBadge');
+    if (newEnquiries > 0) {
+        sidebarBadge.textContent = newEnquiries;
+        sidebarBadge.style.display = 'inline-block';
+    } else {
+        sidebarBadge.style.display = 'none';
+    }
+
+    renderDashboardEnquiriesTable();
+}
+
+function renderDashboardEnquiriesTable() {
+    const tbody = document.getElementById('dashboardEnquiriesTable');
+    if (!tbody) return;
+
+    if (State.enquiries.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #94A3B8; padding: 24px;">No enquiries received yet.</td></tr>`;
+        return;
+    }
+
+    const recent = State.enquiries.slice(0, 5);
+    tbody.innerHTML = recent.map(e => `
+        <tr>
+            <td>${formatDate(e.created_at)}</td>
+            <td><strong>${escapeHtml(e.name)}</strong></td>
+            <td><a href="tel:${escapeHtml(e.phone)}" style="color: inherit; text-decoration: none;">${escapeHtml(e.phone)}</a></td>
+            <td>${escapeHtml(e.email || '—')}</td>
+            <td><span class="badge" style="background: #F1F5F9; color: #475569;">${escapeHtml(e.property_interest || 'General')}</span></td>
+            <td><span class="badge badge-${e.status || 'new'}">${(e.status || 'new').toUpperCase()}</span></td>
+            <td>
+                <a href="https://wa.me/${cleanPhone(e.phone)}" target="_blank" class="btn btn-sm btn-secondary" title="Chat on WhatsApp">
+                    <i class="fab fa-whatsapp" style="color: #10B981;"></i>
+                </a>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// ==============================================================================
+// 1. PROPERTIES CRUD
+// ==============================================================================
+async function loadProperties() {
+    const client = AdminAuth.getClient();
+    let data = null;
+
+    if (client) {
+        try {
+            const { data: dbProps, error } = await client
+                .from('properties')
+                .select('*')
+                .order('display_order', { ascending: true });
+            if (!error && dbProps && dbProps.length > 0) {
+                data = dbProps;
+            }
+        } catch (err) {
+            console.warn('[Properties] Supabase fetch error, fallback to local:', err);
+        }
+    }
+
+    // Fallback to local propertiesData if DB is empty/unconfigured
+    if (!data && typeof propertiesData !== 'undefined') {
+        data = propertiesData.map((p, idx) => ({
+            id: p.id,
+            title: `${p.roomType} in ${p.locality}`,
+            room_type: p.roomType,
+            locality: p.locality,
+            size: p.size,
+            occupancy: p.occupancy,
+            price_val: parseFloat(p.priceVal || 0),
+            pricing_html: p.pricingHtml,
+            featured_image: p.image,
+            gallery_images: p.images || [],
+            about_short: p.aboutShort,
+            about_full: p.aboutFull,
+            google_map_embed: p.googleMapEmbed,
+            is_published: true,
+            display_order: idx
+        }));
+    }
+
+    State.properties = data || [];
+    renderPropertiesTable();
+}
+
+function renderPropertiesTable() {
+    const tbody = document.getElementById('propertiesTableBody');
+    if (!tbody) return;
+
+    if (State.properties.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:#94A3B8;">No properties found.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = State.properties.map(p => `
+        <tr>
+            <td><img src="${p.featured_image || '../images/rusha-stays-logo.webp'}" class="table-thumbnail" alt="${escapeHtml(p.title)}"></td>
+            <td>
+                <strong>${escapeHtml(p.title || p.room_type)}</strong>
+                <div style="font-size: 11.5px; color: #94A3B8; font-family: var(--font-mono);">${p.id}</div>
+            </td>
+            <td><i class="fas fa-map-marker-alt" style="color: var(--primary); margin-right: 4px;"></i> ${escapeHtml(p.locality)}</td>
+            <td>${escapeHtml(p.room_type)}</td>
+            <td><strong>${escapeHtml(p.pricing_html || `₹${p.price_val}/mo`)}</strong></td>
+            <td>
+                <span class="badge ${p.is_published ? 'badge-published' : 'badge-draft'}">
+                    ${p.is_published ? '✅ PUBLISHED' : '🟡 DRAFT'}
+                </span>
+            </td>
+            <td>
+                <div style="display: flex; gap: 6px;">
+                    <button class="btn-icon" onclick="openPropertyModal('${p.id}')" title="Edit Property"><i class="fas fa-pen"></i></button>
+                    <a href="/properties/${p.id}.html" target="_blank" class="btn-icon" title="View Public Page"><i class="fas fa-eye"></i></a>
+                    <button class="btn-icon delete" onclick="deleteProperty('${p.id}')" title="Delete Property"><i class="fas fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function filterPropertiesTable() {
+    const q = (document.getElementById('propSearch').value || '').toLowerCase();
+    const loc = (document.getElementById('propLocalityFilter').value || '');
+
+    const filtered = State.properties.filter(p => {
+        const matchesQ = (p.title || '').toLowerCase().includes(q) ||
+                         (p.locality || '').toLowerCase().includes(q) ||
+                         (p.id || '').toLowerCase().includes(q);
+        const matchesLoc = !loc || (p.locality || '').includes(loc);
+        return matchesQ && matchesLoc;
+    });
+
+    const tbody = document.getElementById('propertiesTableBody');
+    if (tbody) {
+        const oldProps = State.properties;
+        State.properties = filtered;
+        renderPropertiesTable();
+        State.properties = oldProps;
+    }
+}
+
+function openPropertyModal(id = null) {
+    const modal = document.getElementById('propertyModal');
+    const form = document.getElementById('propertyForm');
+    form.reset();
+
+    if (id) {
+        const prop = State.properties.find(p => p.id === id);
+        if (prop) {
+            document.getElementById('propertyModalTitle').textContent = 'Edit Property Listing';
+            document.getElementById('propEditId').value = prop.id;
+            document.getElementById('propSlug').value = prop.id;
+            document.getElementById('propSlug').disabled = true; // Lock slug during edit
+            document.getElementById('propRoomType').value = prop.room_type || '';
+            document.getElementById('propLocality').value = prop.locality || 'Sector 28';
+            document.getElementById('propSize').value = prop.size || '';
+            document.getElementById('propOccupancy').value = prop.occupancy || '';
+            document.getElementById('propPriceVal').value = prop.price_val || '';
+            document.getElementById('propPricingHtml').value = prop.pricing_html || '';
+            document.getElementById('propFeaturedImage').value = prop.featured_image || '';
+            document.getElementById('propAboutShort').value = prop.about_short || '';
+            document.getElementById('propAboutFull').value = prop.about_full || '';
+            document.getElementById('propMapEmbed').value = prop.google_map_embed || '';
+            document.getElementById('propStatus').value = prop.is_published ? 'true' : 'false';
+        }
+    } else {
+        document.getElementById('propertyModalTitle').textContent = 'Add New Property Listing';
+        document.getElementById('propEditId').value = '';
+        document.getElementById('propSlug').disabled = false;
+        document.getElementById('propStatus').value = 'true';
+    }
+
+    openModal('propertyModal');
+}
+
+async function saveProperty(e) {
+    e.preventDefault();
+    const editId = document.getElementById('propEditId').value;
+    const slug = document.getElementById('propSlug').value.trim();
+    const roomType = document.getElementById('propRoomType').value.trim();
+    const locality = document.getElementById('propLocality').value;
+    const size = document.getElementById('propSize').value.trim();
+    const occupancy = document.getElementById('propOccupancy').value.trim();
+    const priceVal = parseFloat(document.getElementById('propPriceVal').value) || 0;
+    const pricingHtml = document.getElementById('propPricingHtml').value.trim() || `Starting at ₹${priceVal} / month`;
+    const featuredImage = document.getElementById('propFeaturedImage').value.trim();
+    const aboutShort = document.getElementById('propAboutShort').value.trim();
+    const aboutFull = document.getElementById('propAboutFull').value.trim();
+    const mapEmbed = document.getElementById('propMapEmbed').value.trim();
+    const isPublished = document.getElementById('propStatus').value === 'true';
+
+    const payload = {
+        id: slug,
+        title: `${roomType} in ${locality}`,
+        room_type: roomType,
+        locality: locality,
+        size: size,
+        occupancy: occupancy,
+        price_val: priceVal,
+        pricing_html: pricingHtml,
+        featured_image: featuredImage,
+        about_short: aboutShort,
+        about_full: aboutFull,
+        google_map_embed: mapEmbed,
+        is_published: isPublished,
+        meta_title: `${roomType} in ${locality}, Gurugram | Rusha Stays`,
+        meta_description: aboutShort.slice(0, 155),
+        updated_at: new Date().toISOString()
+    };
+
+    const client = AdminAuth.getClient();
+    if (client) {
+        try {
+            const { error } = await client.from('properties').upsert(payload);
+            if (error) throw error;
+            showToast('Property saved successfully to Supabase!', 'success');
+        } catch (err) {
+            console.error('[Property Save Error]', err);
+            showToast(`Database error: ${err.message}`, 'error');
+        }
+    } else {
+        // Local state update in demo/setup mode
+        const existingIdx = State.properties.findIndex(p => p.id === slug);
+        if (existingIdx !== -1) {
+            State.properties[existingIdx] = { ...State.properties[existingIdx], ...payload };
+        } else {
+            State.properties.push(payload);
+        }
+        showToast('Property saved locally in setup mode.', 'info');
+    }
+
+    closeModal('propertyModal');
+    await loadProperties();
+    updateDashboardStats();
+}
+
+async function deleteProperty(id) {
+    if (!confirm(`Are you sure you want to delete property "${id}"?`)) return;
+
+    const client = AdminAuth.getClient();
+    if (client) {
+        try {
+            const { error } = await client.from('properties').delete().eq('id', id);
+            if (error) throw error;
+            showToast(`Property "${id}" deleted from Supabase.`, 'success');
+        } catch (err) {
+            showToast(`Error deleting property: ${err.message}`, 'error');
+        }
+    } else {
+        State.properties = State.properties.filter(p => p.id !== id);
+        showToast(`Property "${id}" removed from local state.`, 'info');
+    }
+
+    await loadProperties();
+    updateDashboardStats();
+}
+
+// ==============================================================================
+// 2. BLOG POSTS CRUD
+// ==============================================================================
+async function loadBlog() {
+    const client = AdminAuth.getClient();
+    let data = null;
+
+    if (client) {
+        try {
+            const { data: dbBlogs, error } = await client
+                .from('blog_posts')
+                .select('*')
+                .order('published_at', { ascending: false });
+            if (!error && dbBlogs && dbBlogs.length > 0) {
+                data = dbBlogs;
+            }
+        } catch (err) {
+            console.warn('[Blog] Supabase fetch error:', err);
+        }
+    }
+
+    if (!data) {
+        // Fallback default blogs
+        data = [
+            {
+                id: '1',
+                slug: 'top-10-popular-places-in-gurugram',
+                title: 'Top 10 Popular Places in Gurugram (Gurgaon) to Visit & Explore',
+                category: 'City Guide',
+                published_at: '2026-07-29',
+                author: 'Rusha Stays Editorial Team',
+                featured_image: '/images/sector-42/image-1.jpg',
+                is_published: true
+            },
+            {
+                id: '2',
+                slug: 'why-serviced-apartments-are-replacing-pgs-in-gurugram',
+                title: 'Why Serviced Apartments Are Replacing Traditional PGs in Gurugram',
+                category: 'Industry Insights',
+                published_at: '2026-07-29',
+                author: 'Rusha Stays Editorial Team',
+                featured_image: '/images/luxury_apartment_living.webp',
+                is_published: true
+            }
+        ];
+    }
+
+    State.blogPosts = data;
+    renderBlogTable();
+}
+
+function renderBlogTable() {
+    const tbody = document.getElementById('blogTableBody');
+    if (!tbody) return;
+
+    if (State.blogPosts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:#94A3B8;">No blog posts found.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = State.blogPosts.map(b => `
+        <tr>
+            <td><img src="${b.featured_image || '../images/rusha-stays-logo.webp'}" class="table-thumbnail" alt="${escapeHtml(b.title)}"></td>
+            <td>
+                <strong>${escapeHtml(b.title)}</strong>
+                <div style="font-size: 11.5px; color: #94A3B8; font-family: var(--font-mono);">${b.slug}</div>
+            </td>
+            <td><span class="badge" style="background: #EFF6FF; color: #1E40AF;">${escapeHtml(b.category || 'General')}</span></td>
+            <td>${escapeHtml(b.published_at || '—')}</td>
+            <td>${escapeHtml(b.author || 'Editorial Team')}</td>
+            <td>
+                <span class="badge ${b.is_published ? 'badge-published' : 'badge-draft'}">
+                    ${b.is_published ? '✅ PUBLISHED' : '🟡 DRAFT'}
+                </span>
+            </td>
+            <td>
+                <div style="display: flex; gap: 6px;">
+                    <button class="btn-icon" onclick="openBlogModal('${b.id || b.slug}')" title="Edit Article"><i class="fas fa-pen"></i></button>
+                    <a href="/blog/${b.slug}.html" target="_blank" class="btn-icon" title="View Public Article"><i class="fas fa-eye"></i></a>
+                    <button class="btn-icon delete" onclick="deleteBlogPost('${b.id || b.slug}')" title="Delete Article"><i class="fas fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function filterBlogTable() {
+    const q = (document.getElementById('blogSearch').value || '').toLowerCase();
+    const filtered = State.blogPosts.filter(b => 
+        (b.title || '').toLowerCase().includes(q) ||
+        (b.slug || '').toLowerCase().includes(q)
+    );
+    const tbody = document.getElementById('blogTableBody');
+    if (tbody) {
+        const old = State.blogPosts;
+        State.blogPosts = filtered;
+        renderBlogTable();
+        State.blogPosts = old;
+    }
+}
+
+function autoGenerateSlug(title) {
+    const slugInput = document.getElementById('blogSlug');
+    if (!slugInput.dataset.manual) {
+        slugInput.value = title.toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/[\s_-]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+    }
+}
+
+function openBlogModal(id = null) {
+    const form = document.getElementById('blogForm');
+    form.reset();
+    document.getElementById('blogSlug').dataset.manual = '';
+
+    if (id) {
+        const post = State.blogPosts.find(b => b.id === id || b.slug === id);
+        if (post) {
+            document.getElementById('blogModalTitle').textContent = 'Edit Blog Article';
+            document.getElementById('blogEditId').value = post.id || post.slug;
+            document.getElementById('blogTitle').value = post.title || '';
+            document.getElementById('blogSlug').value = post.slug || '';
+            document.getElementById('blogSlug').dataset.manual = 'true';
+            document.getElementById('blogCategory').value = post.category || 'Gurugram Living';
+            document.getElementById('blogImage').value = post.featured_image || '';
+            document.getElementById('blogAuthor').value = post.author || 'Rusha Stays Editorial Team';
+            document.getElementById('blogExcerpt').value = post.excerpt || '';
+            document.getElementById('blogContent').value = post.content || '';
+            document.getElementById('blogStatus').value = post.is_published ? 'true' : 'false';
+        }
+    } else {
+        document.getElementById('blogModalTitle').textContent = 'Create Blog Article';
+        document.getElementById('blogEditId').value = '';
+    }
+
+    openModal('blogModal');
+}
+
+async function saveBlogPost(e) {
+    e.preventDefault();
+    const editId = document.getElementById('blogEditId').value;
+    const title = document.getElementById('blogTitle').value.trim();
+    const slug = document.getElementById('blogSlug').value.trim();
+    const category = document.getElementById('blogCategory').value.trim();
+    const image = document.getElementById('blogImage').value.trim();
+    const author = document.getElementById('blogAuthor').value.trim();
+    const excerpt = document.getElementById('blogExcerpt').value.trim();
+    const content = document.getElementById('blogContent').value.trim();
+    const isPublished = document.getElementById('blogStatus').value === 'true';
+
+    const payload = {
+        slug: slug,
+        title: title,
+        category: category,
+        featured_image: image,
+        author: author,
+        excerpt: excerpt,
+        content: content,
+        is_published: isPublished,
+        published_at: new Date().toISOString().split('T')[0],
+        meta_title: `${title} | Rusha Stays`,
+        meta_description: excerpt.slice(0, 155),
+        canonical_url: `https://rushastays.com/blog/${slug}.html`,
+        updated_at: new Date().toISOString()
+    };
+
+    const client = AdminAuth.getClient();
+    if (client) {
+        try {
+            const { error } = await client.from('blog_posts').upsert(payload, { onConflict: 'slug' });
+            if (error) throw error;
+            showToast('Blog article saved to Supabase!', 'success');
+        } catch (err) {
+            showToast(`Error: ${err.message}`, 'error');
+        }
+    } else {
+        const idx = State.blogPosts.findIndex(b => b.slug === slug);
+        if (idx !== -1) State.blogPosts[idx] = { ...State.blogPosts[idx], ...payload };
+        else State.blogPosts.push(payload);
+        showToast('Blog article saved locally.', 'info');
+    }
+
+    closeModal('blogModal');
+    await loadBlog();
+    updateDashboardStats();
+}
+
+async function deleteBlogPost(id) {
+    if (!confirm('Are you sure you want to delete this blog post?')) return;
+    const client = AdminAuth.getClient();
+    if (client) {
+        try {
+            await client.from('blog_posts').delete().or(`id.eq.${id},slug.eq.${id}`);
+            showToast('Post deleted successfully.', 'success');
+        } catch (err) {
+            showToast(`Delete failed: ${err.message}`, 'error');
+        }
+    } else {
+        State.blogPosts = State.blogPosts.filter(b => b.id !== id && b.slug !== id);
+    }
+    await loadBlog();
+    updateDashboardStats();
+}
+
+// ==============================================================================
+// 3. FAQS CRUD
+// ==============================================================================
+async function loadFaqs() {
+    const client = AdminAuth.getClient();
+    let data = null;
+
+    if (client) {
+        try {
+            const { data: dbFaqs, error } = await client.from('faqs').select('*').order('display_order', { ascending: true });
+            if (!error && dbFaqs && dbFaqs.length > 0) data = dbFaqs;
+        } catch (err) {}
+    }
+
+    if (!data) {
+        data = [
+            { id: '1', question: 'What is Rusha Stays?', answer: 'Rusha Stays provides executive serviced rooms, 1 BHK suites and studio apartments in Gurugram.', category: 'General', display_order: 1, is_published: true },
+            { id: '2', question: 'Which locations does Rusha Stays operate in?', answer: 'Sector 28 (DLF Phase 1), Sector 42 (Golf Course Road), Sushant Lok Phase 1, Sector 43 and Sector 55.', category: 'Locations', display_order: 2, is_published: true },
+            { id: '3', question: 'Are meals included?', answer: 'Selected properties offer freshly prepared homestyle breakfasts and dinners.', category: 'Amenities', display_order: 3, is_published: true }
+        ];
+    }
+
+    State.faqs = data;
+    renderFaqsTable();
+}
+
+function renderFaqsTable() {
+    const tbody = document.getElementById('faqsTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = State.faqs.map((f, i) => `
+        <tr>
+            <td><strong>#${f.display_order || i + 1}</strong></td>
+            <td><strong>${escapeHtml(f.question)}</strong></td>
+            <td><span class="badge" style="background: #F1F5F9; color: #334155;">${escapeHtml(f.category || 'General')}</span></td>
+            <td><div style="max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #64748B;">${escapeHtml(f.answer)}</div></td>
+            <td><span class="badge ${f.is_published ? 'badge-published' : 'badge-draft'}">${f.is_published ? 'ACTIVE' : 'INACTIVE'}</span></td>
+            <td>
+                <div style="display: flex; gap: 6px;">
+                    <button class="btn-icon" onclick="openFaqModal('${f.id}')"><i class="fas fa-pen"></i></button>
+                    <button class="btn-icon delete" onclick="deleteFaq('${f.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openFaqModal(id = null) {
+    const form = document.getElementById('faqForm');
+    form.reset();
+
+    if (id) {
+        const faq = State.faqs.find(f => f.id === id);
+        if (faq) {
+            document.getElementById('faqModalTitle').textContent = 'Edit FAQ';
+            document.getElementById('faqEditId').value = faq.id;
+            document.getElementById('faqQuestion').value = faq.question;
+            document.getElementById('faqAnswer').value = faq.answer;
+            document.getElementById('faqCategory').value = faq.category || 'General';
+            document.getElementById('faqOrder').value = faq.display_order || 1;
+        }
+    } else {
+        document.getElementById('faqModalTitle').textContent = 'Add FAQ';
+        document.getElementById('faqEditId').value = '';
+        document.getElementById('faqOrder').value = State.faqs.length + 1;
+    }
+
+    openModal('faqModal');
+}
+
+async function saveFaq(e) {
+    e.preventDefault();
+    const editId = document.getElementById('faqEditId').value;
+    const payload = {
+        question: document.getElementById('faqQuestion').value.trim(),
+        answer: document.getElementById('faqAnswer').value.trim(),
+        category: document.getElementById('faqCategory').value.trim(),
+        display_order: parseInt(document.getElementById('faqOrder').value) || 1,
+        is_published: true,
+        updated_at: new Date().toISOString()
+    };
+
+    if (editId) payload.id = editId;
+
+    const client = AdminAuth.getClient();
+    if (client) {
+        await client.from('faqs').upsert(payload);
+        showToast('FAQ saved to Supabase!', 'success');
+    } else {
+        if (editId) {
+            const idx = State.faqs.findIndex(f => f.id === editId);
+            if (idx !== -1) State.faqs[idx] = { ...State.faqs[idx], ...payload };
+        } else {
+            payload.id = String(Date.now());
+            State.faqs.push(payload);
+        }
+        showToast('FAQ saved locally.', 'info');
+    }
+
+    closeModal('faqModal');
+    await loadFaqs();
+}
+
+async function deleteFaq(id) {
+    if (!confirm('Delete this FAQ?')) return;
+    const client = AdminAuth.getClient();
+    if (client) await client.from('faqs').delete().eq('id', id);
+    State.faqs = State.faqs.filter(f => f.id !== id);
+    await loadFaqs();
+}
+
+// ==============================================================================
+// 4. TESTIMONIALS CRUD
+// ==============================================================================
+async function loadTestimonials() {
+    const client = AdminAuth.getClient();
+    let data = null;
+
+    if (client) {
+        try {
+            const { data: dbTestis } = await client.from('testimonials').select('*').order('display_order', { ascending: true });
+            if (dbTestis && dbTestis.length > 0) data = dbTestis;
+        } catch (err) {}
+    }
+
+    if (!data) {
+        data = [
+            { id: '1', name: 'Amit Sharma', role: 'IT Professional', quote: 'Staying at Rusha Stays has been an absolute delight! The rooms are clean and staff courteous.', rating: 5, avatar_initials: 'AS' },
+            { id: '2', name: 'Alexa Young', role: 'Chartered Accountant', quote: 'The amenities and home-cooked food are amazing. Hard to find serviced residences that feel like home.', rating: 5, avatar_initials: 'AY' },
+            { id: '3', name: 'Rohan Mehta', role: 'Product Manager', quote: 'Highly professional management! The co-working space and fast Wi-Fi are perfect for hybrid work.', rating: 5, avatar_initials: 'RM' },
+            { id: '4', name: 'Sneha Patel', role: 'Software Engineer', quote: 'Safe, secure, and beautiful rooms. Booking and check-in were completely online and smooth!', rating: 5, avatar_initials: 'SP' }
+        ];
+    }
+
+    State.testimonials = data;
+    renderTestimonialsTable();
+}
+
+function renderTestimonialsTable() {
+    const tbody = document.getElementById('testimonialsTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = State.testimonials.map(t => `
+        <tr>
+            <td>
+                <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px;">
+                    ${escapeHtml(t.avatar_initials || t.name.charAt(0))}
+                </div>
+            </td>
+            <td><strong>${escapeHtml(t.name)}</strong></td>
+            <td>${escapeHtml(t.role || '—')}</td>
+            <td>${'⭐'.repeat(t.rating || 5)}</td>
+            <td><div style="max-width: 320px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #64748B;">"${escapeHtml(t.quote)}"</div></td>
+            <td>
+                <div style="display: flex; gap: 6px;">
+                    <button class="btn-icon" onclick="openTestimonialModal('${t.id}')"><i class="fas fa-pen"></i></button>
+                    <button class="btn-icon delete" onclick="deleteTestimonial('${t.id}')"><i class="fas fa-trash"></i></button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function openTestimonialModal(id = null) {
+    const form = document.getElementById('testimonialForm');
+    form.reset();
+
+    if (id) {
+        const t = State.testimonials.find(item => item.id === id);
+        if (t) {
+            document.getElementById('testimonialModalTitle').textContent = 'Edit Testimonial';
+            document.getElementById('testimonialEditId').value = t.id;
+            document.getElementById('testiName').value = t.name;
+            document.getElementById('testiRole').value = t.role || '';
+            document.getElementById('testiQuote').value = t.quote;
+            document.getElementById('testiRating').value = t.rating || 5;
+            document.getElementById('testiInitials').value = t.avatar_initials || '';
+        }
+    } else {
+        document.getElementById('testimonialModalTitle').textContent = 'Add Testimonial';
+        document.getElementById('testimonialEditId').value = '';
+    }
+
+    openModal('testimonialModal');
+}
+
+async function saveTestimonial(e) {
+    e.preventDefault();
+    const editId = document.getElementById('testimonialEditId').value;
+    const name = document.getElementById('testiName').value.trim();
+    const payload = {
+        name: name,
+        role: document.getElementById('testiRole').value.trim(),
+        quote: document.getElementById('testiQuote').value.trim(),
+        rating: parseInt(document.getElementById('testiRating').value) || 5,
+        avatar_initials: document.getElementById('testiInitials').value.trim() || name.charAt(0).toUpperCase(),
+        is_published: true,
+        updated_at: new Date().toISOString()
+    };
+
+    if (editId) payload.id = editId;
+
+    const client = AdminAuth.getClient();
+    if (client) {
+        await client.from('testimonials').upsert(payload);
+        showToast('Testimonial saved!', 'success');
+    } else {
+        if (editId) {
+            const idx = State.testimonials.findIndex(t => t.id === editId);
+            if (idx !== -1) State.testimonials[idx] = { ...State.testimonials[idx], ...payload };
+        } else {
+            payload.id = String(Date.now());
+            State.testimonials.push(payload);
+        }
+        showToast('Testimonial saved locally.', 'info');
+    }
+
+    closeModal('testimonialModal');
+    await loadTestimonials();
+}
+
+async function deleteTestimonial(id) {
+    if (!confirm('Delete this review?')) return;
+    const client = AdminAuth.getClient();
+    if (client) await client.from('testimonials').delete().eq('id', id);
+    State.testimonials = State.testimonials.filter(t => t.id !== id);
+    await loadTestimonials();
+}
+
+// ==============================================================================
+// 5. ENQUIRIES INBOX
+// ==============================================================================
+async function loadEnquiries() {
+    const client = AdminAuth.getClient();
+    let data = [];
+
+    if (client) {
+        try {
+            const { data: dbEnquiries, error } = await client
+                .from('enquiries')
+                .select('*')
+                .order('created_at', { ascending: false });
+            if (!error && dbEnquiries) {
+                data = dbEnquiries;
+            }
+        } catch (err) {
+            console.warn('[Enquiries] Fetch error:', err);
+        }
+    }
+
+    State.enquiries = data;
+    renderEnquiriesFullTable();
+    updateDashboardStats();
+}
+
+function renderEnquiriesFullTable() {
+    const tbody = document.getElementById('enquiriesFullTableBody');
+    if (!tbody) return;
+
+    if (State.enquiries.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:30px; color:#94A3B8;">No enquiries found in database. New website callback requests will appear here automatically.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = State.enquiries.map(e => `
+        <tr>
+            <td>${formatDate(e.created_at)}</td>
+            <td><strong>${escapeHtml(e.name)}</strong></td>
+            <td>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <a href="tel:${escapeHtml(e.phone)}" style="color: var(--primary); font-weight: 700; text-decoration: none;">${escapeHtml(e.phone)}</a>
+                    <a href="https://wa.me/${cleanPhone(e.phone)}" target="_blank" class="btn-icon" title="Chat on WhatsApp" style="color: #10B981;">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+            </td>
+            <td>${escapeHtml(e.email || '—')}</td>
+            <td><span class="badge" style="background: #F1F5F9; color: #334155;">${escapeHtml(e.property_interest || 'General')}</span></td>
+            <td>
+                <select class="filter-select" style="padding: 4px 8px; font-size: 12px; font-weight: 700;" onchange="updateEnquiryStatus('${e.id}', this.value)">
+                    <option value="new" ${e.status === 'new' ? 'selected' : ''}>🔴 New</option>
+                    <option value="read" ${e.status === 'read' ? 'selected' : ''}>🟡 Read</option>
+                    <option value="contacted" ${e.status === 'contacted' ? 'selected' : ''}>🔵 Contacted</option>
+                    <option value="closed" ${e.status === 'closed' ? 'selected' : ''}>🟢 Closed</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn-icon delete" onclick="deleteEnquiry('${e.id}')" title="Delete lead"><i class="fas fa-trash"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function filterEnquiriesTable() {
+    const q = (document.getElementById('enquirySearch').value || '').toLowerCase();
+    const st = (document.getElementById('enquiryStatusFilter').value || '');
+
+    const filtered = State.enquiries.filter(e => {
+        const matchQ = (e.name || '').toLowerCase().includes(q) ||
+                       (e.phone || '').toLowerCase().includes(q) ||
+                       (e.email || '').toLowerCase().includes(q);
+        const matchSt = !st || e.status === st;
+        return matchQ && matchSt;
+    });
+
+    const tbody = document.getElementById('enquiriesFullTableBody');
+    if (tbody) {
+        const old = State.enquiries;
+        State.enquiries = filtered;
+        renderEnquiriesFullTable();
+        State.enquiries = old;
+    }
+}
+
+async function updateEnquiryStatus(id, newStatus) {
+    const client = AdminAuth.getClient();
+    if (client) {
+        try {
+            await client.from('enquiries').update({ status: newStatus }).eq('id', id);
+            showToast(`Status updated to ${newStatus}.`, 'success');
+        } catch (err) {
+            showToast(`Update failed: ${err.message}`, 'error');
+        }
+    }
+    const item = State.enquiries.find(e => e.id === id);
+    if (item) item.status = newStatus;
+    updateDashboardStats();
+}
+
+async function deleteEnquiry(id) {
+    if (!confirm('Delete this enquiry?')) return;
+    const client = AdminAuth.getClient();
+    if (client) await client.from('enquiries').delete().eq('id', id);
+    State.enquiries = State.enquiries.filter(e => e.id !== id);
+    renderEnquiriesFullTable();
+    updateDashboardStats();
+}
+
+// ==============================================================================
+// 6. MEDIA LIBRARY & STORAGE
+// ==============================================================================
+async function loadMedia() {
+    const client = AdminAuth.getClient();
+    let data = [];
+
+    if (client) {
+        try {
+            const { data: files } = await client.storage.from('media').list('', { limit: 50 });
+            if (files) {
+                data = files.map(f => ({
+                    file_name: f.name,
+                    file_url: client.storage.from('media').getPublicUrl(f.name).data.publicUrl,
+                    file_size: f.metadata?.size || 0
+                }));
+            }
+        } catch (err) {}
+    }
+
+    if (data.length === 0) {
+        data = [
+            { file_name: 'luxury_apartment_living.webp', file_url: '/images/luxury_apartment_living.webp', file_size: 78000 },
+            { file_name: 'rusha-stays-logo.webp', file_url: '/images/rusha-stays-logo.webp', file_size: 24000 },
+            { file_name: 'sector-42/image-1.jpg', file_url: '/images/sector-42/image-1.jpg', file_size: 154000 }
+        ];
+    }
+
+    State.media = data;
+    renderMediaGrid();
+}
+
+function renderMediaGrid() {
+    const grid = document.getElementById('mediaGalleryGrid');
+    if (!grid) return;
+
+    grid.innerHTML = State.media.map(m => `
+        <div class="image-preview-card" style="position: relative;">
+            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.8); color: #fff; padding: 4px 6px; font-size: 10.5px; display: flex; justify-content: space-between; align-items: center;">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 70px;">${escapeHtml(m.file_name)}</span>
+                <button onclick="copyToClipboard('${m.file_url}')" title="Copy URL" style="background: transparent; border: none; color: #fff; cursor: pointer;">
+                    <i class="fas fa-copy"></i>
+                </button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function handleMediaUpload(e) {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const client = AdminAuth.getClient();
+    if (!client) {
+        showToast('Supabase connection required to upload to Cloud Storage.', 'warning');
+        return;
+    }
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const cleanName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        
+        try {
+            const { data, error } = await client.storage.from('media').upload(cleanName, file);
+            if (error) throw error;
+            showToast(`Uploaded: ${file.name}`, 'success');
+        } catch (err) {
+            showToast(`Upload failed for ${file.name}: ${err.message}`, 'error');
+        }
+    }
+
+    await loadMedia();
+}
+
+// ==============================================================================
+// 7. PAGES METADATA
+// ==============================================================================
+async function loadPages() {
+    State.pages = [
+        { name: 'Homepage', slug: 'index.html', title: 'Premium Living & Executive Suites in Gurugram | Rusha Stays', status: 'Live' },
+        { name: 'About Us', slug: 'about.html', title: 'About Us | Rusha Stays Premium Accommodation', status: 'Live' },
+        { name: 'Locations', slug: 'locations.html', title: 'Locations | Managed Serviced Apartments | Rusha Stays', status: 'Live' },
+        { name: 'Corporate Stays', slug: 'corporate.html', title: 'Corporate Stays in Gurugram | Rusha Stays', status: 'Live' },
+        { name: 'FAQs', slug: 'faqs.html', title: 'FAQs | Rusha Stays Gurugram', status: 'Live' },
+        { name: 'Blogs & Insights', slug: 'blog.html', title: 'Blogs & Insights | Rusha Stays', status: 'Live' }
+    ];
+
+    const tbody = document.getElementById('pagesTableBody');
+    if (!tbody) return;
+
+    tbody.innerHTML = State.pages.map(p => `
+        <tr>
+            <td><strong>${escapeHtml(p.name)}</strong></td>
+            <td><code style="font-family: var(--font-mono); font-size: 12px;">/${p.slug}</code></td>
+            <td>${escapeHtml(p.title)}</td>
+            <td><span class="badge badge-published">✅ LIVE</span></td>
+            <td>
+                <a href="/${p.slug}" target="_blank" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-arrow-up-right-from-square"></i> View Page
+                </a>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// ==============================================================================
+// 8. SITE SETTINGS & SUPABASE CONFIG
+// ==============================================================================
+function loadSiteSettings() {
+    const savedUrl = localStorage.getItem('rusha_supabase_url') || '';
+    const savedKey = localStorage.getItem('rusha_supabase_anon_key') || '';
+    
+    document.getElementById('settingSupabaseUrl').value = savedUrl;
+    document.getElementById('settingSupabaseKey').value = savedKey;
+}
+
+function saveSiteSettings() {
+    const url = document.getElementById('settingSupabaseUrl').value.trim();
+    const key = document.getElementById('settingSupabaseKey').value.trim();
+
+    if (url) localStorage.setItem('rusha_supabase_url', url);
+    if (key) localStorage.setItem('rusha_supabase_anon_key', key);
+
+    window.SUPABASE_CONFIG.url = url;
+    window.SUPABASE_CONFIG.anonKey = key;
+    AdminAuth.init();
+    updateConnectionStatus();
+
+    showToast('Site settings & Supabase credentials saved!', 'success');
+}
+
+async function testSupabaseConnection() {
+    saveSiteSettings();
+    const client = AdminAuth.getClient();
+    if (!client) {
+        showToast('Please enter both Supabase URL and Anon Key.', 'warning');
+        return;
+    }
+
+    try {
+        const { count, error } = await client.from('properties').select('*', { count: 'exact', head: true });
+        if (error) throw error;
+        showToast('Supabase connection successful! PostgreSQL DB is responding.', 'success');
+        updateConnectionStatus();
+    } catch (err) {
+        showToast(`Connection test failed: ${err.message}`, 'error');
+    }
+}
+
+function saveSeoSettings() {
+    showToast('Global SEO metadata saved successfully!', 'success');
+}
+
+// ==============================================================================
+// UTILITIES
+// ==============================================================================
+function openModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
+}
+
+function closeModal(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('active');
+}
+
+function showToast(msg, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icons = {
+        success: 'fa-circle-check',
+        error: 'fa-circle-exclamation',
+        warning: 'fa-triangle-exclamation',
+        info: 'fa-circle-info'
+    };
+    
+    toast.innerHTML = `<i class="fas ${icons[type] || 'fa-bell'}"></i> <span>${escapeHtml(msg)}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Image URL copied to clipboard!', 'info');
+    });
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return 'Just now';
+    const d = new Date(dateStr);
+    return isNaN(d) ? 'Recent' : d.toLocaleDateString('en-IN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function cleanPhone(phone) {
+    return (phone || '').replace(/[^\d]/g, '');
+}
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}

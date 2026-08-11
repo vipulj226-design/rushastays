@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | Rusha Stays CMS</title>
+    <link rel="icon" type="image/webp" href="../images/rusha-stays-logo.webp">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="js/supabase-client.js"></script>
+    
+    <style>
+        :root {
+            --primary: #C83828;
+            --primary-hover: #A02B1D;
+            --bg-dark: #0F172A;
+            --font: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font);
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: #1E293B;
+        }
+
+        .login-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 440px;
+            padding: 40px 36px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #C83828 0%, #E35106 100%);
+            border-radius: 16px;
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 16px rgba(200, 56, 40, 0.25);
+        }
+
+        .login-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0F172A;
+            letter-spacing: -0.5px;
+        }
+
+        .login-subtitle {
+            font-size: 13px;
+            color: #64748B;
+            margin-top: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94A3B8;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px 12px 40px;
+            background: #F8FAFC;
+            border: 1px solid #E2E8F0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #0F172A;
+            transition: all 0.2s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            background: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(200, 56, 40, 0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 13px;
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(200, 56, 40, 0.25);
+            margin-top: 24px;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 6px 16px rgba(200, 56, 40, 0.35);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .alert-box {
+            padding: 12px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-danger {
+            background: #FEF2F2;
+            border: 1px solid #FEE2E2;
+            color: #991B1B;
+        }
+
+        .alert-info {
+            background: #EFF6FF;
+            border: 1px solid #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .login-footer {
+            margin-top: 28px;
+            text-align: center;
+            border-top: 1px solid #F1F5F9;
+            padding-top: 18px;
+            font-size: 12px;
+            color: #64748B;
+        }
+
+        .login-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .config-helper-btn {
+            background: transparent;
+            border: none;
+            color: #64748B;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo-wrap">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h1 class="login-title">Rusha Stays Admin</h1>
+            <p class="login-subtitle">Sign in to manage properties, blogs & enquiries</p>
+        </div>
+
+        <div id="alertBox" class="alert-box alert-danger">
+            <i class="fas fa-circle-exclamation"></i>
+            <span id="alertMsg">Invalid credentials</span>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label class="form-label" for="email">Admin Email</label>
+                <div class="input-wrap">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" class="form-control" placeholder="admin@rushastays.com" required autofocus>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <div class="input-wrap">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••••••" required>
+                </div>
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-submit">
+                <span>Sign In to Dashboard</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="login-footer">
+            <div>&copy; 2026 Rusha Stays Management System</div>
+            <div style="margin-top: 6px;">
+                <a href="/">← Return to Public Website</a>
+            </div>
+            <button type="button" class="config-helper-btn" onclick="promptSupabaseConfig()">⚙️ Configure Supabase Credentials</button>
+        </div>
+    </div>
+
+    <script>
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', async () => {
+            AdminAuth.init();
+            const sessionData = await AdminAuth.checkSession();
+            if (sessionData.authenticated) {
+                window.location.href = 'index.html';
+            }
+        });
+
+        function showAlert(msg, type = 'danger') {
+            const box = document.getElementById('alertBox');
+            const txt = document.getElementById('alertMsg');
+            box.className = `alert-box alert-${type}`;
+            txt.textContent = msg;
+            box.style.display = 'flex';
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Authenticating...';
+
+            try {
+                await AdminAuth.login(email, password);
+                btn.innerHTML = '<i class="fas fa-check"></i> Success! Redirecting...';
+                window.location.href = 'index.html';
+            } catch (err) {
+                showAlert(err.message || 'Login failed. Please check your credentials.');
+                btn.disabled = false;
+                btn.innerHTML = '<span>Sign In to Dashboard</span> <i class="fas fa-arrow-right"></i>';
+            }
+        }
+
+        function promptSupabaseConfig() {
+            const currentUrl = localStorage.getItem('rusha_supabase_url') || '';
+            const currentKey = localStorage.getItem('rusha_supabase_anon_key') || '';
+            
+            const newUrl = prompt('Enter your Supabase Project URL:\n(e.g. https://your-id.supabase.co)', currentUrl);
+            if (newUrl !== null && newUrl.trim() !== '') {
+                const newKey = prompt('Enter your Supabase Anon/Public Key:', currentKey);
+                if (newKey !== null && newKey.trim() !== '') {
+                    localStorage.setItem('rusha_supabase_url', newUrl.trim());
+                    localStorage.setItem('rusha_supabase_anon_key', newKey.trim());
+                    window.SUPABASE_CONFIG.url = newUrl.trim();
+                    window.SUPABASE_CONFIG.anonKey = newKey.trim();
+                    AdminAuth.init();
+                    showAlert('Supabase credentials saved successfully! You can now log in.', 'info');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

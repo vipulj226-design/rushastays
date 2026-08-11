@@ -43,6 +43,42 @@ const app = {
 
     async init() {
         this.contentDiv = document.getElementById('app-content');
+
+        // Optional Live Supabase Properties Sync
+        if (typeof window.getSupabaseClient === 'function') {
+            const supabaseClient = window.getSupabaseClient();
+            if (supabaseClient) {
+                try {
+                    const { data: liveProps, error } = await supabaseClient
+                        .from('properties')
+                        .select('*')
+                        .eq('is_published', true)
+                        .order('display_order', { ascending: true });
+                    if (!error && liveProps && liveProps.length > 0) {
+                        window.propertiesData = liveProps.map(p => ({
+                            id: p.id,
+                            locality: p.locality,
+                            roomType: p.room_type,
+                            occupancy: p.occupancy,
+                            size: p.size,
+                            pricingHtml: p.pricing_html,
+                            priceVal: String(p.price_val),
+                            image: p.featured_image,
+                            images: p.gallery_images && p.gallery_images.length ? p.gallery_images : [p.featured_image],
+                            aboutShort: p.about_short,
+                            aboutFull: p.about_full,
+                            googleMapEmbed: p.google_map_embed,
+                            categories: p.categories || [],
+                            propertyAmenities: p.property_amenities || [],
+                            inSuiteFeatures: p.in_suite_features || [],
+                            landmarks: p.landmarks || []
+                        }));
+                    }
+                } catch (err) {
+                    console.warn('[Supabase] Properties sync fallback to static:', err);
+                }
+            }
+        }
         
         if (document.getElementById('home-template')) {
             this.renderHome();
@@ -657,6 +693,29 @@ const app = {
         };
 
 
+
+        // Dual-Save: Record lead into Supabase Enquiries table if connected
+        try {
+            if (typeof window.getSupabaseClient === 'function') {
+                const supabaseClient = window.getSupabaseClient();
+                if (supabaseClient) {
+                    supabaseClient.from('enquiries').insert({
+                        name: name || 'Website Visitor',
+                        phone: phone || 'Not provided',
+                        email: email || null,
+                        property_interest: inquiry_type || extraData.property_id || formType || 'General Enquiry',
+                        source_page: window.location.pathname || 'Homepage',
+                        status: 'new'
+                    }).then(({ error }) => {
+                        if (error) console.warn('[Supabase Enquiry]', error.message);
+                    }).catch(err => {
+                        console.warn('[Supabase Enquiry Exception]', err);
+                    });
+                }
+            }
+        } catch (sbErr) {
+            console.warn('[Supabase Enquiry Init Error]', sbErr);
+        }
 
         try {
             const response = await fetch('https://api.web3forms.com/submit', {
