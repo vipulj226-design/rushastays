@@ -1451,3 +1451,106 @@ window.scrollToCategory = function(catId) {
     const el = document.getElementById(catId);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
+
+/* ==============================================================================
+   REVIEWS & TESTIMONIALS CAROUSEL ENGINE (Auto-Rotate, Touch Swipe, Dots, Controls)
+   ============================================================================== */
+(function() {
+    let currentSlide = 0;
+    let autoPlayTimer = null;
+
+    window.updateCarouselView = function() {
+        const track = document.getElementById('testimonial-track');
+        const dots = document.querySelectorAll('#carousel-dots .carousel-dot');
+        const slides = document.querySelectorAll('#testimonial-track .carousel-slide');
+        
+        if (!track || slides.length === 0) return;
+        
+        if (currentSlide >= slides.length) currentSlide = 0;
+        if (currentSlide < 0) currentSlide = slides.length - 1;
+        
+        track.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        dots.forEach((dot, idx) => {
+            if (idx === currentSlide) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    };
+
+    window.goToSlide = function(index) {
+        currentSlide = index;
+        window.updateCarouselView();
+        resetAutoPlay();
+    };
+
+    window.nextSlide = function() {
+        const slides = document.querySelectorAll('#testimonial-track .carousel-slide');
+        if (slides.length === 0) return;
+        currentSlide = (currentSlide + 1) % slides.length;
+        window.updateCarouselView();
+        resetAutoPlay();
+    };
+
+    window.prevSlide = function() {
+        const slides = document.querySelectorAll('#testimonial-track .carousel-slide');
+        if (slides.length === 0) return;
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        window.updateCarouselView();
+        resetAutoPlay();
+    };
+
+    function startAutoPlay() {
+        if (autoPlayTimer) clearInterval(autoPlayTimer);
+        autoPlayTimer = setInterval(() => {
+            const slides = document.querySelectorAll('#testimonial-track .carousel-slide');
+            if (slides.length > 0) {
+                currentSlide = (currentSlide + 1) % slides.length;
+                window.updateCarouselView();
+            }
+        }, 3500);
+    }
+
+    function resetAutoPlay() {
+        startAutoPlay();
+    }
+
+    function initTestimonialsCarousel() {
+        const viewport = document.querySelector('.carousel-viewport');
+        if (!viewport) return;
+
+        window.updateCarouselView();
+        startAutoPlay();
+
+        // Pause auto-rotation on mouse hover
+        viewport.addEventListener('mouseenter', () => {
+            if (autoPlayTimer) clearInterval(autoPlayTimer);
+        });
+        viewport.addEventListener('mouseleave', () => {
+            startAutoPlay();
+        });
+
+        // Touch Swipe gestures for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        viewport.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        viewport.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 40) {
+                window.nextSlide();
+            } else if (touchEndX - touchStartX > 40) {
+                window.prevSlide();
+            }
+        }, { passive: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTestimonialsCarousel);
+    } else {
+        setTimeout(initTestimonialsCarousel, 100);
+    }
+})();
