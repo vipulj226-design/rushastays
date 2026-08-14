@@ -1805,9 +1805,11 @@ function renderMediaGrid() {
 
     // Helper to test if item belongs to category
     const belongsTo = (m, key) => {
-        if (key === 'cloud') return m.file_name.startsWith('cloud/');
-        if (key === 'general') return !m.file_name.startsWith('cloud/') && !m.file_url.includes('/sector-') && !m.file_url.includes('/sushant-lok') && !m.file_url.includes('/king-room');
-        return m.file_url.toLowerCase().includes('/' + key + '/');
+        const fn = m.file_name.toLowerCase();
+        const fu = m.file_url.toLowerCase();
+        if (key === 'cloud') return fn.startsWith('cloud/') || fn.startsWith('uploads/') || fn.startsWith('replacements/');
+        if (key === 'general') return !fn.startsWith('cloud/') && !fn.startsWith('uploads/') && !fn.startsWith('replacements/') && !fu.includes('/sector-') && !fu.includes('/sushant-lok') && !fu.includes('/king-room') && !fn.includes('sector-') && !fn.includes('sushant-lok') && !fn.includes('king-room');
+        return fu.includes('/' + key + '/') || fn.includes(key);
     };
 
     // Card generator HTML with Replace & Delete actions (NO copy button)
@@ -1893,11 +1895,9 @@ function replaceMediaImage(fileName, oldUrl) {
 
         const client = AdminAuth.getClient();
         if (!client) {
-            alert('DEBUG: Supabase client is NULL. Login required.');
             showToast('Supabase not connected. Please login first.', 'error');
             return;
         }
-        alert('DEBUG: Client ready. Uploading file: ' + file.name + ' (' + file.size + ' bytes)');
 
         const cleanName = `replacements/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
 
@@ -1905,7 +1905,6 @@ function replaceMediaImage(fileName, oldUrl) {
             const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
 
             if (error) {
-                alert('DEBUG UPLOAD ERROR: ' + JSON.stringify(error));
                 if (error.message && error.message.includes('Bucket not found')) {
                     showToast('Storage bucket "media" not found! Please create it in Supabase Dashboard > Storage.', 'error');
                 } else {
@@ -1914,7 +1913,6 @@ function replaceMediaImage(fileName, oldUrl) {
                 console.error('[Replace Upload Error]', error);
                 return;
             }
-            alert('DEBUG: Upload SUCCESS! Public URL: ' + client.storage.from('media').getPublicUrl(cleanName).data.publicUrl);
 
             const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
             const newUrl = pubData.publicUrl;
@@ -1942,7 +1940,6 @@ function replaceMediaImage(fileName, oldUrl) {
             showToast('Photo replaced & saved to cloud permanently!', 'success');
 
         } catch (err) {
-            alert('DEBUG EXCEPTION: ' + err.message);
             showToast('Upload error: ' + err.message, 'error');
             console.error('[Replace Upload Exception]', err);
         }
