@@ -1804,12 +1804,25 @@ function renderMediaGrid() {
     ];
 
     // Helper to test if item belongs to category
+    const propertyKeys = ['sector-28-1bhk', 'sector-28-executive', 'sector-28-premium-rooms', 'king-room', 'sector-42', 'sushant-lok'];
+    const matchesProp = (fn, fu, k) => fu.includes('/' + k + '/') || fn.includes(k);
+
     const belongsTo = (m, key) => {
         const fn = m.file_name.toLowerCase();
         const fu = m.file_url.toLowerCase();
-        if (key === 'cloud') return fn.startsWith('cloud/') || fn.startsWith('uploads/') || fn.startsWith('replacements/');
-        if (key === 'general') return !fn.startsWith('cloud/') && !fn.startsWith('uploads/') && !fn.startsWith('replacements/') && !fu.includes('/sector-') && !fu.includes('/sushant-lok') && !fu.includes('/king-room') && !fn.includes('sector-') && !fn.includes('sushant-lok') && !fn.includes('king-room');
-        return fu.includes('/' + key + '/') || fn.includes(key);
+        const isUpload = fn.startsWith('cloud/') || fn.startsWith('uploads/') || fn.startsWith('replacements/');
+        const belongsToAnyProp = propertyKeys.some(k => matchesProp(fn, fu, k));
+
+        if (key === 'cloud') {
+            // Cloud only shows uploads that DON'T match any property
+            return isUpload && !belongsToAnyProp;
+        }
+        if (key === 'general') {
+            // General = site images that don't match any property and aren't uploads
+            return !isUpload && !belongsToAnyProp;
+        }
+        // Property categories — match by key in filename or URL path
+        return matchesProp(fn, fu, key);
     };
 
     // Card generator HTML with Replace & Delete actions (NO copy button)
