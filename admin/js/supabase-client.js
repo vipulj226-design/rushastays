@@ -85,6 +85,10 @@ const AdminAuth = {
             }
         }
         this.user = null;
+        try {
+            localStorage.removeItem('supabase.auth.token');
+            sessionStorage.clear();
+        } catch (e) {}
         window.location.href = 'login.html';
     }
 };
