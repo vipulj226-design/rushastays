@@ -135,6 +135,9 @@ function switchTab(tabId) {
     const sidebar = document.getElementById('sidebar');
     if (sidebar && sidebar.classList.contains('mobile-open')) {
         sidebar.classList.remove('mobile-open');
+        const backdrop = document.getElementById('sidebarBackdrop');
+        if (backdrop) backdrop.classList.remove('active');
+        document.body.style.overflow = '';
     }
 
     if (tabId === 'seo') {
@@ -144,7 +147,11 @@ function switchTab(tabId) {
 window.switchTab = switchTab;
 
 function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('mobile-open');
+    const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    const isOpen = sidebar.classList.toggle('mobile-open');
+    if (backdrop) backdrop.classList.toggle('active', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 
 // ==============================================================================

@@ -951,15 +951,31 @@ textarea.form-control {
 }
 
 /* ==============================================================================
-   RESPONSIVE DESIGN
+   RESPONSIVE DESIGN — TABLETS & PHONES
    ============================================================================== */
+
+/* ── TABLET (≤992px): Sidebar becomes slide-out overlay ── */
 @media (max-width: 992px) {
     .admin-sidebar {
         transform: translateX(-100%);
+        box-shadow: none;
     }
 
     .admin-sidebar.mobile-open {
         transform: translateX(0);
+        box-shadow: 8px 0 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Dark backdrop when sidebar is open */
+    .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 99;
+    }
+    .sidebar-backdrop.active {
+        display: block;
     }
 
     .admin-main {
@@ -967,29 +983,268 @@ textarea.form-control {
     }
 
     .btn-toggle-sidebar {
-        display: block;
-    }
-}
-
-@media (max-width: 640px) {
-    .admin-header {
-        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
     }
 
     .admin-content {
-        padding: 16px;
+        padding: 20px;
     }
 
     .metrics-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
     }
 
+    /* Modal adjustments */
+    .modal-dialog {
+        max-width: 95%;
+        max-height: 85vh;
+    }
+    .modal-dialog.lg {
+        max-width: 95%;
+    }
+
+    /* Table horizontal scroll */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .admin-table {
+        min-width: 600px;
+    }
+
+    /* Form rows stack on tablet */
+    .form-row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .card-header {
+        padding: 16px 18px;
+    }
+    .card-body {
+        padding: 18px;
+    }
+}
+
+/* ── PHONE (≤640px): Everything stacks vertically ── */
+@media (max-width: 640px) {
+    :root {
+        --header-height: 60px;
+    }
+
+    .admin-header {
+        padding: 0 12px;
+        height: 60px;
+    }
+
+    .page-title {
+        font-size: 16px;
+    }
+
+    /* Hide "View Site" text on small screens */
+    .btn-view-site span {
+        display: none;
+    }
+    .btn-view-site {
+        padding: 8px 10px;
+    }
+
+    /* Hide connection status text */
+    .conn-status-badge span:not(.status-dot) {
+        display: none;
+    }
+    .conn-status-badge {
+        padding: 6px 8px;
+        min-width: auto;
+    }
+
+    .admin-content {
+        padding: 12px;
+    }
+
+    /* Single column metrics */
+    .metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .metric-card {
+        padding: 16px;
+    }
+    .metric-value {
+        font-size: 22px;
+    }
+    .metric-icon-wrap {
+        width: 42px;
+        height: 42px;
+        font-size: 18px;
+    }
+
+    /* Card adjustments */
+    .admin-card {
+        margin-bottom: 16px;
+        border-radius: var(--radius-md);
+    }
+    .card-header {
+        padding: 14px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    .card-body {
+        padding: 14px 16px;
+    }
+    .card-title {
+        font-size: 15px;
+    }
+
+    /* Table adjustments */
     .table-toolbar {
         flex-direction: column;
         align-items: stretch;
+        gap: 10px;
     }
-
     .search-input-wrap {
         max-width: 100%;
+        min-width: auto;
+    }
+    .admin-table {
+        min-width: 500px;
+        font-size: 12.5px;
+    }
+    .admin-table th,
+    .admin-table td {
+        padding: 10px 12px;
+    }
+
+    /* Buttons full-width stack */
+    .card-header .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Form adjustments */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .form-group {
+        margin-bottom: 14px;
+    }
+    .form-control {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    /* Modal full-screen on phone */
+    .modal-overlay {
+        padding: 8px;
+        align-items: flex-end;
+    }
+    .modal-dialog,
+    .modal-dialog.lg {
+        max-width: 100%;
+        max-height: 92vh;
+        border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+    .modal-header {
+        padding: 16px;
+    }
+    .modal-title {
+        font-size: 16px;
+    }
+    .modal-body {
+        padding: 16px;
+    }
+    .modal-footer {
+        padding: 14px 16px;
+        flex-direction: column;
+    }
+    .modal-footer .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Upload dropzone */
+    .upload-dropzone {
+        padding: 20px 14px;
+    }
+    .upload-icon {
+        font-size: 28px;
+    }
+    .image-preview-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 8px;
+    }
+
+    /* Toast on mobile */
+    .toast-container {
+        top: auto;
+        bottom: 12px;
+        right: 12px;
+        left: 12px;
+    }
+    .toast {
+        min-width: auto;
+        max-width: 100%;
+        font-size: 13px;
+        padding: 12px 14px;
+    }
+
+    /* Sidebar full-screen on phone */
+    .admin-sidebar {
+        width: 280px;
+    }
+    .sidebar-header {
+        padding: 0 16px;
+    }
+    .sidebar-nav {
+        padding: 14px 8px;
+    }
+    .nav-item {
+        padding: 10px 14px;
+        font-size: 13.5px;
+    }
+    .sidebar-footer {
+        padding: 12px 14px;
+    }
+
+    /* Image preview in forms */
+    .image-preview-card {
+        aspect-ratio: 1/1;
+    }
+
+    /* SEO audit results */
+    .seo-result-card {
+        padding: 12px !important;
+    }
+
+    /* Settings form adjustments */
+    .settings-grid {
+        grid-template-columns: 1fr !important;
     }
 }
+
+/* ── VERY SMALL PHONES (≤380px) ── */
+@media (max-width: 380px) {
+    .admin-content {
+        padding: 8px;
+    }
+    .page-title {
+        font-size: 14px;
+    }
+    .admin-sidebar {
+        width: 260px;
+    }
+    .metric-card {
+        padding: 14px;
+    }
+    .header-actions {
+        gap: 6px;
+    }
+}
+
