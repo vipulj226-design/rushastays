@@ -1419,7 +1419,7 @@ window.closeCallbackModal = function(e) {
     // e is Event  → only close if click was on overlay background or close button
     if (e && e !== true && typeof e === 'object' && e.target) {
         const isOverlay = e.target.id === 'callback-modal';
-        const isCloseBtn = e.target.classList.contains('modal-close') || e.target.classList.contains('btn-success-close');
+        const isCloseBtn = !!(e.target.closest('.modal-close') || e.target.closest('.btn-success-close'));
         if (!isOverlay && !isCloseBtn) {
             return; // clicked inside modal content — do nothing
         }
