@@ -140,6 +140,20 @@ function switchTab(tabId) {
         document.body.style.overflow = '';
     }
 
+    if (tabId === 'properties') {
+        if (typeof renderPropertiesCards === 'function') renderPropertiesCards();
+        if (typeof renderPropertiesTable === 'function') renderPropertiesTable();
+    }
+    if (tabId === 'blog') {
+        if (typeof renderBlogCards === 'function') renderBlogCards();
+        if (typeof renderBlogTable === 'function') renderBlogTable();
+    }
+    if (tabId === 'faqs') {
+        if (typeof renderFaqsTable === 'function') renderFaqsTable();
+    }
+    if (tabId === 'pages') {
+        if (typeof loadPages === 'function') loadPages();
+    }
     if (tabId === 'seo') {
         if (typeof renderSeoAuditTable === 'function') renderSeoAuditTable();
     }
@@ -714,7 +728,9 @@ async function loadFaqs() {
     if (client) {
         try {
             const { data: dbFaqs, error } = await client.from('faqs').select('*').order('display_order', { ascending: true });
-            if (!error && dbFaqs && dbFaqs.length > 0) data = dbFaqs;
+            if (!error && dbFaqs && dbFaqs.length >= 15) {
+                data = dbFaqs;
+            }
         } catch (err) {}
     }
 
@@ -2491,3 +2507,88 @@ function setTestimonialRating(val) {
     });
 }
 window.setTestimonialRating = setTestimonialRating;
+
+
+/* ==============================================================================
+   BLOG WIX-STYLE CARDS & VIEW HELPERS
+   ============================================================================== */
+
+let currentBlogView = 'cards';
+function setBlogView(mode) {
+    currentBlogView = mode;
+    const cardsBtn = document.getElementById('blogViewCardsBtn');
+    const tableBtn = document.getElementById('blogViewTableBtn');
+    const cardsGrid = document.getElementById('blogCardsGrid');
+    const tableContainer = document.getElementById('blogTableContainer');
+
+    if (mode === 'cards') {
+        if (cardsBtn) cardsBtn.classList.add('active');
+        if (tableBtn) tableBtn.classList.remove('active');
+        if (cardsGrid) cardsGrid.style.display = 'grid';
+        if (tableContainer) tableContainer.style.display = 'none';
+    } else {
+        if (cardsBtn) cardsBtn.classList.remove('active');
+        if (tableBtn) tableBtn.classList.add('active');
+        if (cardsGrid) cardsGrid.style.display = 'none';
+        if (tableContainer) tableContainer.style.display = 'block';
+    }
+}
+window.setBlogView = setBlogView;
+
+function renderBlogCards() {
+    const cardsGrid = document.getElementById('blogCardsGrid');
+    if (!cardsGrid) return;
+
+    if (!State.blogPosts || State.blogPosts.length === 0) {
+        cardsGrid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 48px; background: #fff; border-radius: 12px; border: 1px dashed #CBD5E1;">
+                <i class="fas fa-newspaper" style="font-size: 36px; color: #94A3B8; margin-bottom: 12px;"></i>
+                <h4 style="font-size: 16px; color: #334155;">No Articles Found</h4>
+                <p style="font-size: 13px; color: #94A3B8; margin-top: 4px;">Click "+ Create Article" above to publish your first post!</p>
+            </div>
+        `;
+        return;
+    }
+
+    cardsGrid.innerHTML = State.blogPosts.map(b => {
+        const isLive = b.is_published !== false;
+        const mainImg = b.featured_image || '../images/luxury_apartment_living.webp';
+        const author = b.author || 'Rusha Stays Team';
+        const date = b.published_at || 'Recent';
+        const category = b.category || 'Guide';
+        const slug = b.slug || b.id;
+
+        return `
+            <div class="wix-property-card">
+                <div class="wix-card-media">
+                    <img src="${mainImg}" alt="${escapeHtml(b.title)}" loading="lazy" onerror="this.src='../images/rusha-stays-logo.webp'">
+                    <span class="wix-card-status-badge ${isLive ? 'published' : 'draft'}">
+                        ${isLive ? '● Published' : '○ Draft'}
+                    </span>
+                    <span class="wix-card-price-badge" style="background: var(--primary);">${escapeHtml(category)}</span>
+                </div>
+                <div class="wix-card-body">
+                    <div class="wix-card-locality"><i class="far fa-calendar"></i> ${escapeHtml(date)} &bull; By ${escapeHtml(author)}</div>
+                    <div class="wix-card-title" style="font-size: 15px;">${escapeHtml(b.title)}</div>
+                    <p style="font-size: 12px; color: #64748B; line-height: 1.4; margin-top: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        ${escapeHtml(b.excerpt || '')}
+                    </p>
+                </div>
+                <div class="wix-card-footer">
+                    <button class="btn btn-secondary btn-sm" onclick="openBlogModal('${slug}')">
+                        <i class="fas fa-pen-to-square"></i> Edit
+                    </button>
+                    <div style="display: flex; gap: 6px;">
+                        <a href="../blog/${slug}.html" target="_blank" class="btn-icon" title="View Article Page">
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <button class="btn-icon delete" onclick="deleteBlogPost('${slug}')" title="Delete Article">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+window.renderBlogCards = renderBlogCards;
