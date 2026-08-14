@@ -139,11 +139,11 @@ const app = {
                         .select('*')
                         .order('display_order', { ascending: true });
 
-                    if (!fErr && dbFaqs && dbFaqs.length > 0) {
+                    if (!fErr && dbFaqs && dbFaqs.length >= 15) {
                         const container = document.getElementById('faqs-container') || document.querySelector('.faq-section');
                         const list = dbFaqs.filter(f => f.is_published !== false);
 
-                        if (container && list.length > 0) {
+                        if (container && list.length >= 15) {
                             const categories = {
                                 'About': [],
                                 'Locations': [],
