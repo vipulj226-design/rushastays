@@ -1011,15 +1011,17 @@ const app = {
             const modalHeader = document.querySelector('#callback-modal .modal-header');
             if (successState) {
                 form.style.display = 'none';
+                form.classList.add('d-none');
                 successState.style.display = 'block';
+                successState.classList.remove('d-none');
                 if (modalHeader) modalHeader.style.display = 'none';
             }
-            // Trigger 15s reset timeout to match inline scripts
+            // Trigger 4s auto close
             setTimeout(() => {
                 if (typeof window.closeCallbackModal === 'function') {
                     window.closeCallbackModal(true);
                 }
-            }, 15000);
+            }, 4000);
         }
         else if (form.id === 'stickyLeadForm') {
             const wrapper = document.getElementById('sticky-form-wrapper');
@@ -1368,7 +1370,43 @@ window.toggleSidebar = function() {
     if (overlay) overlay.classList.toggle('active');
 };
 
-window.openCallbackModal = function() {
+window.resetCallbackModalState = function() {
+    const form = document.getElementById('callbackForm');
+    const successState = document.getElementById('modal-success-state');
+    const modalHeader = document.querySelector('#callback-modal .modal-header');
+    
+    if (form) {
+        form.reset();
+        form.style.display = '';
+        form.classList.remove('d-none');
+    }
+    if (successState) {
+        successState.style.display = 'none';
+        successState.classList.add('d-none');
+    }
+    if (modalHeader) {
+        modalHeader.style.display = '';
+        modalHeader.classList.remove('d-none');
+    }
+};
+
+window.openCallbackModal = function(propName) {
+    if (typeof window.resetCallbackModalState === 'function') {
+        window.resetCallbackModalState();
+    }
+    
+    if (propName && typeof propName === 'string') {
+        const select = document.getElementById('modal-interest');
+        if (select) {
+            for (let opt of select.options) {
+                if (opt.value.toLowerCase().includes(propName.toLowerCase()) || opt.text.toLowerCase().includes(propName.toLowerCase())) {
+                    select.value = opt.value;
+                    break;
+                }
+            }
+        }
+    }
+    
     const modal = document.getElementById('callback-modal');
     if (modal) {
         modal.classList.add('active');
@@ -1377,13 +1415,14 @@ window.openCallbackModal = function() {
 };
 
 window.closeCallbackModal = function(e) {
-    if (e && e.target && e.target !== e.currentTarget && !e.target.classList.contains('modal-close')) {
-        return;
-    }
+    // If e is true or background overlay click or close button click or got it button click
     const modal = document.getElementById('callback-modal');
     if (modal) {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+    }
+    if (typeof window.resetCallbackModalState === 'function') {
+        window.resetCallbackModalState();
     }
 };
 
