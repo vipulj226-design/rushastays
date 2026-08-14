@@ -274,40 +274,69 @@ const app = {
                         replacements.forEach(rep => {
                             const origUrl = rep.original_url;
                             const newUrl = rep.file_url;
+                            // Normalize: extract the path part for flexible matching
+                            const origPath = origUrl.replace(/^(https?:\/\/[^\/]+)?/, '').replace(/^\.\.\//, '/').replace(/^\/+/, '/');
+                            
                             // Replace in <img> tags
                             document.querySelectorAll('img').forEach(img => {
-                                if (img.src.includes(origUrl) || img.getAttribute('src') === origUrl) {
+                                const imgSrc = (img.getAttribute('src') || '').replace(/^\.\.\//, '/').replace(/^\/+/, '/');
+                                if (imgSrc === origPath || img.src.includes(origPath)) {
                                     img.src = newUrl;
                                 }
                                 // Also check data-src for lazy loading
-                                if (img.dataset.src && (img.dataset.src.includes(origUrl) || img.dataset.src === origUrl)) {
+                                const dataSrc = (img.dataset.src || '').replace(/^\.\.\//, '/').replace(/^\/+/, '/');
+                                if (dataSrc === origPath) {
                                     img.dataset.src = newUrl;
                                 }
                             });
                             // Replace in background-image styles
                             document.querySelectorAll('[style*="background-image"]').forEach(el => {
-                                if (el.style.backgroundImage.includes(origUrl)) {
+                                const bgImg = el.style.backgroundImage || '';
+                                if (bgImg.includes(origPath) || bgImg.includes(origUrl)) {
                                     el.style.backgroundImage = `url('${newUrl}')`;
                                 }
                             });
+
+                            // Also replace in propertiesData so dynamically rendered pages use new URLs
+                            if (window.propertiesData) {
+                                window.propertiesData.forEach(p => {
+                                    // Replace main image
+                                    if (p.image && (p.image === origUrl || p.image.includes(origPath))) {
+                                        p.image = newUrl;
+                                    }
+                                    // Replace in gallery array
+                                    if (p.images) {
+                                        p.images = p.images.map(img => {
+                                            const imgNorm = img.replace(/^\.\.\//, '/').replace(/^\/+/, '/');
+                                            return (imgNorm === origPath || img === origUrl) ? newUrl : img;
+                                        });
+                                    }
+                                });
+                            }
                         });
 
                         // 2. Add uploaded property images to propertiesData galleries
                         const uploads = mediaAssets.filter(a => a.category !== 'replacement' && a.category !== 'test' && a.category !== 'general');
                         if (window.propertiesData && uploads.length > 0) {
-                            const propKeyMap = {
-                                'sector-28-1bhk': 'sector-28-1bhk',
-                                'sector-28-executive': 'sector-28-executive',
-                                'sector-28-premium-rooms': 'sector-28-premium-rooms',
-                                'king-room': 'king-room',
-                                'sector-42': 'sector-42',
-                                'sushant-lok': 'sushant-lok'
+                            // Map media category keys to actual property IDs
+                            const catToIdMap = {
+                                'sushant-lok': 'sushant-lok-1-bhk-studio',
+                                'sector-42': 'sector-42-1-bhk-suite',
+                                'sector-28-1bhk': 'sector-28-1-bhk-suite',
+                                'king-room': 'sector-28-king-room-suite',
+                                'sector-28-executive': 'sector-28-executive-rooms',
+                                'sector-28-premium-rooms': 'sector-28-executive-premium-rooms'
                             };
                             uploads.forEach(upload => {
                                 const cat = upload.category;
-                                if (propKeyMap[cat]) {
-                                    const prop = window.propertiesData.find(p => p.id === cat);
-                                    if (prop && prop.images) {
+                                const propId = catToIdMap[cat];
+                                // Find property by mapped ID or fuzzy match
+                                const prop = window.propertiesData.find(p => 
+                                    p.id === propId || p.id === cat || p.id.includes(cat) || cat.includes(p.id)
+                                );
+                                if (prop && prop.images) {
+                                    // Avoid duplicate URLs
+                                    if (!prop.images.includes(upload.file_url)) {
                                         prop.images.push(upload.file_url);
                                     }
                                 }
