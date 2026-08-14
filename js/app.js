@@ -191,25 +191,29 @@ const app = {
                         .order('created_at', { ascending: false });
 
                     if (!bErr && dbBlogs && dbBlogs.length > 0) {
-                        const container = document.getElementById('blog-grid') || document.querySelector('.blog-grid');
+                        const container = document.getElementById('blog-grid') || document.querySelector('.blog-grid') || document.querySelector('.blog-main-content');
                         const list = dbBlogs.filter(b => b.is_published !== false);
 
                         if (container && list.length > 0) {
                             container.innerHTML = list.map(b => {
-                                const image = b.featured_image || '/images/sector-28-1bhk/img-1.jpg';
+                                const image = b.featured_image || 'images/luxury_apartment_living.webp';
                                 const link = b.slug ? `blog/${b.slug}.html` : '#';
+                                const readTime = b.read_time || '5 Min Read';
+                                const pubDate = b.published_at || (b.created_at ? b.created_at.split('T')[0] : 'Recent');
                                 return `
-                                    <div class="blog-card">
-                                        <div class="blog-card__image">
-                                            <img src="${image}" alt="${b.title || 'Blog Post'}" loading="lazy">
+                                    <article class="featured-card cursor-pointer" onclick="location.href='${link}'" style="margin-bottom: 30px;">
+                                        <div class="featured-img" style="background-image: url('${image}');"></div>
+                                        <div class="featured-content">
+                                            <div class="post-meta">
+                                                <span><i class="far fa-calendar"></i> ${pubDate}</span>
+                                                <span><i class="far fa-clock"></i> ${readTime}</span>
+                                                <span><i class="far fa-user"></i> By ${b.author || 'Hospitality Expert'}</span>
+                                            </div>
+                                            <h2 class="post-title">${b.title}</h2>
+                                            <p class="post-excerpt">${b.excerpt || ''}</p>
+                                            <a href="${link}" class="read-more-btn">Read Full Article <i class="fas fa-arrow-right"></i></a>
                                         </div>
-                                        <div class="blog-card__content">
-                                            <span class="blog-card__category">${b.category || 'Guide'}</span>
-                                            <h3 class="blog-card__title">${b.title}</h3>
-                                            <p class="blog-card__excerpt">${b.excerpt || ''}</p>
-                                            <a href="${link}" class="btn-text">Read Article <i class="fas fa-arrow-right"></i></a>
-                                        </div>
-                                    </div>
+                                    </article>
                                 `;
                             }).join('');
                         }
@@ -217,6 +221,27 @@ const app = {
                 } catch (bErr) {
                     console.warn('[Supabase] Blog sync error:', bErr);
                 }
+
+                // Live Sync Site Settings (Phone, WhatsApp, Email) from Supabase
+                try {
+                    const { data: dbSettings } = await supabaseClient
+                        .from('site_settings')
+                        .select('*')
+                        .single();
+
+                    if (dbSettings) {
+                        if (dbSettings.whatsapp || dbSettings.phone) {
+                            const rawPhone = dbSettings.whatsapp || dbSettings.phone;
+                            const cleanPhone = rawPhone.replace(/\D/g, '');
+                            document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+                                a.href = `https://wa.me/${cleanPhone}`;
+                            });
+                            document.querySelectorAll('.contact-num-only').forEach(el => {
+                                el.textContent = dbSettings.phone || rawPhone;
+                            });
+                        }
+                    }
+                } catch (sErr) {}
             }
         }
         
