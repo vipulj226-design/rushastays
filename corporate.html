@@ -29,7 +29,7 @@ if ('serviceWorker' in navigator) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.min.css?v=3.2">
+    <link rel="stylesheet" href="css/styles.min.css?v=3.3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css?v=3.0">
 
     <!-- JSON-LD Structured Data -->
@@ -613,7 +613,7 @@ if ('serviceWorker' in navigator) {
             </div>
             <div class="corp-carousel-wrapper">
                 <div class="corp-hero-carousel animate-fade-in delay-3">
-                    <div class="carousel-slide">
+                    <div class="carousel-slide active">
                         <img src="images/corp-amenities.webp" alt="Gurugram Corporate Stays Amenities">
                     </div>
                     <div class="carousel-slide">
@@ -1103,6 +1103,28 @@ if ('serviceWorker' in navigator) {
     </a>
 
     
-    <script src="js/app.min.js?v=3.2" defer></script>
+    <script src="js/app.min.js?v=3.3" defer></script>
+
+    <!-- Corporate Hero Carousel Auto-Slider Script -->
+    <script>
+    (function() {
+        function initCorpCarousel() {
+            var slides = document.querySelectorAll('.corp-hero-carousel .carousel-slide');
+            if (!slides || slides.length <= 1) return;
+            
+            var currentIndex = 0;
+            setInterval(function() {
+                slides[currentIndex].classList.remove('active');
+                currentIndex = (currentIndex + 1) % slides.length;
+                slides[currentIndex].classList.add('active');
+            }, 3500);
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCorpCarousel);
+        } else {
+            initCorpCarousel();
+        }
+    })();
+    </script>
 </body>
 </html>
