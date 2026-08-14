@@ -1415,7 +1415,15 @@ window.openCallbackModal = function(propName) {
 };
 
 window.closeCallbackModal = function(e) {
-    // If e is true or background overlay click or close button click or got it button click
+    // e === true  → programmatic close (Got It button, auto-timer)
+    // e is Event  → only close if click was on overlay background or close button
+    if (e && e !== true && typeof e === 'object' && e.target) {
+        const isOverlay = e.target.id === 'callback-modal';
+        const isCloseBtn = e.target.classList.contains('modal-close') || e.target.classList.contains('btn-success-close');
+        if (!isOverlay && !isCloseBtn) {
+            return; // clicked inside modal content — do nothing
+        }
+    }
     const modal = document.getElementById('callback-modal');
     if (modal) {
         modal.classList.remove('active');
