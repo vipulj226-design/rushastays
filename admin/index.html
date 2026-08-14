@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
     <!-- Admin CSS -->
-    <link rel="stylesheet" href="css/admin.css?v=4.9">
+    <link rel="stylesheet" href="css/admin.css?v=5.0">
 
     <!-- WIX-STYLE & MOBILE OVERRIDES (inline to bypass cache) -->
     <style>
@@ -156,7 +156,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/data.js"></script>
-    <script src="js/supabase-client.js?v=4.9"></script>
+    <script src="js/supabase-client.js?v=5.0"></script>
 </head>
 <body>
 
@@ -616,14 +616,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="upload-dropzone" id="mediaDropzone" onclick="document.getElementById('mediaFileInput').click()">
-                                <i class="fas fa-cloud-arrow-up upload-icon"></i>
-                                <div class="upload-text">Click or drag & drop images here to upload</div>
-                                <div class="upload-hint">Supports WebP, JPG, PNG up to 5MB (Direct to Supabase Storage)</div>
-                                <input type="file" id="mediaFileInput" style="display: none;" multiple accept="image/*" onchange="handleMediaUpload(event)">
-                            </div>
-
-                            <div style="margin-top: 24px;">
+                            <div>
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 12px;">
                                     <h4 style="font-size: 14px; font-weight: 700; margin: 0;">Website & Storage Media Files</h4>
                                 </div>
@@ -1280,6 +1273,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Admin App Controller Script -->
-    <script src="js/admin-app.js?v=4.9"></script>
+    <script src="js/admin-app.js?v=5.0"></script>
 </body>
 </html>
