@@ -1341,18 +1341,62 @@ async function deleteEnquiry(id) {
 async function loadMedia() {
     const client = AdminAuth.getClient();
     let cloudFiles = [];
+    let dbFiles = [];
 
     if (client) {
+        // 1. Fetch from Supabase Storage bucket (if bucket exists)
         try {
-            const { data: files } = await client.storage.from('media').list('', { limit: 100 });
-            if (files) {
-                cloudFiles = files.map(f => ({
-                    file_name: 'cloud/' + f.name,
-                    file_url: client.storage.from('media').getPublicUrl(f.name).data.publicUrl,
-                    file_size: f.metadata?.size || 0
+            const { data: files, error: storageErr } = await client.storage.from('media').list('', { limit: 200 });
+            if (!storageErr && files) {
+                // List subfolders too
+                for (const folder of ['uploads', 'replacements']) {
+                    try {
+                        const { data: subFiles } = await client.storage.from('media').list(folder, { limit: 200 });
+                        if (subFiles) {
+                            subFiles.forEach(f => {
+                                if (f.name && !f.name.startsWith('.')) {
+                                    const fullPath = `${folder}/${f.name}`;
+                                    cloudFiles.push({
+                                        file_name: 'cloud/' + fullPath,
+                                        file_url: client.storage.from('media').getPublicUrl(fullPath).data.publicUrl,
+                                        file_size: f.metadata?.size || 0
+                                    });
+                                }
+                            });
+                        }
+                    } catch (subErr) {}
+                }
+                // Root-level files
+                files.forEach(f => {
+                    if (f.name && !f.name.startsWith('.') && f.id) {
+                        cloudFiles.push({
+                            file_name: 'cloud/' + f.name,
+                            file_url: client.storage.from('media').getPublicUrl(f.name).data.publicUrl,
+                            file_size: f.metadata?.size || 0
+                        });
+                    }
+                });
+            }
+        } catch (err) {
+            console.warn('[Media Storage] Bucket not found or inaccessible:', err);
+        }
+
+        // 2. Fetch from media_assets database table (persisted records)
+        try {
+            const { data: dbAssets, error: dbErr } = await client
+                .from('media_assets')
+                .select('*')
+                .order('created_at', { ascending: false });
+            if (!dbErr && dbAssets && dbAssets.length > 0) {
+                dbFiles = dbAssets.map(a => ({
+                    file_name: a.file_name || 'uploaded',
+                    file_url: a.file_url,
+                    file_size: a.file_size || 0
                 }));
             }
-        } catch (err) {}
+        } catch (dbErr) {
+            console.warn('[Media Assets Table] Not available:', dbErr);
+        }
     }
 
     const siteImages = [
@@ -1728,7 +1772,15 @@ async function loadMedia() {
         }
 ];
 
-    State.media = [...cloudFiles, ...siteImages];
+    // Merge all sources: cloud uploads first, then DB records, then site images
+    // Deduplicate by file_url
+    const allMedia = [...dbFiles, ...cloudFiles, ...siteImages];
+    const seen = new Set();
+    State.media = allMedia.filter(m => {
+        if (seen.has(m.file_url)) return false;
+        seen.add(m.file_url);
+        return true;
+    });
     renderMediaGrid();
 }
 
@@ -1837,47 +1889,62 @@ function replaceMediaImage(fileName, oldUrl) {
         const file = e.target.files[0];
         if (!file) return;
 
-        showToast('Replacing image with new photo...', 'info');
+        showToast('Uploading replacement photo to cloud...', 'info');
 
         const client = AdminAuth.getClient();
-        let newUrl = '';
-
-        if (client) {
-            try {
-                const cleanName = `uploads/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-                const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
-                if (!error && data) {
-                    const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
-                    newUrl = pubData.publicUrl;
-                }
-            } catch (err) {
-                console.warn('[Replace Upload Error]', err);
-            }
+        if (!client) {
+            showToast('Supabase not connected. Please login first.', 'error');
+            return;
         }
 
-        if (!newUrl) {
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                applyMediaReplacement(fileName, oldUrl, evt.target.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            applyMediaReplacement(fileName, oldUrl, newUrl);
+        const cleanName = `replacements/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+
+        try {
+            const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
+
+            if (error) {
+                if (error.message && error.message.includes('Bucket not found')) {
+                    showToast('Storage bucket "media" not found! Please create it in Supabase Dashboard > Storage.', 'error');
+                } else {
+                    showToast('Upload failed: ' + (error.message || 'Unknown error. Check Storage bucket policies.'), 'error');
+                }
+                console.error('[Replace Upload Error]', error);
+                return;
+            }
+
+            const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
+            const newUrl = pubData.publicUrl;
+
+            // Save replacement record to media_assets table
+            try {
+                await client.from('media_assets').upsert({
+                    file_name: cleanName,
+                    file_url: newUrl,
+                    original_url: oldUrl,
+                    category: 'replacement',
+                    file_size: file.size
+                });
+            } catch (dbErr) {
+                console.warn('[media_assets save]', dbErr);
+            }
+
+            // Update in-memory state and re-render
+            const item = State.media.find(m => m.file_name === fileName || m.file_url === oldUrl);
+            if (item) {
+                item.file_url = newUrl;
+                item.file_name = cleanName;
+            }
+            renderMediaGrid();
+            showToast('Photo replaced & saved to cloud permanently!', 'success');
+
+        } catch (err) {
+            showToast('Upload error: ' + err.message, 'error');
+            console.error('[Replace Upload Exception]', err);
         }
     };
     input.click();
 }
 window.replaceMediaImage = replaceMediaImage;
-
-function applyMediaReplacement(fileName, oldUrl, newUrl) {
-    const item = State.media.find(m => m.file_name === fileName || m.file_url === oldUrl);
-    if (item) {
-        item.file_url = newUrl;
-    }
-    renderMediaGrid();
-    showToast('Photo replaced successfully!', 'success');
-}
-window.applyMediaReplacement = applyMediaReplacement;
 
 function uploadImageToCategory(categoryKey) {
     const input = document.createElement('input');
@@ -1888,49 +1955,60 @@ function uploadImageToCategory(categoryKey) {
         const files = Array.from(e.target.files);
         if (!files || files.length === 0) return;
 
-        showToast(`Uploading ${files.length} image(s)...`, 'info');
-
         const client = AdminAuth.getClient();
+        if (!client) {
+            showToast('Supabase not connected. Please login first.', 'error');
+            return;
+        }
+
+        showToast(`Uploading ${files.length} image(s) to cloud...`, 'info');
+        let successCount = 0;
 
         for (const file of files) {
-            let fileUrl = '';
-            if (client) {
-                try {
-                    const cleanName = `uploads/${categoryKey}_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-                    const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
-                    if (!error && data) {
-                        const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
-                        fileUrl = pubData.publicUrl;
-                    }
-                } catch (err) {
-                    console.warn('[Upload Image Error]', err);
-                }
-            }
+            const cleanName = `uploads/${categoryKey}_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
 
-            if (!fileUrl) {
-                await new Promise((resolve) => {
-                    const reader = new FileReader();
-                    reader.onload = function(evt) {
-                        State.media.unshift({
-                            file_name: `${categoryKey}/${file.name}`,
-                            file_url: evt.target.result,
-                            file_size: file.size
-                        });
-                        resolve();
-                    };
-                    reader.readAsDataURL(file);
-                });
-            } else {
+            try {
+                const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
+
+                if (error) {
+                    if (error.message && error.message.includes('Bucket not found')) {
+                        showToast('Storage bucket "media" not found! Create it in Supabase Dashboard > Storage.', 'error');
+                        return;
+                    }
+                    showToast(`Upload failed for ${file.name}: ${error.message}`, 'error');
+                    continue;
+                }
+
+                const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
+                const fileUrl = pubData.publicUrl;
+
+                // Save to media_assets table for persistence
+                try {
+                    await client.from('media_assets').upsert({
+                        file_name: cleanName,
+                        file_url: fileUrl,
+                        category: categoryKey,
+                        file_size: file.size
+                    });
+                } catch (dbErr) {
+                    console.warn('[media_assets save]', dbErr);
+                }
+
                 State.media.unshift({
-                    file_name: `cloud/${categoryKey}_${file.name}`,
+                    file_name: cleanName,
                     file_url: fileUrl,
                     file_size: file.size
                 });
+                successCount++;
+            } catch (err) {
+                showToast(`Upload error for ${file.name}: ${err.message}`, 'error');
             }
         }
 
         renderMediaGrid();
-        showToast('Photos uploaded successfully!', 'success');
+        if (successCount > 0) {
+            showToast(`${successCount} photo(s) uploaded & saved to cloud permanently!`, 'success');
+        }
     };
     input.click();
 }
