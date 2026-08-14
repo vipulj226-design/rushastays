@@ -618,6 +618,9 @@ function openBlogModal(id = null) {
             const excerptEl = document.getElementById('blogExcerpt');
             if (excerptEl) excerptEl.value = post.excerpt || '';
 
+            // Visual Rich Editor Loading (WYSIWYG)
+            const visualEditor = document.getElementById('blogVisualEditor');
+            if (visualEditor) visualEditor.innerHTML = post.content || '';
             const contentEl = document.getElementById('blogContent');
             if (contentEl) contentEl.value = post.content || '';
 
@@ -634,6 +637,11 @@ function openBlogModal(id = null) {
         const editIdEl = document.getElementById('blogEditId');
         if (editIdEl) editIdEl.value = '';
 
+        const visualEditor = document.getElementById('blogVisualEditor');
+        if (visualEditor) visualEditor.innerHTML = '';
+        const contentEl = document.getElementById('blogContent');
+        if (contentEl) contentEl.value = '';
+
         if (typeof removeVisualImage === 'function') {
             removeVisualImage('blogImage', 'blogImagePreview', 'blogImageDropPlaceholder');
         }
@@ -646,41 +654,75 @@ function openBlogModal(id = null) {
     openModal('blogModal');
 }
 
-function insertBlogTag(type) {
-    const textarea = document.getElementById('blogContent');
-    if (!textarea) return;
+function formatDoc(cmd, value = null) {
+    const editor = document.getElementById('blogVisualEditor');
+    if (!editor) return;
+    editor.focus();
 
-    const start = textarea.selectionStart || 0;
-    const end = textarea.selectionEnd || 0;
-    const selected = textarea.value.substring(start, end);
-    let replacement = '';
+    if (cmd === 'formatBlock') {
+        document.execCommand('formatBlock', false, `<${value}>`);
+    } else if (cmd === 'createLink') {
+        const url = prompt('Enter website link URL (e.g. https://...):', 'https://');
+        if (url) document.execCommand('createLink', false, url);
+    } else if (cmd === 'insertImage') {
+        triggerBlogVisualImageUpload();
+    } else {
+        document.execCommand(cmd, false, value);
+    }
+}
+window.formatDoc = formatDoc;
 
-    switch(type) {
-        case 'h2':
-            replacement = selected ? `<h2>${selected}</h2>\n` : '<h2>Section Heading Title</h2>\n';
-            break;
-        case 'p':
-            replacement = selected ? `<p>${selected}</p>\n` : '<p>Write your paragraph text here...</p>\n';
-            break;
-        case 'ul':
-            replacement = selected ? `<ul>\n  <li>${selected}</li>\n</ul>\n` : '<ul>\n  <li>Key point 1</li>\n  <li>Key point 2</li>\n</ul>\n';
-            break;
-        case 'b':
-            replacement = selected ? `<strong>${selected}</strong>` : '<strong>Bold text</strong>';
-            break;
-        case 'img':
-            const url = prompt('Enter Image URL (or copy from Media Library):', '/images/luxury_apartment_living.webp');
-            if (url) {
-                replacement = `<img src="${url}" alt="Article Photo" style="width:100%; border-radius:12px; margin: 20px 0;">\n`;
+function triggerBlogVisualImageUpload() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        showToast('Adding photo to article...', 'info');
+
+        const client = AdminAuth.getClient();
+        let imgUrl = '';
+
+        if (client) {
+            try {
+                const cleanName = `uploads/blog_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+                const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
+                if (!error && data) {
+                    const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
+                    imgUrl = pubData.publicUrl;
+                }
+            } catch (err) {
+                console.warn('[Blog Image Upload Error]', err);
             }
-            break;
-    }
+        }
 
-    if (replacement) {
-        textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
-        textarea.focus();
-        textarea.setSelectionRange(start + replacement.length, start + replacement.length);
-    }
+        if (!imgUrl) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                insertImageAtCursor(evt.target.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            insertImageAtCursor(imgUrl);
+        }
+    };
+    input.click();
+}
+window.triggerBlogVisualImageUpload = triggerBlogVisualImageUpload;
+
+function insertImageAtCursor(url) {
+    const editor = document.getElementById('blogVisualEditor');
+    if (!editor) return;
+    editor.focus();
+    document.execCommand('insertHTML', false, `<p><img src="${url}" alt="Article Photo" style="max-width:100%; border-radius:10px; margin: 12px 0;"></p><p><br></p>`);
+    showToast('Photo added to article!', 'success');
+}
+window.insertImageAtCursor = insertImageAtCursor;
+
+function insertBlogTag(type) {
+    formatDoc(type === 'h2' ? 'formatBlock' : type, type);
 }
 window.insertBlogTag = insertBlogTag;
 
@@ -693,7 +735,12 @@ async function saveBlogPost(e) {
     const image = document.getElementById('blogImage').value.trim();
     const author = document.getElementById('blogAuthor').value.trim();
     const excerpt = document.getElementById('blogExcerpt').value.trim();
-    let content = document.getElementById('blogContent').value.trim();
+    
+    // Read directly from the Visual Rich-Text Editor (No coding needed!)
+    const visualEditor = document.getElementById('blogVisualEditor');
+    let content = visualEditor ? visualEditor.innerHTML.trim() : (document.getElementById('blogContent')?.value.trim() || '');
+    if (content === '<br>' || content === '<p><br></p>') content = '';
+
     const isPublished = document.getElementById('blogStatusToggle') ? document.getElementById('blogStatusToggle').checked : true;
 
     // Smart Auto-Formatter: If client typed plain text without HTML tags, automatically format into paragraphs!
