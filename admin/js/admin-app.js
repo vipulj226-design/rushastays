@@ -1893,9 +1893,11 @@ function replaceMediaImage(fileName, oldUrl) {
 
         const client = AdminAuth.getClient();
         if (!client) {
+            alert('DEBUG: Supabase client is NULL. Login required.');
             showToast('Supabase not connected. Please login first.', 'error');
             return;
         }
+        alert('DEBUG: Client ready. Uploading file: ' + file.name + ' (' + file.size + ' bytes)');
 
         const cleanName = `replacements/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
 
@@ -1903,6 +1905,7 @@ function replaceMediaImage(fileName, oldUrl) {
             const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
 
             if (error) {
+                alert('DEBUG UPLOAD ERROR: ' + JSON.stringify(error));
                 if (error.message && error.message.includes('Bucket not found')) {
                     showToast('Storage bucket "media" not found! Please create it in Supabase Dashboard > Storage.', 'error');
                 } else {
@@ -1911,6 +1914,7 @@ function replaceMediaImage(fileName, oldUrl) {
                 console.error('[Replace Upload Error]', error);
                 return;
             }
+            alert('DEBUG: Upload SUCCESS! Public URL: ' + client.storage.from('media').getPublicUrl(cleanName).data.publicUrl);
 
             const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
             const newUrl = pubData.publicUrl;
@@ -1938,6 +1942,7 @@ function replaceMediaImage(fileName, oldUrl) {
             showToast('Photo replaced & saved to cloud permanently!', 'success');
 
         } catch (err) {
+            alert('DEBUG EXCEPTION: ' + err.message);
             showToast('Upload error: ' + err.message, 'error');
             console.error('[Replace Upload Exception]', err);
         }
