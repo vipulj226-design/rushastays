@@ -276,39 +276,43 @@ const app = {
                             const newUrl = rep.file_url;
                             // Normalize: extract the path part for flexible matching
                             const origPath = origUrl.replace(/^(https?:\/\/[^\/]+)?/, '').replace(/^\.\.\//, '/').replace(/^\/+/, '/');
+                            const origFileName = origPath.split('/').pop();
                             
                             // Replace in <img> tags
                             document.querySelectorAll('img').forEach(img => {
-                                const imgSrc = (img.getAttribute('src') || '').replace(/^\.\.\//, '/').replace(/^\/+/, '/');
-                                if (imgSrc === origPath || img.src.includes(origPath)) {
+                                const rawSrc = img.getAttribute('src') || '';
+                                const imgSrc = rawSrc.replace(/^\.\.\//, '/').replace(/^\/+/, '/');
+                                if (imgSrc === origPath || img.src.includes(origPath) || (origFileName && rawSrc.endsWith(origFileName))) {
                                     img.src = newUrl;
                                 }
                                 // Also check data-src for lazy loading
-                                const dataSrc = (img.dataset.src || '').replace(/^\.\.\//, '/').replace(/^\/+/, '/');
-                                if (dataSrc === origPath) {
+                                const rawDataSrc = img.dataset.src || '';
+                                const dataSrc = rawDataSrc.replace(/^\.\.\//, '/').replace(/^\/+/, '/');
+                                if (dataSrc === origPath || (origFileName && rawDataSrc.endsWith(origFileName))) {
                                     img.dataset.src = newUrl;
                                 }
                             });
                             // Replace in background-image styles
                             document.querySelectorAll('[style*="background-image"]').forEach(el => {
                                 const bgImg = el.style.backgroundImage || '';
-                                if (bgImg.includes(origPath) || bgImg.includes(origUrl)) {
+                                if (bgImg.includes(origPath) || bgImg.includes(origUrl) || (origFileName && bgImg.includes(origFileName))) {
                                     el.style.backgroundImage = `url('${newUrl}')`;
                                 }
                             });
 
                             // Also replace in propertiesData so dynamically rendered pages use new URLs
-                            if (window.propertiesData) {
-                                window.propertiesData.forEach(p => {
+                            const allPropsList = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+                            if (allPropsList) {
+                                allPropsList.forEach(p => {
                                     // Replace main image
-                                    if (p.image && (p.image === origUrl || p.image.includes(origPath))) {
+                                    if (p.image && (p.image === origUrl || p.image.includes(origPath) || (origFileName && p.image.includes(origFileName)))) {
                                         p.image = newUrl;
                                     }
                                     // Replace in gallery array
                                     if (p.images) {
                                         p.images = p.images.map(img => {
                                             const imgNorm = img.replace(/^\.\.\//, '/').replace(/^\/+/, '/');
-                                            return (imgNorm === origPath || img === origUrl) ? newUrl : img;
+                                            return (imgNorm === origPath || img === origUrl || (origFileName && img.includes(origFileName))) ? newUrl : img;
                                         });
                                     }
                                 });
@@ -317,8 +321,8 @@ const app = {
 
                         // 2. Add uploaded property images to propertiesData galleries
                         const uploads = mediaAssets.filter(a => a.category !== 'replacement' && a.category !== 'test' && a.category !== 'general');
-                        if (window.propertiesData && uploads.length > 0) {
-                            // Map media category keys to actual property IDs
+                        const allPropsList = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+                        if (allPropsList && uploads.length > 0) {
                             const catToIdMap = {
                                 'sushant-lok': 'sushant-lok-1-bhk-studio',
                                 'sector-42': 'sector-42-1-bhk-suite',
@@ -330,14 +334,12 @@ const app = {
                             uploads.forEach(upload => {
                                 const cat = upload.category;
                                 const propId = catToIdMap[cat];
-                                // Find property by mapped ID or fuzzy match
-                                const prop = window.propertiesData.find(p => 
-                                    p.id === propId || p.id === cat || p.id.includes(cat) || cat.includes(p.id)
+                                const prop = allPropsList.find(p => 
+                                    p.id === propId || p.id === cat || (cat && p.id.includes(cat)) || (cat && cat.includes(p.id))
                                 );
                                 if (prop && prop.images) {
-                                    // Avoid duplicate URLs
                                     if (!prop.images.includes(upload.file_url)) {
-                                        prop.images.push(upload.file_url);
+                                        prop.images.unshift(upload.file_url);
                                     }
                                 }
                             });
@@ -349,10 +351,11 @@ const app = {
             }
         }
         
+        const allProps = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
         if (document.getElementById('home-template')) {
             this.renderHome();
         } else if (document.getElementById('locations-properties-grid')) {
-            this.renderPropertiesGrid(propertiesData, 'locations-properties-grid');
+            this.renderPropertiesGrid(allProps, 'locations-properties-grid');
         } else {
             // Automatically detect and render property detail pages
             const path = window.location.pathname;
@@ -404,7 +407,8 @@ const app = {
         if (templateEl) {
             this.contentDiv.innerHTML = templateEl.innerHTML;
         }
-        this.renderPropertiesGrid(propertiesData, 'home-properties-grid');
+        const allProps = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+        this.renderPropertiesGrid(allProps, 'home-properties-grid');
         if (typeof window.initCarousel === 'function') {
             window.initCarousel();
         }
@@ -508,7 +512,10 @@ const app = {
         // Helper to render card HTML
         const makeCard = (p) => {
             const propUrl = `${propLinkPrefix}${p.id}`;
-            const imgUrl = p.image.startsWith('/') ? p.image : '/' + p.image;
+            let imgUrl = p.image || '/images/rusha-stays-logo.webp';
+            if (!imgUrl.startsWith('http://') && !imgUrl.startsWith('https://') && !imgUrl.startsWith('data:')) {
+                imgUrl = imgUrl.startsWith('/') ? imgUrl : '/' + imgUrl;
+            }
             return cardTemplate
                 .replace(/{id}/g, propUrl)
                 .replace(/{image}/g, imgUrl)
@@ -588,7 +595,8 @@ const app = {
             cardEl.classList.add('active');
         }
 
-        const filtered = propertiesData.filter(p => p.categories && p.categories.includes(category));
+        const allProps = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+        const filtered = allProps.filter(p => p.categories && p.categories.includes(category));
         const targetGrid = document.getElementById('locations-properties-grid') ? 'locations-properties-grid' : 'home-properties-grid';
         this.renderPropertiesGrid(filtered, targetGrid);
 
@@ -613,7 +621,8 @@ const app = {
         });
 
         const targetGrid = document.getElementById('locations-properties-grid') ? 'locations-properties-grid' : 'home-properties-grid';
-        this.renderPropertiesGrid(propertiesData, targetGrid);
+        const allProps = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+        this.renderPropertiesGrid(allProps, targetGrid);
 
         const feedbackBar = document.getElementById('filter-feedback-bar');
         if (feedbackBar) {
@@ -664,7 +673,8 @@ const app = {
             return;
         }
 
-        let filtered = propertiesData.filter(p => p.locality === locality);
+        const allProps = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+        let filtered = allProps.filter(p => p.locality === locality);
         if (roomType) {
             filtered = filtered.filter(p => p.roomType === roomType);
         }
@@ -698,7 +708,8 @@ const app = {
         if (!this.contentDiv) {
             this.contentDiv = document.getElementById('app-content');
         }
-        let property = propertiesData.find(p => p.id === propertyId);
+        const allProps = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+        let property = allProps.find(p => p.id === propertyId || p.id.includes(propertyId) || propertyId.includes(p.id));
         
 
 
@@ -1326,7 +1337,8 @@ const app = {
 
     renderYouMayAlsoLike(currentPropertyId) {
         // Filter out current property and get max 5 others (all remaining stays)
-        const others = propertiesData.filter(p => p.id !== currentPropertyId).slice(0, 5);
+        const allProps = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
+        const others = allProps.filter(p => p.id !== currentPropertyId).slice(0, 5);
         this.renderPropertiesGrid(others, 'you-may-also-like-grid');
     },
     shareProperty(id) {

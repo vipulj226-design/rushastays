@@ -1,4 +1,4 @@
-const propertiesData = [
+var propertiesData = [
     {
         "id": "sushant-lok-1-bhk-studio",
         "locality": "Sushant Lok Phase 1",

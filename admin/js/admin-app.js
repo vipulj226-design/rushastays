@@ -1382,16 +1382,21 @@ async function loadMedia() {
         }
 
         // 2. Fetch from media_assets database table (persisted records)
+        let dbReplacements = [];
         try {
             const { data: dbAssets, error: dbErr } = await client
                 .from('media_assets')
                 .select('*')
                 .order('created_at', { ascending: false });
             if (!dbErr && dbAssets && dbAssets.length > 0) {
-                dbFiles = dbAssets.map(a => ({
+                dbReplacements = dbAssets.filter(a => a.category === 'replacement' && a.original_url);
+                const dbUploads = dbAssets.filter(a => a.category !== 'replacement' && a.category !== 'test');
+                
+                dbFiles = dbUploads.map(a => ({
                     file_name: a.file_name || 'uploaded',
                     file_url: a.file_url,
-                    file_size: a.file_size || 0
+                    file_size: a.file_size || 0,
+                    category: a.category
                 }));
             }
         } catch (dbErr) {
@@ -1772,7 +1777,20 @@ async function loadMedia() {
         }
 ];
 
-    // Merge all sources: cloud uploads first, then DB records, then site images
+    // Apply replacements onto siteImages
+    if (typeof dbReplacements !== 'undefined' && dbReplacements.length > 0) {
+        dbReplacements.forEach(rep => {
+            const origNorm = rep.original_url.replace(/^\/+/, '/');
+            const origFileName = origNorm.split('/').pop();
+            const match = siteImages.find(s => s.file_url === origNorm || s.file_url.includes(origNorm) || (origFileName && s.file_name.endsWith(origFileName)));
+            if (match) {
+                match.file_url = rep.file_url;
+                match.replaced = true;
+            }
+        });
+    }
+
+    // Merge all sources: db uploads first, then cloud uploads, then site images
     // Deduplicate by file_url
     const allMedia = [...dbFiles, ...cloudFiles, ...siteImages];
     const seen = new Set();
