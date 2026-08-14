@@ -83,6 +83,140 @@ const app = {
                 } catch (err) {
                     console.warn('[Supabase] Properties sync fallback to static:', err);
                 }
+
+                // Live Sync Testimonials / Reviews from Supabase
+                try {
+                    const { data: dbTestis, error: tErr } = await supabaseClient
+                        .from('testimonials')
+                        .select('*')
+                        .order('display_order', { ascending: true });
+
+                    if (!tErr && dbTestis && dbTestis.length > 0) {
+                        const track = document.getElementById('testimonial-track');
+                        const dotsContainer = document.getElementById('carousel-dots');
+                        const list = dbTestis.filter(t => t.is_published !== false);
+
+                        if (track && dotsContainer && list.length > 0) {
+                            track.innerHTML = list.map(t => {
+                                const ratingVal = parseInt(t.rating) || 5;
+                                const stars = Array(ratingVal).fill('<i class="fas fa-star"></i>').join('');
+                                const initials = t.avatar_initials || (t.name ? t.name.charAt(0).toUpperCase() : 'AS');
+                                return `
+                                    <div class="carousel-slide">
+                                        <div class="carousel-card">
+                                            <span class="carousel-quote-icon"><i class="fas fa-quote-right"></i></span>
+                                            <div class="carousel-rating">${stars}</div>
+                                            <p class="carousel-quote">"${t.quote || ''}"</p>
+                                            <div class="carousel-user">
+                                                <div class="carousel-avatar">${initials}</div>
+                                                <div class="carousel-info">
+                                                    <h3>${t.name || 'Resident'}</h3>
+                                                    <span>${t.role || 'Verified Resident'}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('');
+
+                            dotsContainer.innerHTML = list.map((_, idx) => `
+                                <span class="carousel-dot ${idx === 0 ? 'active' : ''}" onclick="goToSlide(${idx})"></span>
+                            `).join('');
+
+                            if (typeof window.updateCarouselView === 'function') {
+                                window.goToSlide(0);
+                            }
+                        }
+                    }
+                } catch (tErr) {
+                    console.warn('[Supabase] Testimonials sync error:', tErr);
+                }
+
+                // Live Sync FAQs from Supabase
+                try {
+                    const { data: dbFaqs, error: fErr } = await supabaseClient
+                        .from('faqs')
+                        .select('*')
+                        .order('display_order', { ascending: true });
+
+                    if (!fErr && dbFaqs && dbFaqs.length > 0) {
+                        const container = document.getElementById('faqs-container') || document.querySelector('.faq-section');
+                        const list = dbFaqs.filter(f => f.is_published !== false);
+
+                        if (container && list.length > 0) {
+                            const categories = {};
+                            list.forEach(item => {
+                                const cat = item.category || 'General Questions';
+                                if (!categories[cat]) categories[cat] = [];
+                                categories[cat].push(item);
+                            });
+
+                            let html = '';
+                            for (const [catName, faqItems] of Object.entries(categories)) {
+                                html += `
+                                    <div class="category-group">
+                                        <h3 class="category-heading">${catName}</h3>
+                                        <div class="faq-list">
+                                `;
+                                faqItems.forEach(item => {
+                                    html += `
+                                        <div class="faq-card faq-item">
+                                            <button class="faq-trigger" onclick="toggleAccordion(this)">
+                                                <span>${item.question}</span>
+                                                <i class="fas fa-chevron-down"></i>
+                                            </button>
+                                            <div class="faq-answer">
+                                                <p>${item.answer}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                });
+                                html += `
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                            container.innerHTML = html;
+                        }
+                    }
+                } catch (fErr) {
+                    console.warn('[Supabase] FAQs sync error:', fErr);
+                }
+
+                // Live Sync Blog Posts from Supabase
+                try {
+                    const { data: dbBlogs, error: bErr } = await supabaseClient
+                        .from('blog_posts')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!bErr && dbBlogs && dbBlogs.length > 0) {
+                        const container = document.getElementById('blog-grid') || document.querySelector('.blog-grid');
+                        const list = dbBlogs.filter(b => b.is_published !== false);
+
+                        if (container && list.length > 0) {
+                            container.innerHTML = list.map(b => {
+                                const image = b.featured_image || '/images/sector-28-1bhk/img-1.jpg';
+                                const link = b.slug ? `blog/${b.slug}.html` : '#';
+                                return `
+                                    <div class="blog-card">
+                                        <div class="blog-card__image">
+                                            <img src="${image}" alt="${b.title || 'Blog Post'}" loading="lazy">
+                                        </div>
+                                        <div class="blog-card__content">
+                                            <span class="blog-card__category">${b.category || 'Guide'}</span>
+                                            <h3 class="blog-card__title">${b.title}</h3>
+                                            <p class="blog-card__excerpt">${b.excerpt || ''}</p>
+                                            <a href="${link}" class="btn-text">Read Article <i class="fas fa-arrow-right"></i></a>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('');
+                        }
+                    }
+                } catch (bErr) {
+                    console.warn('[Supabase] Blog sync error:', bErr);
+                }
             }
         }
         
