@@ -2047,6 +2047,46 @@ function uploadImageToCategory(categoryKey) {
 }
 window.uploadImageToCategory = uploadImageToCategory;
 
+async function deleteMedia(fileName, fileUrl) {
+    const isConfirmed = confirm(`Are you sure you want to delete this photo?\n\nFile: ${fileName}`);
+    if (!isConfirmed) return;
+
+    showToast('Deleting image...', 'info');
+    const client = AdminAuth.getClient();
+
+    if (client) {
+        // 1. Delete from Supabase Storage bucket
+        let storagePath = fileName;
+        if (storagePath.startsWith('cloud/')) {
+            storagePath = storagePath.replace('cloud/', '');
+        }
+        if (storagePath.startsWith('uploads/') || storagePath.startsWith('replacements/')) {
+            try {
+                await client.storage.from('media').remove([storagePath]);
+            } catch (err) {
+                console.warn('[Delete Storage Warning]', err);
+            }
+        }
+
+        // 2. Delete from media_assets table
+        try {
+            await client.from('media_assets')
+                .delete()
+                .or(`file_name.eq.${fileName},file_name.eq.${storagePath},file_url.eq.${fileUrl}`);
+        } catch (dbErr) {
+            console.warn('[Delete DB Warning]', dbErr);
+        }
+    }
+
+    // 3. Remove from in-memory State.media array
+    State.media = State.media.filter(m => m.file_name !== fileName && m.file_url !== fileUrl);
+
+    // 4. Re-render UI
+    renderMediaGrid();
+    showToast('Photo deleted successfully!', 'success');
+}
+window.deleteMedia = deleteMedia;
+
 
 // ==============================================================================
 // 7. PAGES METADATA
