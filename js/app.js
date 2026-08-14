@@ -1184,8 +1184,10 @@ const app = {
         if (!form) return;
         
         if (form.id === 'callbackForm') {
-            const successState = document.getElementById('modal-success-state');
+            const successState = document.getElementById('successState') || document.getElementById('modal-success-state') || document.querySelector('#callback-modal .success-state');
             const modalHeader = document.querySelector('#callback-modal .modal-header');
+            const modalOverlay = document.getElementById('callback-modal');
+            if (modalOverlay) modalOverlay.classList.add('submitted');
             if (successState) {
                 form.style.display = 'none';
                 form.classList.add('d-none');
@@ -1549,20 +1551,24 @@ window.toggleSidebar = function() {
 
 window.resetCallbackModalState = function() {
     const form = document.getElementById('callbackForm');
-    const successState = document.getElementById('modal-success-state');
+    const successStates = document.querySelectorAll('.success-state, #successState, #modal-success-state');
     const modalHeader = document.querySelector('#callback-modal .modal-header');
+    const modalOverlay = document.getElementById('callback-modal');
     
+    if (modalOverlay) {
+        modalOverlay.classList.remove('submitted');
+    }
     if (form) {
         form.reset();
-        form.style.display = '';
+        form.style.display = 'block';
         form.classList.remove('d-none');
     }
-    if (successState) {
-        successState.style.display = 'none';
-        successState.classList.add('d-none');
-    }
+    successStates.forEach(el => {
+        el.style.display = 'none';
+        el.classList.add('d-none');
+    });
     if (modalHeader) {
-        modalHeader.style.display = '';
+        modalHeader.style.display = 'block';
         modalHeader.classList.remove('d-none');
     }
 };
