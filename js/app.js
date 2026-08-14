@@ -260,6 +260,63 @@ const app = {
                         }
                     }
                 } catch (sErr) {}
+
+                // Live Sync Media Replacements & Uploads from Supabase
+                try {
+                    const { data: mediaAssets, error: mErr } = await supabaseClient
+                        .from('media_assets')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (!mErr && mediaAssets && mediaAssets.length > 0) {
+                        // 1. Apply image replacements on the page
+                        const replacements = mediaAssets.filter(a => a.category === 'replacement' && a.original_url);
+                        replacements.forEach(rep => {
+                            const origUrl = rep.original_url;
+                            const newUrl = rep.file_url;
+                            // Replace in <img> tags
+                            document.querySelectorAll('img').forEach(img => {
+                                if (img.src.includes(origUrl) || img.getAttribute('src') === origUrl) {
+                                    img.src = newUrl;
+                                }
+                                // Also check data-src for lazy loading
+                                if (img.dataset.src && (img.dataset.src.includes(origUrl) || img.dataset.src === origUrl)) {
+                                    img.dataset.src = newUrl;
+                                }
+                            });
+                            // Replace in background-image styles
+                            document.querySelectorAll('[style*="background-image"]').forEach(el => {
+                                if (el.style.backgroundImage.includes(origUrl)) {
+                                    el.style.backgroundImage = `url('${newUrl}')`;
+                                }
+                            });
+                        });
+
+                        // 2. Add uploaded property images to propertiesData galleries
+                        const uploads = mediaAssets.filter(a => a.category !== 'replacement' && a.category !== 'test' && a.category !== 'general');
+                        if (window.propertiesData && uploads.length > 0) {
+                            const propKeyMap = {
+                                'sector-28-1bhk': 'sector-28-1bhk',
+                                'sector-28-executive': 'sector-28-executive',
+                                'sector-28-premium-rooms': 'sector-28-premium-rooms',
+                                'king-room': 'king-room',
+                                'sector-42': 'sector-42',
+                                'sushant-lok': 'sushant-lok'
+                            };
+                            uploads.forEach(upload => {
+                                const cat = upload.category;
+                                if (propKeyMap[cat]) {
+                                    const prop = window.propertiesData.find(p => p.id === cat);
+                                    if (prop && prop.images) {
+                                        prop.images.push(upload.file_url);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                } catch (mErr) {
+                    console.warn('[Supabase] Media assets sync error:', mErr);
+                }
             }
         }
         
