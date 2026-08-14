@@ -574,27 +574,73 @@ function autoGenerateSlug(title) {
 
 function openBlogModal(id = null) {
     const form = document.getElementById('blogForm');
-    form.reset();
-    document.getElementById('blogSlug').dataset.manual = '';
+    if (form) form.reset();
+    const slugEl = document.getElementById('blogSlug');
+    if (slugEl) slugEl.dataset.manual = '';
 
     if (id) {
-        const post = State.blogPosts.find(b => b.id === id || b.slug === id);
+        const post = State.blogPosts.find(b => b.id === id || b.slug === id || String(b.id) === String(id));
         if (post) {
-            document.getElementById('blogModalTitle').textContent = 'Edit Blog Article';
-            document.getElementById('blogEditId').value = post.id || post.slug;
-            document.getElementById('blogTitle').value = post.title || '';
-            document.getElementById('blogSlug').value = post.slug || '';
-            document.getElementById('blogSlug').dataset.manual = 'true';
-            document.getElementById('blogCategory').value = post.category || 'Gurugram Living';
-            document.getElementById('blogImage').value = post.featured_image || '';
-            document.getElementById('blogAuthor').value = post.author || 'Rusha Stays Editorial Team';
-            document.getElementById('blogExcerpt').value = post.excerpt || '';
-            document.getElementById('blogContent').value = post.content || '';
-            document.getElementById('blogStatus').value = post.is_published ? 'true' : 'false';
+            const titleEl = document.getElementById('blogModalTitle');
+            if (titleEl) titleEl.textContent = 'Edit Blog Article';
+            
+            const editIdEl = document.getElementById('blogEditId');
+            if (editIdEl) editIdEl.value = post.id || post.slug;
+
+            const blogTitleEl = document.getElementById('blogTitle');
+            if (blogTitleEl) blogTitleEl.value = post.title || '';
+
+            if (slugEl) {
+                slugEl.value = post.slug || '';
+                slugEl.dataset.manual = 'true';
+            }
+
+            const catEl = document.getElementById('blogCategory');
+            if (catEl) catEl.value = post.category || 'Gurugram Living';
+
+            // Visual Cover Image Preview
+            if (post.featured_image) {
+                if (typeof setVisualImagePreview === 'function') {
+                    setVisualImagePreview('blogImage', 'blogImagePreview', 'blogImageDropPlaceholder', post.featured_image);
+                } else {
+                    const imgInp = document.getElementById('blogImage');
+                    if (imgInp) imgInp.value = post.featured_image;
+                }
+            } else {
+                if (typeof removeVisualImage === 'function') {
+                    removeVisualImage('blogImage', 'blogImagePreview', 'blogImageDropPlaceholder');
+                }
+            }
+
+            const authorEl = document.getElementById('blogAuthor');
+            if (authorEl) authorEl.value = post.author || 'Rusha Stays Editorial Team';
+
+            const excerptEl = document.getElementById('blogExcerpt');
+            if (excerptEl) excerptEl.value = post.excerpt || '';
+
+            const contentEl = document.getElementById('blogContent');
+            if (contentEl) contentEl.value = post.content || '';
+
+            // Status Toggle Switch
+            const isLive = post.is_published !== false;
+            const toggle = document.getElementById('blogStatusToggle');
+            const label = document.getElementById('blogStatusLabel');
+            if (toggle) toggle.checked = isLive;
+            if (label) label.textContent = isLive ? 'Published (Live on Website)' : 'Draft (Hidden from Public)';
         }
     } else {
-        document.getElementById('blogModalTitle').textContent = 'Create Blog Article';
-        document.getElementById('blogEditId').value = '';
+        const titleEl = document.getElementById('blogModalTitle');
+        if (titleEl) titleEl.textContent = 'Create Blog Article';
+        const editIdEl = document.getElementById('blogEditId');
+        if (editIdEl) editIdEl.value = '';
+
+        if (typeof removeVisualImage === 'function') {
+            removeVisualImage('blogImage', 'blogImagePreview', 'blogImageDropPlaceholder');
+        }
+        const toggle = document.getElementById('blogStatusToggle');
+        const label = document.getElementById('blogStatusLabel');
+        if (toggle) toggle.checked = true;
+        if (label) label.textContent = 'Published (Live on Website)';
     }
 
     openModal('blogModal');
