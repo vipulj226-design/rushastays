@@ -1404,7 +1404,7 @@ async function loadMedia() {
         }
     }
 
-    const siteImages = [
+    let siteImages = [
         {
                 "file_name": "best-living-experience.webp",
                 "file_url": "/images/best-living-experience.webp",
