@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
     <!-- Admin CSS -->
-    <link rel="stylesheet" href="css/admin.css?v=4.4">
+    <link rel="stylesheet" href="css/admin.css?v=4.5">
 
     <!-- MOBILE OVERRIDES (inline to bypass cache) -->
     <style>
@@ -93,7 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/data.js"></script>
-    <script src="js/supabase-client.js?v=4.4"></script>
+    <script src="js/supabase-client.js?v=4.5"></script>
 </head>
 <body>
 
@@ -303,8 +303,23 @@
                                         <option value="Sushant Lok">Sushant Lok Phase 1 — 1 BHK Studio Suite</option>
                                     </optgroup>
                                 </select>
+                                <div class="view-switcher">
+                                    <button type="button" class="view-btn active" id="propViewCardsBtn" onclick="setPropertiesView('cards')">
+                                        <i class="fas fa-grip"></i> <span>Cards</span>
+                                    </button>
+                                    <button type="button" class="view-btn" id="propViewTableBtn" onclick="setPropertiesView('table')">
+                                        <i class="fas fa-table-list"></i> <span>Table</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="table-responsive">
+
+                            <!-- WIX-STYLE VISUAL CARDS GRID -->
+                            <div id="propertiesCardsGrid" class="wix-cards-grid">
+                                <!-- Rendered dynamically -->
+                            </div>
+
+                            <!-- DATA TABLE (TOGGLEABLE) -->
+                            <div class="table-responsive" id="propertiesTableContainer" style="display: none;">
                                 <table class="admin-table">
                                     <thead>
                                         <tr>
@@ -922,14 +937,44 @@
                         </div>
                     </div>
 
+                    <!-- WIX-STYLE VISUAL COVER IMAGE UPLOADER -->
                     <div class="form-group">
-                        <label class="form-label">Featured Cover Image URL</label>
-                        <div style="display: flex; gap: 8px; align-items: center;">
-                            <input type="text" class="form-control" id="propFeaturedImage" placeholder="/images/sector-28-1bhk/img-1.jpg">
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="triggerQuickUpload('propFeaturedImage')" title="Upload or Drag Photo" style="white-space: nowrap; height: 42px;">
-                                <i class="fas fa-cloud-arrow-up"></i> Drop / Upload
-                            </button>
+                        <label class="form-label">Property Cover Photo *</label>
+                        <div class="wix-image-picker-box" onclick="triggerVisualUpload('propFeaturedImage', 'propImagePreview', 'propImageDropPlaceholder')">
+                            <input type="hidden" id="propFeaturedImage" required>
+                            <div id="propImageDropPlaceholder">
+                                <i class="fas fa-cloud-arrow-up" style="font-size: 32px; color: var(--primary); margin-bottom: 8px;"></i>
+                                <div style="font-weight: 700; font-size: 14px; color: var(--text-primary);">Click to Choose or Drag & Drop Photo</div>
+                                <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">PNG, JPG, WEBP supported</div>
+                            </div>
+                            <div class="wix-image-preview-card" id="propImagePreview" style="display: none;">
+                                <img src="" id="propImagePreviewImg" alt="Cover Preview">
+                                <div class="wix-image-actions">
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); triggerVisualUpload('propFeaturedImage', 'propImagePreview', 'propImageDropPlaceholder')"><i class="fas fa-camera"></i> Change</button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation(); removeVisualImage('propFeaturedImage', 'propImagePreview', 'propImageDropPlaceholder')"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- WIX-STYLE CLICKABLE AMENITIES CHIPS -->
+                    <div class="form-group">
+                        <label class="form-label">Amenities & Features (Click to select)</label>
+                        <div class="amenities-chip-grid" id="propAmenitiesGrid">
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, 'High-Speed WiFi')"><i class="fas fa-wifi"></i> WiFi</span>
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, 'Air Conditioning')"><i class="fas fa-snowflake"></i> Air Conditioning</span>
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, '100% Power Backup')"><i class="fas fa-bolt"></i> Power Backup</span>
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, 'Modular Kitchen')"><i class="fas fa-kitchen-set"></i> Kitchen</span>
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, 'Daily Housekeeping')"><i class="fas fa-broom"></i> Housekeeping</span>
+                            <span class="amenity-chip" onclick="toggleAmenityChip(this, 'Smart TV')"><i class="fas fa-tv"></i> Smart TV</span>
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, 'Hot Water / Geyser')"><i class="fas fa-shower"></i> Geyser</span>
+                            <span class="amenity-chip" onclick="toggleAmenityChip(this, 'Dedicated Parking')"><i class="fas fa-square-parking"></i> Parking</span>
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, 'Work Desk')"><i class="fas fa-laptop"></i> Work Desk</span>
+                            <span class="amenity-chip" onclick="toggleAmenityChip(this, 'Washing Machine')"><i class="fas fa-shirt"></i> Washing Machine</span>
+                            <span class="amenity-chip active" onclick="toggleAmenityChip(this, '24/7 Security CCTV')"><i class="fas fa-shield-halved"></i> 24x7 Security</span>
+                            <span class="amenity-chip" onclick="toggleAmenityChip(this, 'Lift / Elevator')"><i class="fas fa-elevator"></i> Lift Access</span>
+                        </div>
+                        <input type="hidden" id="propAmenities">
                     </div>
 
                     <div class="form-group">
@@ -949,14 +994,16 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Publication Status</label>
-                            <select class="form-control" id="propStatus">
-                                <option value="true">Published (Visible Publicly)</option>
-                                <option value="false">Draft (Hidden from Public)</option>
-                            </select>
-                        </div>
+                    <!-- WIX/IOS STYLE TOGGLE SWITCH -->
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label class="form-label">Live Status</label>
+                        <label class="wix-switch-wrap">
+                            <span class="wix-switch">
+                                <input type="checkbox" id="propStatusToggle" checked onchange="document.getElementById('propStatusLabel').textContent = this.checked ? 'Published (Visible on Website)' : 'Draft (Hidden from Public)'">
+                                <span class="wix-slider"></span>
+                            </span>
+                            <span class="wix-switch-label" id="propStatusLabel">Published (Visible on Website)</span>
+                        </label>
                     </div>
                 </form>
             </div>
@@ -993,15 +1040,29 @@
                             <input type="text" class="form-control" id="blogCategory" placeholder="Gurugram Living">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Featured Image URL</label>
-                            <input type="text" class="form-control" id="blogImage" placeholder="/images/sector-42/image-1.jpg">
+                    <!-- WIX-STYLE VISUAL COVER IMAGE UPLOADER -->
+                    <div class="form-group">
+                        <label class="form-label">Article Cover Photo</label>
+                        <div class="wix-image-picker-box" onclick="triggerVisualUpload('blogImage', 'blogImagePreview', 'blogImageDropPlaceholder')">
+                            <input type="hidden" id="blogImage">
+                            <div id="blogImageDropPlaceholder">
+                                <i class="fas fa-cloud-arrow-up" style="font-size: 32px; color: var(--primary); margin-bottom: 8px;"></i>
+                                <div style="font-weight: 700; font-size: 14px; color: var(--text-primary);">Click or Drag & Drop Article Cover Photo</div>
+                                <div style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">PNG, JPG, WEBP supported</div>
+                            </div>
+                            <div class="wix-image-preview-card" id="blogImagePreview" style="display: none;">
+                                <img src="" id="blogImagePreviewImg" alt="Cover Preview">
+                                <div class="wix-image-actions">
+                                    <button type="button" class="btn btn-secondary btn-sm" onclick="event.stopPropagation(); triggerVisualUpload('blogImage', 'blogImagePreview', 'blogImageDropPlaceholder')"><i class="fas fa-camera"></i> Change</button>
+                                    <button type="button" class="btn btn-danger btn-sm" onclick="event.stopPropagation(); removeVisualImage('blogImage', 'blogImagePreview', 'blogImageDropPlaceholder')"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Author Name</label>
-                            <input type="text" class="form-control" id="blogAuthor" value="Rusha Stays Editorial Team">
-                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Author Name</label>
+                        <input type="text" class="form-control" id="blogAuthor" value="Rusha Stays Editorial Team">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Excerpt / Summary</label>
@@ -1021,14 +1082,17 @@
                         <textarea class="form-control" id="blogContent" style="min-height: 200px; font-size: 14px;" placeholder="Write or paste your article text here... (Click the buttons above to format)"></textarea>
                         <div class="form-help">💡 <b>Noob Tip:</b> Just type normal text! If you type plain lines, they will automatically format nicely on the website.</div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Status</label>
-                            <select class="form-control" id="blogStatus">
-                                <option value="true">Published</option>
-                                <option value="false">Draft</option>
-                            </select>
-                        </div>
+
+                    <!-- WIX/IOS STYLE TOGGLE SWITCH -->
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label class="form-label">Live Status</label>
+                        <label class="wix-switch-wrap">
+                            <span class="wix-switch">
+                                <input type="checkbox" id="blogStatusToggle" checked onchange="document.getElementById('blogStatusLabel').textContent = this.checked ? 'Published (Live on Website)' : 'Draft (Hidden from Public)'">
+                                <span class="wix-slider"></span>
+                            </span>
+                            <span class="wix-switch-label" id="blogStatusLabel">Published (Live on Website)</span>
+                        </label>
                     </div>
                 </form>
             </div>
@@ -1104,13 +1168,19 @@
                         <label class="form-label">Review Quote *</label>
                         <textarea class="form-control" id="testiQuote" required style="min-height: 100px;"></textarea>
                     </div>
+
+                    <!-- WIX-STYLE STAR RATING SELECTOR -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label class="form-label">Star Rating (1-5)</label>
-                            <select class="form-control" id="testiRating">
-                                <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
-                                <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
-                            </select>
+                            <label class="form-label">Star Rating (Click Stars)</label>
+                            <div class="star-rating-picker" id="testiStarPicker">
+                                <span class="star active" data-val="1" onclick="setTestimonialRating(1)">★</span>
+                                <span class="star active" data-val="2" onclick="setTestimonialRating(2)">★</span>
+                                <span class="star active" data-val="3" onclick="setTestimonialRating(3)">★</span>
+                                <span class="star active" data-val="4" onclick="setTestimonialRating(4)">★</span>
+                                <span class="star active" data-val="5" onclick="setTestimonialRating(5)">★</span>
+                            </div>
+                            <input type="hidden" id="testiRating" value="5">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Avatar Initials</label>
@@ -1132,6 +1202,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Admin App Controller Script -->
-    <script src="js/admin-app.js?v=4.4"></script>
+    <script src="js/admin-app.js?v=4.5"></script>
 </body>
 </html>

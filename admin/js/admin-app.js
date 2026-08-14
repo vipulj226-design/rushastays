@@ -250,6 +250,7 @@ async function loadProperties() {
 }
 
 function renderPropertiesTable() {
+    renderPropertiesCards();
     const tbody = document.getElementById('propertiesTableBody');
     if (!tbody) return;
 
@@ -320,24 +321,42 @@ function openPropertyModal(id = null) {
             document.getElementById('propertyModalTitle').textContent = 'Edit Property Listing';
             document.getElementById('propEditId').value = prop.id;
             document.getElementById('propSlug').value = prop.id;
-            document.getElementById('propSlug').disabled = true; // Lock slug during edit
-            document.getElementById('propRoomType').value = prop.room_type || '';
+            document.getElementById('propSlug').disabled = true;
+            document.getElementById('propRoomType').value = prop.room_type || prop.title || '';
             document.getElementById('propLocality').value = prop.locality || 'Sector 28';
             document.getElementById('propSize').value = prop.size || '';
             document.getElementById('propOccupancy').value = prop.occupancy || '';
             document.getElementById('propPriceVal').value = prop.price_val || '';
             document.getElementById('propPricingHtml').value = prop.pricing_html || '';
-            document.getElementById('propFeaturedImage').value = prop.featured_image || '';
+            
+            // Visual Image Preview
+            const imgUrl = prop.featured_image || (prop.images && prop.images[0]) || '';
+            if (imgUrl) {
+                setVisualImagePreview('propFeaturedImage', 'propImagePreview', 'propImageDropPlaceholder', imgUrl);
+            } else {
+                removeVisualImage('propFeaturedImage', 'propImagePreview', 'propImageDropPlaceholder');
+            }
+
             document.getElementById('propAboutShort').value = prop.about_short || '';
             document.getElementById('propAboutFull').value = prop.about_full || '';
             document.getElementById('propMapEmbed').value = prop.google_map_embed || '';
-            document.getElementById('propStatus').value = prop.is_published ? 'true' : 'false';
+            
+            // Status Toggle Switch
+            const isLive = prop.is_published !== false;
+            const toggle = document.getElementById('propStatusToggle');
+            const label = document.getElementById('propStatusLabel');
+            if (toggle) toggle.checked = isLive;
+            if (label) label.textContent = isLive ? 'Published (Visible on Website)' : 'Draft (Hidden from Public)';
         }
     } else {
         document.getElementById('propertyModalTitle').textContent = 'Add New Property Listing';
         document.getElementById('propEditId').value = '';
         document.getElementById('propSlug').disabled = false;
-        document.getElementById('propStatus').value = 'true';
+        removeVisualImage('propFeaturedImage', 'propImagePreview', 'propImageDropPlaceholder');
+        const toggle = document.getElementById('propStatusToggle');
+        const label = document.getElementById('propStatusLabel');
+        if (toggle) toggle.checked = true;
+        if (label) label.textContent = 'Published (Visible on Website)';
     }
 
     openModal('propertyModal');
@@ -357,7 +376,7 @@ async function saveProperty(e) {
     const aboutShort = document.getElementById('propAboutShort').value.trim();
     const aboutFull = document.getElementById('propAboutFull').value.trim();
     const mapEmbed = document.getElementById('propMapEmbed').value.trim();
-    const isPublished = document.getElementById('propStatus').value === 'true';
+    const isPublished = document.getElementById('propStatusToggle') ? document.getElementById('propStatusToggle').checked : true;
 
     const payload = {
         id: slug,
@@ -614,7 +633,7 @@ async function saveBlogPost(e) {
     const author = document.getElementById('blogAuthor').value.trim();
     const excerpt = document.getElementById('blogExcerpt').value.trim();
     let content = document.getElementById('blogContent').value.trim();
-    const isPublished = document.getElementById('blogStatus').value === 'true';
+    const isPublished = document.getElementById('blogStatusToggle') ? document.getElementById('blogStatusToggle').checked : true;
 
     // Smart Auto-Formatter: If client typed plain text without HTML tags, automatically format into paragraphs!
     if (content && !content.includes('<p>') && !content.includes('<h2>') && !content.includes('<div>') && !content.includes('<article>')) {
@@ -869,12 +888,13 @@ function openTestimonialModal(id = null) {
             document.getElementById('testiName').value = t.name;
             document.getElementById('testiRole').value = t.role || '';
             document.getElementById('testiQuote').value = t.quote;
-            document.getElementById('testiRating').value = t.rating || 5;
+            setTestimonialRating(t.rating || 5);
             document.getElementById('testiInitials').value = t.avatar_initials || '';
         }
     } else {
         document.getElementById('testimonialModalTitle').textContent = 'Add Testimonial';
         document.getElementById('testimonialEditId').value = '';
+        setTestimonialRating(5);
     }
 
     openModal('testimonialModal');
