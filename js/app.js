@@ -479,12 +479,18 @@ const app = {
         const featuresHtml = property.inSuiteFeatures.map(f => `<li><i class="fas fa-check-circle" style="color: var(--primary); margin-right: 8px;"></i>${f}</li>`).join('');
         const amenitiesHtml = property.propertyAmenities.map(a => `<li><i class="fas fa-star" style="color: #F9D976; margin-right: 8px;"></i>${a}</li>`).join('');
         
-        // Landmarks HTML
-        const landmarksHtml = property.landmarks.map(l => `
-            <div style="background: var(--bg-main); padding: 12px 16px; border-radius: 12px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500;">
-                <span style="font-size: 20px;">${l.icon}</span> ${l.text}
-            </div>
-        `).join('');
+        // Landmarks HTML (Supports Emojis & FontAwesome Icons)
+        const landmarksHtml = (property.landmarks || []).map(l => {
+            const iconStr = l.icon || '📍';
+            const iconElement = (iconStr.startsWith('fa') || iconStr.includes('fa-'))
+                ? `<i class="${iconStr}" style="font-size: 18px; color: var(--primary); width: 24px; text-align: center;"></i>`
+                : `<span style="font-size: 20px; width: 24px; text-align: center; display: inline-block;">${iconStr}</span>`;
+            return `
+                <div style="background: var(--bg-main); padding: 12px 16px; border-radius: 12px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; border: 1px solid var(--border-color);">
+                    ${iconElement} <span>${l.text}</span>
+                </div>
+            `;
+        }).join('');
 
         const detailsHtml = `
             <!-- Full Width Title Block -->

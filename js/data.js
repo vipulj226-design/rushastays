@@ -42,10 +42,10 @@ const propertiesData = [
         "neighbourhoodText": "Sushant Lok Phase 1 is one of Gurgaon's most prestigious and well-connected residential hubs. Located opposite Galleria Market, residents have instant access to fine dining, cafes, supermarkets and daily conveniences. MG Road Metro Station, IFFCO Chowk, Golf Course Road and Cyber City are all within a 5 to 10 minute drive, making commuting effortless for working professionals.",
         "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.4727786440263!2d77.0754877!3d28.4653068!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18e592df7859%3A0x6b7bd4d18721adbf!2sSushant%20Lok%20Phase%20I%2C%20Gurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
         "landmarks": [
-            { "icon": "fa-solid fa-bag-shopping", "text": "Galleria Market - 2 Mins" },
-            { "icon": "fa-solid fa-train-subway", "text": "MG Road Metro - 5 Mins" },
-            { "icon": "fa-solid fa-building", "text": "Cyber City - 10 Mins" },
-            { "icon": "fa-solid fa-hospital", "text": "Fortis Hospital - 7 Mins" }
+            { "icon": "🛍️", "text": "Galleria Market - 2 Mins" },
+            { "icon": "🚇", "text": "MG Road Metro - 5 Mins" },
+            { "icon": "🏢", "text": "Cyber City - 10 Mins" },
+            { "icon": "🏥", "text": "Fortis Hospital - 7 Mins" }
         ]
     },
     {
@@ -95,10 +95,10 @@ const propertiesData = [
         "neighbourhoodText": "Sector 42 is one of Golf Course Road's prime residential enclaves. Located adjacent to Sector 42-43 Rapid Metro Station, residents enjoy seamless transit across Gurgaon's commercial belt. Horizon Center, Central Plaza and Golf Course Road business hubs are located within a 3 to 7 minute drive.",
         "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.0123456789!2d77.091234!3d28.452345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18d123456789%3A0x123456789abcdef!2sSector%2042%2C%20Gurugram%2C%20Haryana!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
         "landmarks": [
-            { "icon": "fa-solid fa-train-subway", "text": "Sector 42-43 Rapid Metro - 3 Mins" },
-            { "icon": "fa-solid fa-building", "text": "One Horizon Center - 5 Mins" },
-            { "icon": "fa-solid fa-bag-shopping", "text": "Central Plaza Mall - 4 Mins" },
-            { "icon": "fa-solid fa-hospital", "text": "Max Hospital - 8 Mins" }
+            { "icon": "🚇", "text": "Sector 42-43 Rapid Metro - 3 Mins" },
+            { "icon": "🏢", "text": "One Horizon Center - 5 Mins" },
+            { "icon": "🛍️", "text": "Central Plaza Mall - 4 Mins" },
+            { "icon": "🏥", "text": "Max Hospital - 8 Mins" }
         ]
     },
     {
@@ -143,9 +143,9 @@ const propertiesData = [
         "neighbourhoodText": "Sector 28 is situated between Golf Course Road and MG Road. DLF Phase 1 Metro Station and MG Road Metro Station are both within 5 minutes, giving effortless access to Cyber City, Galleria Market, and Delhi.",
         "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.2!2d77.085!3d28.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18e!2sSector%2028%2C%20Gurugram!5e0!3m2!1sen!2sin!4v1700000000000",
         "landmarks": [
-            { "icon": "fa-solid fa-train-subway", "text": "DLF Phase 1 Metro - 4 Mins" },
-            { "icon": "fa-solid fa-bag-shopping", "text": "Galleria Market - 5 Mins" },
-            { "icon": "fa-solid fa-building", "text": "Cyber Hub - 8 Mins" }
+            { "icon": "🚇", "text": "DLF Phase 1 Metro - 4 Mins" },
+            { "icon": "🛍️", "text": "Galleria Market - 5 Mins" },
+            { "icon": "🏢", "text": "Cyber Hub - 8 Mins" }
         ]
     },
     {
@@ -185,8 +185,8 @@ const propertiesData = [
         "neighbourhoodText": "Sector 28 offers quiet, tree-lined avenues with instant access to Golf Course Road and MG Road commercial districts.",
         "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.2!2d77.085!3d28.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18e!2sSector%2028%2C%20Gurugram!5e0!3m2!1sen!2sin!4v1700000000000",
         "landmarks": [
-            { "icon": "fa-solid fa-train-subway", "text": "DLF Phase 1 Metro - 4 Mins" },
-            { "icon": "fa-solid fa-building", "text": "Cyber City - 8 Mins" }
+            { "icon": "🚇", "text": "DLF Phase 1 Metro - 4 Mins" },
+            { "icon": "🏢", "text": "Cyber City - 8 Mins" }
         ]
     },
     {
@@ -236,7 +236,7 @@ const propertiesData = [
         "neighbourhoodText": "Located in Sector 28, Gurugram near MG Road and Golf Course Road.",
         "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.2!2d77.085!3d28.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18e!2sSector%2028%2C%20Gurugram!5e0!3m2!1sen!2sin!4v1700000000000",
         "landmarks": [
-            { "icon": "fa-solid fa-train-subway", "text": "Metro - 5 Mins" }
+            { "icon": "🚇", "text": "Metro - 5 Mins" }
         ]
     },
     {
@@ -271,7 +271,7 @@ const propertiesData = [
         "neighbourhoodText": "Sector 28, Gurugram.",
         "googleMapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3507.2!2d77.085!3d28.47!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d18e!2sSector%2028%2C%20Gurugram!5e0!3m2!1sen!2sin!4v1700000000000",
         "landmarks": [
-            { "icon": "fa-solid fa-train-subway", "text": "Metro - 5 Mins" }
+            { "icon": "🚇", "text": "Metro - 5 Mins" }
         ]
     }
 ];
