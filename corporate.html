@@ -29,7 +29,7 @@ if ('serviceWorker' in navigator) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.min.css?v=3.3">
+    <link rel="stylesheet" href="css/styles.min.css?v=3.4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css?v=3.0">
 
     <!-- JSON-LD Structured Data -->
@@ -611,40 +611,68 @@ if ('serviceWorker' in navigator) {
                     <a href="/locations.html" class="btn-outline-primary corp-btn-view">View Properties</a>
                 </div>
             </div>
-            <div class="corp-carousel-wrapper">
-                <div class="corp-hero-carousel animate-fade-in delay-3">
+            <div class="corp-carousel-wrapper" style="position: relative;">
+                <div class="corp-hero-carousel animate-fade-in delay-3" id="corpCarouselContainer" style="position: relative; width: 100%; height: 460px; border-radius: 24px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow-md); touch-action: pan-y;">
+                    
+                    <!-- Floating Photo Counter Badge -->
+                    <div id="corpSlideCounter" style="position: absolute; top: 16px; right: 16px; background: rgba(15,23,42,0.85); color: #ffffff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; z-index: 10; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.25);">
+                        <i class="fas fa-camera" style="color: #38bdf8; font-size: 11px;"></i>
+                        <span id="corpSlideCounterText">Photo 1 of 11</span>
+                    </div>
+
+                    <!-- Swipe / Click Hint -->
+                    <div style="position: absolute; top: 16px; left: 16px; background: rgba(15,23,42,0.85); color: #ffffff; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; z-index: 10; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.15); display: flex; align-items: center; gap: 6px;">
+                        <i class="fas fa-arrows-left-right" style="color: #38bdf8;"></i> Swipe or Click ◄ ►
+                    </div>
+
+                    <!-- Left Arrow Button -->
+                    <button onclick="prevCorpSlide()" title="Previous Photo" style="position: absolute; top: 50%; left: 14px; transform: translateY(-50%); background: rgba(15,23,42,0.75); border: none; color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; z-index: 10; backdrop-filter: blur(6px); transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" onmouseover="this.style.background='rgba(200,56,40,0.95)'" onmouseout="this.style.background='rgba(15,23,42,0.75)'">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+
+                    <!-- Right Arrow Button -->
+                    <button onclick="nextCorpSlide()" title="Next Photo" style="position: absolute; top: 50%; right: 14px; transform: translateY(-50%); background: rgba(15,23,42,0.75); border: none; color: #fff; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; z-index: 10; backdrop-filter: blur(6px); transition: all 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" onmouseover="this.style.background='rgba(200,56,40,0.95)'" onmouseout="this.style.background='rgba(15,23,42,0.75)'">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                    <!-- Slide Images -->
                     <div class="carousel-slide active">
-                        <img src="images/corp-amenities.webp" alt="Gurugram Corporate Stays Amenities">
+                        <img src="images/corp-amenities.webp" alt="Gurugram Corporate Stays Amenities" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-2.webp" alt="Fully Furnished Corporate Suites Gurugram">
+                        <img src="images/corp-room-2.webp" alt="Fully Furnished Corporate Suites Gurugram" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-3.webp" alt="Rusha Stays Premium Managed Suites">
+                        <img src="images/corp-room-3.webp" alt="Rusha Stays Premium Managed Suites" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-4.webp" alt="Managed Executive Rooms Gurgaon">
+                        <img src="images/corp-room-4.webp" alt="Managed Executive Rooms Gurgaon" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-5.webp" alt="Luxury Furnished Studio Suite Gurgaon">
+                        <img src="images/corp-room-5.webp" alt="Luxury Furnished Studio Suite Gurgaon" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-bathroom.webp" alt="Premium Luxury Attached Bathroom Gurgaon">
+                        <img src="images/corp-bathroom.webp" alt="Premium Luxury Attached Bathroom Gurgaon" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-6.webp" alt="Premium Managed Service Apartments Gurgaon">
+                        <img src="images/corp-room-6.webp" alt="Premium Managed Service Apartments Gurgaon" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-7.webp" alt="Relocation Housing Solutions Gurgaon">
+                        <img src="images/corp-room-7.webp" alt="Relocation Housing Solutions Gurgaon" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-8.webp" alt="Fully Furnished Twin Beds Suite Gurgaon">
+                        <img src="images/corp-room-8.webp" alt="Fully Furnished Twin Beds Suite Gurgaon" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-studio.webp" alt="Luxury Open Plan Studio Suite Gurgaon">
+                        <img src="images/corp-studio.webp" alt="Luxury Open Plan Studio Suite Gurgaon" draggable="false">
                     </div>
                     <div class="carousel-slide">
-                        <img src="images/corp-room-9.webp" alt="Executive Serviced Apartment Gurgaon">
+                        <img src="images/corp-room-9.webp" alt="Executive Serviced Apartment Gurgaon" draggable="false">
+                    </div>
+
+                    <!-- Dot Pagination Bar -->
+                    <div id="corpDotsContainer" style="position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; background: rgba(15,23,42,0.65); padding: 6px 14px; border-radius: 20px; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,0.15);">
+                        <!-- Rendered by JS -->
                     </div>
                 </div>
             </div>
@@ -1103,28 +1131,90 @@ if ('serviceWorker' in navigator) {
     </a>
 
     
-    <script src="js/app.min.js?v=3.3" defer></script>
+    <script src="js/app.min.js?v=3.4" defer></script>
 
-    <!-- Corporate Hero Carousel Auto-Slider Script -->
+    <!-- Corporate Hero Carousel Interactive Script -->
     <script>
-    (function() {
-        function initCorpCarousel() {
-            var slides = document.querySelectorAll('.corp-hero-carousel .carousel-slide');
-            if (!slides || slides.length <= 1) return;
-            
-            var currentIndex = 0;
-            setInterval(function() {
-                slides[currentIndex].classList.remove('active');
-                currentIndex = (currentIndex + 1) % slides.length;
-                slides[currentIndex].classList.add('active');
-            }, 3500);
+    var corpCurrentIndex = 0;
+    var corpAutoTimer = null;
+
+    function updateCorpSlideDisplay() {
+        var slides = document.querySelectorAll('.corp-hero-carousel .carousel-slide');
+        var counterText = document.getElementById('corpSlideCounterText');
+        var dotsContainer = document.getElementById('corpDotsContainer');
+
+        if (!slides || slides.length === 0) return;
+
+        slides.forEach(function(slide, idx) {
+            if (idx === corpCurrentIndex) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+
+        if (counterText) {
+            counterText.textContent = 'Photo ' + (corpCurrentIndex + 1) + ' of ' + slides.length;
         }
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initCorpCarousel);
-        } else {
-            initCorpCarousel();
+
+        if (dotsContainer) {
+            var dotsHtml = '';
+            for (var i = 0; i < slides.length; i++) {
+                var isActive = (i === corpCurrentIndex);
+                var bg = isActive ? '#C63A2D' : 'rgba(255,255,255,0.5)';
+                var width = isActive ? '20px' : '8px';
+                dotsHtml += '<span onclick="goToCorpSlide(' + i + ')" style="width:' + width + '; height:8px; border-radius:100px; background:' + bg + '; cursor:pointer; transition:all 0.3s;"></span>';
+            }
+            dotsContainer.innerHTML = dotsHtml;
         }
-    })();
+    }
+
+    function nextCorpSlide() {
+        var slides = document.querySelectorAll('.corp-hero-carousel .carousel-slide');
+        if (!slides || slides.length === 0) return;
+        corpCurrentIndex = (corpCurrentIndex + 1) % slides.length;
+        updateCorpSlideDisplay();
+        restartCorpTimer();
+    }
+
+    function prevCorpSlide() {
+        var slides = document.querySelectorAll('.corp-hero-carousel .carousel-slide');
+        if (!slides || slides.length === 0) return;
+        corpCurrentIndex = (corpCurrentIndex - 1 + slides.length) % slides.length;
+        updateCorpSlideDisplay();
+        restartCorpTimer();
+    }
+
+    function goToCorpSlide(idx) {
+        corpCurrentIndex = idx;
+        updateCorpSlideDisplay();
+        restartCorpTimer();
+    }
+
+    function restartCorpTimer() {
+        if (corpAutoTimer) clearInterval(corpAutoTimer);
+        corpAutoTimer = setInterval(function() {
+            nextCorpSlide();
+        }, 3500);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCorpSlideDisplay();
+        restartCorpTimer();
+
+        // Touch Swipe & Drag
+        var container = document.getElementById('corpCarouselContainer');
+        if (container) {
+            var startX = 0;
+            container.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+            container.addEventListener('touchend', function(e) {
+                var diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 35) {
+                    if (diff > 0) nextCorpSlide(); else prevCorpSlide();
+                }
+            }, { passive: true });
+        }
+    });
     </script>
 </body>
 </html>
