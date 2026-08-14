@@ -2048,15 +2048,21 @@ function uploadImageToCategory(categoryKey) {
 window.uploadImageToCategory = uploadImageToCategory;
 
 async function deleteMedia(fileName, fileUrl) {
-    const isConfirmed = confirm(`Are you sure you want to delete this photo?\n\nFile: ${fileName}`);
+    if (window.event) {
+        window.event.stopPropagation();
+        window.event.preventDefault();
+    }
+
+    const cleanDisplay = (fileName || '').split('/').pop();
+    const isConfirmed = confirm(`Are you sure you want to delete this photo?\n\nFile: ${cleanDisplay}`);
     if (!isConfirmed) return;
 
-    showToast('Deleting image...', 'info');
+    showToast('Deleting photo...', 'info');
     const client = AdminAuth.getClient();
 
     if (client) {
         // 1. Delete from Supabase Storage bucket
-        let storagePath = fileName;
+        let storagePath = fileName || '';
         if (storagePath.startsWith('cloud/')) {
             storagePath = storagePath.replace('cloud/', '');
         }
@@ -2070,9 +2076,18 @@ async function deleteMedia(fileName, fileUrl) {
 
         // 2. Delete from media_assets table
         try {
-            await client.from('media_assets')
-                .delete()
-                .or(`file_name.eq.${fileName},file_name.eq.${storagePath},file_url.eq.${fileUrl}`);
+            if (fileUrl && fileUrl.startsWith('http')) {
+                await client.from('media_assets').delete().eq('file_url', fileUrl);
+            }
+            if (storagePath) {
+                await client.from('media_assets').delete().eq('file_name', storagePath);
+            }
+            if (fileName) {
+                await client.from('media_assets').delete().eq('file_name', fileName);
+            }
+            if (fileUrl) {
+                await client.from('media_assets').delete().eq('original_url', fileUrl);
+            }
         } catch (dbErr) {
             console.warn('[Delete DB Warning]', dbErr);
         }
