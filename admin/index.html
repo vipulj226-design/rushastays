@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Rusha Stays Admin CMS Dashboard - Property & Content Management">
     <title>Dashboard | Rusha Stays Admin CMS</title>
     <link rel="icon" type="image/webp" href="../images/rusha-stays-logo.webp">
     
@@ -712,109 +714,11 @@
                         </div>
                         <div class="form-group" style="margin-bottom: 18px;">
                             <label class="form-label" style="color: #f8fafc;">Default OpenGraph Social Image URL</label>
-                            <input type="text" class="form-control" id="seoGlobalOg" oninput="updateSerpPreview()" value="https://rushastays.com/images/sector-28-1bhk/img-1.jpg">
+                            <input type="text" class="form-control" id="seoGlobalOg" oninput="updateSerpPreview()" value="https://rushastays.com/images/luxury_apartment_living.webp">
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" style="color: #f8fafc;">Google Site Verification Tag</label>
-                                <input type="text" class="form-control" id="seoGoogleVerify" placeholder="google-site-verification=xxxx">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label" style="color: #f8fafc;">Target Focus Keywords</label>
-                                <input type="text" class="form-control" id="seoKeywords" value="serviced apartments gurugram, coliving sector 28, executive rooms gurgaon, 1bhk suite sushant lok">
-                            </div>
-                        </div>
-                        <div style="margin-top: 24px; text-align: right;">
-                            <button type="submit" class="btn btn-primary" style="padding: 12px 24px;">
-                                <i class="fas fa-floppy-disk"></i> Save SEO Configuration
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- GOOGLE SERP PREVIEW BOX -->
-            <div class="admin-card" style="margin-bottom: 28px; background: #0f172a; border: 1px solid #1e293b; border-radius: 18px; overflow: hidden;">
-                <div class="card-header" style="border-bottom: 1px solid #1e293b; padding: 18px 24px;">
-                    <h3 class="card-title" style="color: #f8fafc; font-size: 15px; font-weight: 700; margin: 0; display: flex; align-items: center; gap: 8px;">
-                        <i class="fab fa-google" style="color: #ea4335;"></i> Google Search Result Live Snippet Preview
-                    </h3>
-                </div>
-                <div class="card-body" style="padding: 24px;">
-                    <div style="background: #ffffff; padding: 22px; border-radius: 14px; max-width: 680px; border: 1px solid #e2e8f0; font-family: Arial, sans-serif; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-                        <div style="font-size: 14px; color: #202124; display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                            <span style="background: #c83828; width: 20px; height: 20px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #ffffff;">R</span>
-                            <span style="font-size: 14px; color: #202124; font-weight: 600;">Rusha Stays</span>
-                            <span style="font-size: 12px; color: #5f6368;">https://rushastays.com</span>
-                        </div>
-                        <h3 id="serpPreviewTitle" style="font-size: 20px; color: #1a0dab; font-weight: 400; margin: 0 0 4px 0; line-height: 1.3; cursor: pointer; text-decoration: underline;">
-                            Premium Living & Executive Suites in Gurugram | Rusha Stays
-                        </h3>
-                        <p id="serpPreviewDesc" style="font-size: 14px; color: #4d5156; margin: 0; line-height: 1.58;">
-                            Rusha Stays provides fully furnished premium executive suites, studio apartments, and serviced rooms across prime Gurugram locations like Sector 28, Sector 42, and Sushant Lok Phase 1.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- LIVE PAGE-BY-PAGE AUDIT TABLE -->
-            <div class="admin-card" style="margin-bottom: 28px; background: #0f172a; border: 1px solid #1e293b; border-radius: 18px; overflow: hidden;">
-                <div class="card-header" style="border-bottom: 1px solid #1e293b; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                    <div>
-                        <h3 class="card-title" style="color: #f8fafc; font-size: 16px; font-weight: 700; margin: 0;">Page-by-Page SEO Audit Matrix</h3>
-                        <p class="card-subtitle" style="color: #94a3b8; font-size: 12px; margin-top: 2px;">Real-time meta title, description length, canonical URL, and schema status for all 15 website pages</p>
-                    </div>
-                    <div style="display: flex; gap: 8px;">
-                        <a href="/sitemap.xml" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 12px;">
-                            <i class="fas fa-sitemap"></i> View Sitemap.xml
-                        </a>
-                        <a href="/robots.txt" target="_blank" class="btn btn-secondary btn-sm" style="font-size: 12px;">
-                            <i class="fas fa-robot"></i> View Robots.txt
-                        </a>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Page Name</th>
-                                <th>URL Path</th>
-                                <th>Title Audit</th>
-                                <th>Description Audit</th>
-                                <th>Canonical</th>
-                                <th>Score</th>
-                            </tr>
-                        </thead>
-                        <tbody id="seoAuditTableBody">
-                            <!-- Rendered by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- GLOBAL SEO CONFIG FORM -->
-            <div class="admin-card" style="background: #0f172a; border: 1px solid #1e293b; border-radius: 18px;">
-                <div class="card-header" style="border-bottom: 1px solid #1e293b; padding: 18px 24px;">
-                    <h3 class="card-title" style="color: #f8fafc; font-size: 16px; font-weight: 700; margin: 0;">Global SEO Settings</h3>
-                </div>
-                <div class="card-body" style="padding: 24px;">
-                    <form onsubmit="saveSeoSettings(event)">
-                        <div class="form-group" style="margin-bottom: 18px;">
-                            <label class="form-label" style="color: #f8fafc;">Global Meta Title</label>
-                            <input type="text" class="form-control" id="seoGlobalTitle" oninput="updateSerpPreview()" value="Premium Living & Executive Suites in Gurugram | Rusha Stays">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 18px;">
-                            <label class="form-label" style="color: #f8fafc;">Global Meta Description</label>
-                            <textarea class="form-control" id="seoGlobalDesc" oninput="updateSerpPreview()" style="min-height: 80px;">Rusha Stays provides fully furnished premium executive suites, studio apartments, and serviced rooms across prime Gurugram locations like Sector 28, Sector 42, and Sushant Lok Phase 1.</textarea>
-                        </div>
-                        <div class="form-group" style="margin-bottom: 18px;">
-                            <label class="form-label" style="color: #f8fafc;">Default OpenGraph Social Image URL</label>
-                            <input type="text" class="form-control" id="seoGlobalOg" value="https://rushastays.com/images/luxury-living.webp">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label" style="color: #f8fafc;">Google Site Verification Code</label>
                                 <input type="text" class="form-control" id="seoGoogleVerify" placeholder="google-site-verification=xxxx">
                             </div>
                             <div class="form-group">

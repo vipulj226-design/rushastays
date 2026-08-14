@@ -976,7 +976,7 @@ if ('serviceWorker' in navigator) {
                     </div>
                     <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
                 
-                    <div class="footer-social-block footer-social-block">
+                    <div class="footer-social-block">
                         <span class="label-caps">Follow Us</span>
                         <div class="d-flex-gap-12">
                             <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
@@ -1004,9 +1004,9 @@ if ('serviceWorker' in navigator) {
                 <div class="footer-col">
                     <h3>Properties</h3>
                     <ul class="footer-links">
-                        <li><a href="/properties/sector-42-1-bhk-suite">Sector 42 Suite</a></li>
-                        <li><a href="/properties/sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
-                        <li><a href="/properties/sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                        <li><a href="/properties/sector-42-1-bhk-suite.html">Sector 42 Suite</a></li>
+                        <li><a href="/properties/sushant-lok-1-bhk-studio.html">Sushant Lok Studio</a></li>
+                        <li><a href="/properties/sector-28-1-bhk-suite.html">Sector 28 Suite</a></li>
                         <li class="mt-8"><span class="tag-pill-gray">Sector 43 (Upcoming)</span></li>
                         <li><span class="tag-pill-gray">Sector 55 (Upcoming)</span></li>
                     </ul>
@@ -1102,126 +1102,7 @@ if ('serviceWorker' in navigator) {
         <span>Live Chat</span>
     </a>
 
-    <script>
-        function toggleSidebar() {
-            document.getElementById('mobile-sidebar').classList.toggle('open');
-            document.getElementById('sidebar-overlay').classList.toggle('active');
-        }
-
-        function openCallbackModal() {
-            document.getElementById('callback-modal').classList.add('active');
-        }
-
-        let modalTimeoutId = null;
-
-        
-        function closeCallbackModal(e) {
-        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
-        if (modalTimeoutId) {
-        clearTimeout(modalTimeoutId);
-        modalTimeoutId = null;
-        }
-        document.getElementById('callback-modal').classList.remove('active');
-        // Reset states
-        setTimeout(() => {
-        document.getElementById('callbackForm').style.display = 'flex';
-        document.getElementById('modal-success-state').style.display = 'none';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'block';
-        document.getElementById('callbackForm').reset();
-        }, 300);
-        }
-        }
-
-        function handleCallbackSubmit(e) {
-        e.preventDefault();
-        // Simulate form submission
-        document.getElementById('callbackForm').style.display = 'none';
-        document.getElementById('modal-success-state').style.display = 'block';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'none';
-
-        // Auto close modal after 15 seconds if not clicked manually
-        modalTimeoutId = setTimeout(() => {
-        closeCallbackModal(true);
-        }, 15000);
-        }
-
-// Counter animation for stats
-        function animateCounters() {
-            const counters = document.querySelectorAll('.corp-stat-num');
-            counters.forEach(counter => {
-                const target = counter.textContent;
-                const isNum = parseInt(target);
-                if (!isNaN(isNum)) {
-                    let count = 0;
-                    const step = Math.ceil(isNum / 40);
-                    const timer = setInterval(() => {
-                        count += step;
-                        if (count >= isNum) {
-                            counter.textContent = target;
-                            clearInterval(timer);
-                        } else {
-                            counter.textContent = count + (target.includes('+') ? '+' : target.includes('%') ? '%' : '');
-                        }
-                    }, 40);
-                }
-            });
-        }
-        // Trigger on scroll
-        const statsEl = document.querySelector('.corp-stats-bar');
-        if (statsEl) {
-            const obs = new IntersectionObserver((entries) => {
-                entries.forEach(e => { if (e.isIntersecting) { animateCounters(); obs.disconnect(); } });
-            }, { threshold: 0.3 });
-            obs.observe(statsEl);
-        }
-
-        // Native Scroll Reveal Observer
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-        document.querySelectorAll('.serve-card, .corp-format-card, .ideal-card, .loc-prop-item, .process-step, .corp-h2, .corp-lead, .why-check-item, .loc-img-wrap, .why-img').forEach(el => {
-            el.classList.add('reveal-on-scroll');
-            revealObserver.observe(el);
-        });
-
-        // Corporate Hero Carousel Controller
-        document.addEventListener('DOMContentLoaded', () => {
-            const carousel = document.querySelector('.corp-hero-carousel');
-            if (!carousel) return;
-            
-            const slides = carousel.querySelectorAll('.carousel-slide');
-            if (slides.length <= 1) return;
-            
-            // Set first slide active
-            slides[0].classList.add('active');
-            
-            let currentIndex = 0;
-            
-            setInterval(() => {
-                const nextIndex = (currentIndex + 1) % slides.length;
-                
-                // Remove last-active from all
-                slides.forEach(slide => slide.classList.remove('last-active'));
-                
-                // Current active becomes last-active (keeps opacity: 1 and sits underneath)
-                slides[currentIndex].classList.remove('active');
-                slides[currentIndex].classList.add('last-active');
-                
-                // Next slide becomes active (fades in on top)
-                slides[nextIndex].classList.add('active');
-                
-                currentIndex = nextIndex;
-            }, 4000);
-        });
-    </script>
+    
     <script src="js/app.min.js?v=3.1" defer></script>
 </body>
 </html>

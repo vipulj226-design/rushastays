@@ -1495,17 +1495,17 @@ if ('serviceWorker' in navigator) {
                 <p>Explore Locations Across <strong>Sector 28</strong>, <strong>Sector 42</strong>, <strong>Sushant Lok Phase 1</strong>, <strong>Sector 43</strong> and <strong>Sector 55</strong></p>
             </div>
             <div class="locations-grid reveal-element">
-                <a href="locations?locality=Sector%2028" class="location-card active-loc">
+                <a href="locations.html?locality=Sector%2028" class="location-card active-loc">
                     <div class="location-card-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <h3>Sector 28</h3>
                     <span class="location-badge">Active</span>
                 </a>
-                <a href="locations?locality=Sector%2042" class="location-card active-loc">
+                <a href="locations.html?locality=Sector%2042" class="location-card active-loc">
                     <div class="location-card-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <h3>Sector 42</h3>
                     <span class="location-badge">Active</span>
                 </a>
-                <a href="locations?locality=Sushant%20Lok%20Phase%201" class="location-card active-loc">
+                <a href="locations.html?locality=Sushant%20Lok%20Phase%201" class="location-card active-loc">
                     <div class="location-card-icon"><i class="fas fa-map-marker-alt"></i></div>
                     <h3>Sushant Lok Phase 1</h3>
                     <span class="location-badge">Active</span>
@@ -1548,7 +1548,7 @@ if ('serviceWorker' in navigator) {
                     <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
                     
                 
-                    <div class="footer-social-block footer-social-block">
+                    <div class="footer-social-block">
                         <span class="label-caps">Follow Us</span>
                         <div class="d-flex-gap-12">
                             <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
@@ -1576,9 +1576,9 @@ if ('serviceWorker' in navigator) {
                 <div class="footer-col">
                                           <h3>Properties</h3>
                       <ul class="footer-links">
-                          <li><a href="/properties/sector-42-1-bhk-suite">Sector 42 Suite</a></li>
-                          <li><a href="/properties/sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
-                          <li><a href="/properties/sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                          <li><a href="/properties/sector-42-1-bhk-suite.html">Sector 42 Suite</a></li>
+                          <li><a href="/properties/sushant-lok-1-bhk-studio.html">Sushant Lok Studio</a></li>
+                          <li><a href="/properties/sector-28-1-bhk-suite.html">Sector 28 Suite</a></li>
                           <li class="mt-8"><span style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 43 (Upcoming)</span></li>
                           <li><span style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 55 (Upcoming)</span></li>
                       </ul>
@@ -1658,136 +1658,7 @@ if ('serviceWorker' in navigator) {
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // ACCORDION DYNAMIC HEIGHT TOGGLE
-        function toggleAccordion(button) {
-            const card = button.closest('.faq-card');
-            const isOpen = card.classList.contains('open');
-
-            // Close all
-            document.querySelectorAll('.faq-card').forEach(c => {
-                c.classList.remove('open');
-                const trigger = c.querySelector('.faq-trigger');
-                if (trigger) trigger.setAttribute('aria-expanded', 'false');
-            });
-
-            // Open clicked
-            if (!isOpen) {
-                card.classList.add('open');
-                button.setAttribute('aria-expanded', 'true');
-            }
-        }
-        
-        // SCROLL REVEAL ANIMATIONS
-        const revealElements = document.querySelectorAll('.reveal-element');
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target); // Reveal only once
-                }
-            });
-        }, { threshold: 0.15 });
-
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // MOBILE SIDEBAR TOGGLE
-
-        // CATEGORY SCROLL AND HIGHLIGHT
-        function scrollToCategory(id, button) {
-            const target = document.getElementById(id);
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-            
-            // Highlight active chip
-            document.querySelectorAll('.category-chip').forEach(chip => {
-                chip.classList.remove('active');
-            });
-            button.classList.add('active');
-        }
-
-        // INTERSECTION OBSERVER FOR DYNAMIC CHIP HIGHLIGHTING ON SCROLL
-        const categoryGroups = document.querySelectorAll('.category-group');
-        const categoryChips = document.querySelectorAll('.category-chip');
-        
-        const scrollObserverOptions = {
-            root: null,
-            rootMargin: '-10% 0px -75% 0px', // Trigger when header is in the upper zone
-            threshold: 0
-        };
-
-        const scrollObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.id;
-                    
-                    // Match with chip
-                    categoryChips.forEach(chip => {
-                        const onclickStr = chip.getAttribute('onclick');
-                        if (onclickStr && onclickStr.includes(id)) {
-                            categoryChips.forEach(c => c.classList.remove('active'));
-                            chip.classList.add('active');
-                            
-                            // Scroll chips bar on mobile for visibility
-                            const container = document.querySelector('.category-nav-container');
-                            const offsetLeft = chip.offsetLeft - (container.offsetWidth / 2) + (chip.offsetWidth / 2);
-                            container.scrollTo({ left: offsetLeft, behavior: 'smooth' });
-                        }
-                    });
-                }
-            });
-        }, scrollObserverOptions);
-
-        categoryGroups.forEach(group => scrollObserver.observe(group));
-
-        // CALLBACK MODAL HANDLERS
-        function openCallbackModal() {
-            document.getElementById('callback-modal').classList.add('active');
-            document.body.style.overflow = 'hidden'; // Disable background scroll
-            
-            // Reset form states
-            document.getElementById('callbackForm').style.display = 'flex';
-            document.getElementById('successState').style.display = 'none';
-            document.getElementById('callbackForm').reset();
-        }
-
-        let modalTimeoutId = null;
-
-        
-        function closeCallbackModal(e) {
-        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
-        if (modalTimeoutId) {
-        clearTimeout(modalTimeoutId);
-        modalTimeoutId = null;
-        }
-        document.getElementById('callback-modal').classList.remove('active');
-        // Reset states
-        setTimeout(() => {
-        document.getElementById('callbackForm').style.display = 'flex';
-        document.getElementById('modal-success-state').style.display = 'none';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'block';
-        document.getElementById('callbackForm').reset();
-        }, 300);
-        }
-        }
-
-        function handleCallbackSubmit(e) {
-        e.preventDefault();
-        // Simulate form submission
-        document.getElementById('callbackForm').style.display = 'none';
-        document.getElementById('modal-success-state').style.display = 'block';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'none';
-
-        // Auto close modal after 15 seconds if not clicked manually
-        modalTimeoutId = setTimeout(() => {
-        closeCallbackModal(true);
-        }, 15000);
-        }
-
-</script>
+    
 
     <!-- SEO FAQ Schema (JSON-LD) -->
     <script type="application/ld+json">

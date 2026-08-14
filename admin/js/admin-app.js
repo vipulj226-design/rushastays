@@ -614,7 +614,9 @@ async function deleteBlogPost(id) {
     const client = AdminAuth.getClient();
     if (client) {
         try {
-            await client.from('blog_posts').delete().or(`id.eq.${id},slug.eq.${id}`);
+            const isNumeric = !isNaN(id);
+            if (isNumeric) { await client.from('blog_posts').delete().eq('id', id); }
+            else { await client.from('blog_posts').delete().eq('slug', id); }
             showToast('Post deleted successfully.', 'success');
         } catch (err) {
             showToast(`Delete failed: ${err.message}`, 'error');
@@ -713,8 +715,12 @@ async function saveFaq(e) {
 
     const client = AdminAuth.getClient();
     if (client) {
-        await client.from('faqs').upsert(payload);
-        showToast('FAQ saved to Supabase!', 'success');
+        try {
+            await client.from('faqs').upsert(payload);
+            showToast('FAQ saved to Supabase!', 'success');
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
     } else {
         if (editId) {
             const idx = State.faqs.findIndex(f => f.id === editId);
@@ -733,7 +739,13 @@ async function saveFaq(e) {
 async function deleteFaq(id) {
     if (!confirm('Delete this FAQ?')) return;
     const client = AdminAuth.getClient();
-    if (client) await client.from('faqs').delete().eq('id', id);
+    if (client) {
+        try {
+            await client.from('faqs').delete().eq('id', id);
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    }
     State.faqs = State.faqs.filter(f => f.id !== id);
     await loadFaqs();
 }
@@ -831,8 +843,12 @@ async function saveTestimonial(e) {
 
     const client = AdminAuth.getClient();
     if (client) {
-        await client.from('testimonials').upsert(payload);
-        showToast('Testimonial saved!', 'success');
+        try {
+            await client.from('testimonials').upsert(payload);
+            showToast('Testimonial saved!', 'success');
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
     } else {
         if (editId) {
             const idx = State.testimonials.findIndex(t => t.id === editId);
@@ -851,7 +867,13 @@ async function saveTestimonial(e) {
 async function deleteTestimonial(id) {
     if (!confirm('Delete this review?')) return;
     const client = AdminAuth.getClient();
-    if (client) await client.from('testimonials').delete().eq('id', id);
+    if (client) {
+        try {
+            await client.from('testimonials').delete().eq('id', id);
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    }
     State.testimonials = State.testimonials.filter(t => t.id !== id);
     await loadTestimonials();
 }
@@ -974,7 +996,13 @@ async function updateEnquiryStatus(id, newStatus) {
 async function deleteEnquiry(id) {
     if (!confirm('Delete this enquiry?')) return;
     const client = AdminAuth.getClient();
-    if (client) await client.from('enquiries').delete().eq('id', id);
+    if (client) {
+        try {
+            await client.from('enquiries').delete().eq('id', id);
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    }
     State.enquiries = State.enquiries.filter(e => e.id !== id);
     renderEnquiriesFullTable();
     updateDashboardStats();
@@ -1467,7 +1495,7 @@ function renderMediaGrid() {
 }
 
 async function handleMediaUpload(e) {
-    const files = e.target.files;
+    const files = (e.dataTransfer && e.dataTransfer.files) || (e.target && e.target.files);
     if (!files || files.length === 0) return;
 
     const client = AdminAuth.getClient();
@@ -1596,7 +1624,8 @@ async function testSupabaseConnection() {
     }
 }
 
-function saveSeoSettings() {
+function saveSeoSettings(e) {
+    if (e) e.preventDefault();
     showToast('Global SEO metadata saved successfully!', 'success');
 }
 
@@ -1666,6 +1695,7 @@ function escapeHtml(str) {
 // ==============================================================================
 // EXPLICIT GLOBAL WINDOW BINDINGS (for HTML onclick handlers)
 // ==============================================================================
+window.autoGenerateSlug = autoGenerateSlug;
 window.switchTab = typeof switchTab !== 'undefined' ? switchTab : function() {};
 window.toggleSidebar = typeof toggleSidebar !== 'undefined' ? toggleSidebar : function() {};
 window.openModal = typeof openModal !== 'undefined' ? openModal : function() {};
@@ -1703,6 +1733,7 @@ window.copyToClipboard = typeof copyToClipboard !== 'undefined' ? copyToClipboar
 function initDragAndDropListeners() {
     const dropzone = document.getElementById('mediaDropzone');
     if (!dropzone) return;
+    if (dropzone.dataset.initialized) return;
 
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropzone.addEventListener(eventName, (e) => {
@@ -1734,6 +1765,7 @@ function initDragAndDropListeners() {
             handleMediaUpload(e);
         }
     }, false);
+    dropzone.dataset.initialized = 'true';
 }
 
 function triggerQuickUpload(targetInputId) {

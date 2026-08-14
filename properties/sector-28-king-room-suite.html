@@ -24,7 +24,7 @@ if ('serviceWorker' in navigator) {
     <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>King Room Suite in Sector 28, Gurugram | Rusha Stays</title>
-    <meta name="description" content="Book a fully managed, premium King Room Suite in Sector 28, Gurgaon. Spanning 450 Sq. Ft., featuring serviced suites and modern amenities.">
+    <meta name="description" content="Book a fully managed, premium King Room Suite in Sector 28, Gurgaon. Spanning 350 Sq. Ft., featuring serviced suites and modern amenities.">
     <link rel="preload" href="../images/king-room/bedroom.jpg" as="image">
     <link rel="preload" href="../images/king-room/living-area.jpg" as="image">
     <link rel="preload" href="../images/king-room/bathroom.jpg" as="image">
@@ -40,7 +40,7 @@ if ('serviceWorker' in navigator) {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "Rusha Stays - King Room Suite in Sector 28",
-        "image": "https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+        "image": "/images/sector-28-king-room-suite/img-1.jpg",
         "priceRange": "₹20,000 - ₹50,000",
         "telephone": "+91 92058 59444",
         "url": "https://rushastays.com/properties/sector-28-king-room-suite.html",
@@ -118,7 +118,7 @@ if ('serviceWorker' in navigator) {
                     <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
                     
                 
-                    <div class="footer-social-block footer-social-block">
+                    <div class="footer-social-block">
                         <span class="label-caps">Follow Us</span>
                         <div class="d-flex-gap-12">
                             <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
@@ -260,56 +260,7 @@ if ('serviceWorker' in navigator) {
 
     <script src="../js/data.js?v=3.0"></script>
     <script src="../js/app.min.js?v=3.1"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            app.renderPropertyDetails('sector-28-king-room-suite');
-        });
-        
-        function toggleSidebar() {
-            document.getElementById('mobile-sidebar').classList.toggle('open');
-            document.getElementById('sidebar-overlay').classList.toggle('active');
-        }
-        
-        function openCallbackModal() {
-            document.getElementById('callback-modal').classList.add('active');
-        }
-
-        let modalTimeoutId = null;
-
-        
-        function closeCallbackModal(e) {
-        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
-        if (modalTimeoutId) {
-        clearTimeout(modalTimeoutId);
-        modalTimeoutId = null;
-        }
-        document.getElementById('callback-modal').classList.remove('active');
-        // Reset states
-        setTimeout(() => {
-        document.getElementById('callbackForm').style.display = 'flex';
-        document.getElementById('modal-success-state').style.display = 'none';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'block';
-        document.getElementById('callbackForm').reset();
-        }, 300);
-        }
-        }
-
-        function handleCallbackSubmit(e) {
-        e.preventDefault();
-        // Simulate form submission
-        document.getElementById('callbackForm').style.display = 'none';
-        document.getElementById('modal-success-state').style.display = 'block';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'none';
-
-        // Auto close modal after 15 seconds if not clicked manually
-        modalTimeoutId = setTimeout(() => {
-        closeCallbackModal(true);
-        }, 15000);
-        }
-
-</script>
+    
 
     <!-- Floating WhatsApp Live Chat -->
     <a href="https://wa.me/919205859444" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" rel="noopener noreferrer">

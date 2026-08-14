@@ -362,7 +362,7 @@ if ('serviceWorker' in navigator) {
     <main class="blog-layout">
         <div class="blog-main-content">
             <!-- Article Card -->
-            <article class="featured-card" onclick="location.href="/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram"" style="cursor: pointer;" data-style="cursor: pointer;">
+            <article class="featured-card" onclick="location.href='/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html'" style="cursor: pointer;" data-style="cursor: pointer;">
                 <div class="featured-img" style="background-image: url('images/luxury_apartment_living.webp');" data-style="background-image: url('images/luxury_apartment_living.webp');"></div>
                 <div class="featured-content">
                     <div class="post-meta">
@@ -372,7 +372,7 @@ if ('serviceWorker' in navigator) {
                     </div>
                     <h2 class="post-title">Why Serviced Apartments in Gurugram (Gurgaon) are Replacing PGs: The Ultimate Guide for Modern Professionals</h2>
                     <p class="post-excerpt">Relocating to Gurugram (Gurgaon) for work? Discover why modern corporate executives and startup founders are moving away from traditional Paying Guest (PG) accommodations and embracing the privacy, flexibility, and luxury of managed serviced suites.</p>
-                    <a href="/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram" class="read-more-btn">Read Full Article <i class="fas fa-arrow-right"></i></a>
+                    <a href="/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html" class="read-more-btn">Read Full Article <i class="fas fa-arrow-right"></i></a>
                 </div>
             </article>
         </div>
@@ -382,14 +382,14 @@ if ('serviceWorker' in navigator) {
             <div class="sidebar-widget">
                 <h3 class="widget-title">Recent Posts</h3>
                 <div class="recent-posts-list">
-                    <div class="recent-post-item cursor-pointer" onclick="location.href="/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram"">
+                    <div class="recent-post-item cursor-pointer" onclick="location.href='/blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html'">
                         <div class="recent-post-thumb" style="background-image: url('images/luxury_apartment_living.webp');" data-style="background-image: url('images/luxury_apartment_living.webp');"></div>
                         <div class="recent-post-info">
                             <h4>Why Serviced Apartments are Replacing PGs...</h4>
                             <span>July 7, 2026</span>
                         </div>
                     </div>
-                    <div class="recent-post-item cursor-pointer" onclick="location.href="/blog/top-10-popular-places-in-gurugram"">
+                    <div class="recent-post-item cursor-pointer" onclick="location.href='/blog/top-10-popular-places-in-gurugram.html'">
                         <div class="recent-post-thumb" style="background-image: url('images/gurgaon_skyline.webp');" data-style="background-image: url('images/gurgaon_skyline.webp');"></div>
                         <div class="recent-post-info">
                             <h4>Top 10 Popular Places in Gurugram (Gurgaon)...</h4>
@@ -424,7 +424,7 @@ if ('serviceWorker' in navigator) {
                     </div>
                     <p>Experience premium fully furnished accommodations across Gurugram (Gurgaon), featuring executive rooms, studio suites, serviced apartments and 1 BHK residences, thoughtfully designed for working professionals, corporate executives and relocating professionals.</p>
                 
-                    <div class="footer-social-block footer-social-block">
+                    <div class="footer-social-block">
                         <span class="label-caps">Follow Us</span>
                         <div class="d-flex-gap-12">
                             <a href="https://www.instagram.com/rushastays" target="_blank" class="social-icon-btn instagram" aria-label="Follow us on Instagram" rel="noopener noreferrer">
@@ -452,9 +452,9 @@ if ('serviceWorker' in navigator) {
                 <div class="footer-col">
                     <h3>Properties</h3>
                     <ul class="footer-links">
-                        <li><a href="/properties/sector-42-1-bhk-suite">Sector 42 Suite</a></li>
-                        <li><a href="/properties/sushant-lok-1-bhk-studio">Sushant Lok Studio</a></li>
-                        <li><a href="/properties/sector-28-1-bhk-suite">Sector 28 Suite</a></li>
+                        <li><a href="/properties/sector-42-1-bhk-suite.html">Sector 42 Suite</a></li>
+                        <li><a href="/properties/sushant-lok-1-bhk-studio.html">Sushant Lok Studio</a></li>
+                        <li><a href="/properties/sector-28-1-bhk-suite.html">Sector 28 Suite</a></li>
                         <li class="mt-8"><span style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 43 (Upcoming)</span></li>
                         <li><span style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);" data-style="font-size: 13px; color: #222222; background: #ffffff; border: 1px solid #cccccc; font-weight: 600; padding: 2px 6px; border-radius: 4px; background: rgba(0,0,0,0.02);">Sector 55 (Upcoming)</span></li>
                     </ul>
@@ -546,47 +546,7 @@ if ('serviceWorker' in navigator) {
 
     <script src="js/data.js?v=3.0"></script>
     <script src="js/app.min.js?v=3.1"></script>
-    <script>
-        function openCallbackModal() {
-            document.getElementById('callback-modal').classList.add('active');
-        }
-
-        let modalTimeoutId = null;
-
-        
-        function closeCallbackModal(e) {
-        if (e === true || !e || e.target.id === 'callback-modal' || e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
-        if (modalTimeoutId) {
-        clearTimeout(modalTimeoutId);
-        modalTimeoutId = null;
-        }
-        document.getElementById('callback-modal').classList.remove('active');
-        // Reset states
-        setTimeout(() => {
-        document.getElementById('callbackForm').style.display = 'flex';
-        document.getElementById('modal-success-state').style.display = 'none';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'block';
-        document.getElementById('callbackForm').reset();
-        }, 300);
-        }
-        }
-
-        function handleCallbackSubmit(e) {
-        e.preventDefault();
-        // Simulate form submission
-        document.getElementById('callbackForm').style.display = 'none';
-        document.getElementById('modal-success-state').style.display = 'block';
-        const modalHeader = document.querySelector('#callback-modal .modal-header');
-        if (modalHeader) modalHeader.style.display = 'none';
-
-        // Auto close modal after 15 seconds if not clicked manually
-        modalTimeoutId = setTimeout(() => {
-        closeCallbackModal(true);
-        }, 15000);
-        }
-
-</script>
+    
 
     <!-- Floating WhatsApp Live Chat -->
     <a href="https://wa.me/919205859444" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp" rel="noopener noreferrer">

@@ -10,12 +10,24 @@
  * Note: The anon key is safe for public client-side use when Row Level Security (RLS) is enabled.
  */
 
+// Safely retrieve items from localStorage handling private mode / disabled storage
+function safeGetLocalStorage(key) {
+    try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+            return window.localStorage.getItem(key);
+        }
+    } catch (e) {
+        // Storage access is restricted or disabled
+    }
+    return null;
+}
+
 window.SUPABASE_CONFIG = {
     // Supabase Project URL
-    url: window.localStorage.getItem('rusha_supabase_url') || "https://riplmhmadmehoeizbfiu.supabase.co",
+    url: safeGetLocalStorage('rusha_supabase_url') || "https://riplmhmadmehoeizbfiu.supabase.co",
     
     // Supabase Anon/Public Key
-    anonKey: window.localStorage.getItem('rusha_supabase_anon_key') || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpcGxtaG1hZG1laG9laXpiZml1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MTcwNDksImV4cCI6MjEwMTk5MzA0OX0.hphvGVMbNRcEKRoN4MKxz1dwmbGJJ3hqeKhuk23vdvY"
+    anonKey: safeGetLocalStorage('rusha_supabase_anon_key') || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJpcGxtaG1hZG1laG9laXpiZml1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY0MTcwNDksImV4cCI6MjEwMTk5MzA0OX0.hphvGVMbNRcEKRoN4MKxz1dwmbGJJ3hqeKhuk23vdvY"
 };
 
 // Check if Supabase has been configured with real credentials

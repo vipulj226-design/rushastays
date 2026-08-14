@@ -149,7 +149,6 @@ const app = {
     },
 
     animateHeroTitle() {
-        return; // Retain static HTML title to eliminate layout reflow
         const titleEl = document.querySelector('.hero-v2__title');
         if (!titleEl) return;
         
@@ -894,34 +893,7 @@ const app = {
         }
     },
 
-    goToCarouselImage(index) {
-        const container = document.getElementById('prop-carousel-images');
-        const thumbsContainer = document.getElementById('prop-carousel-thumbnails');
-        if (!container) return;
-        
-        const images = container.querySelectorAll('img');
-        if (images.length <= 1 || index < 0 || index >= images.length) return;
 
-        images.forEach(img => img.style.display = 'none');
-        images[index].style.display = 'block';
-
-        if (thumbsContainer) {
-            const thumbs = thumbsContainer.querySelectorAll('img');
-            thumbs.forEach((thumb, i) => {
-                if (i === index) {
-                    thumb.style.border = '2px solid var(--primary)';
-                    thumb.style.opacity = '1';
-                } else {
-                    thumb.style.border = '2px solid transparent';
-                    thumb.style.opacity = '0.6';
-                }
-            });
-            // Ensure thumbnail is in view
-            if (thumbs[index]) {
-                thumbs[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            }
-        }
-    },
 
     initFormHandlers() {
         window.handleCallbackSubmit = (e) => {
@@ -1086,11 +1058,8 @@ const app = {
     },
     shareProperty(id) {
         // Construct the full URL safely
-        let shareUrl = window.location.origin;
-        const pathParts = window.location.pathname.split('/');
-        pathParts.pop(); // Remove current filename
-        const basePath = pathParts.join('/');
-        shareUrl += (basePath === '/' ? '' : basePath) + '/' + id;
+        const cleanId = id.replace(/^\/+/, '').replace(/\/properties\//, '');
+        const shareUrl = `${window.location.origin}/properties/${cleanId}`;
 
         if (navigator.share) {
             navigator.share({
