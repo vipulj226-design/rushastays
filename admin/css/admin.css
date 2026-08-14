@@ -1013,8 +1013,23 @@ textarea.form-control {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
+
     .admin-table {
-        min-width: 600px;
+        min-width: 540px;
+    }
+
+    /* Sticky Actions Column on Mobile */
+    .admin-table th:last-child,
+    .admin-table td:last-child {
+        position: sticky;
+        right: 0;
+        background: #ffffff;
+        box-shadow: -4px 0 10px rgba(0,0,0,0.08);
+        z-index: 5;
+        padding: 8px 10px;
+    }
+    .admin-table th:last-child {
+        background: #F8FAFC;
     }
 
     /* Form rows stack on tablet */

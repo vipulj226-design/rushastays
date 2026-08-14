@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
     <!-- Admin CSS -->
-    <link rel="stylesheet" href="css/admin.css?v=4.6">
+    <link rel="stylesheet" href="css/admin.css?v=4.7">
 
     <!-- WIX-STYLE & MOBILE OVERRIDES (inline to bypass cache) -->
     <style>
@@ -99,10 +99,33 @@
         .btn-view-site { padding: 8px !important; min-width: auto !important; }
         .conn-status-badge { padding: 6px 8px !important; }
         
-        /* Tables scroll horizontally */
+        /* Tables on Mobile: Sticky Action Buttons & Touch Targets */
         .table-responsive { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
-        .admin-table { min-width: 500px; }
+        .admin-table { min-width: 540px; }
         .admin-table th, .admin-table td { padding: 10px 12px !important; font-size: 13px !important; }
+        
+        /* Sticky Actions Column - NEVER scroll right to find Edit button! */
+        .admin-table th:last-child,
+        .admin-table td:last-child {
+            position: sticky !important;
+            right: 0 !important;
+            background: #ffffff !important;
+            box-shadow: -4px 0 10px rgba(0,0,0,0.08) !important;
+            z-index: 5 !important;
+            padding: 8px 10px !important;
+        }
+        .admin-table th:last-child {
+            background: #F8FAFC !important;
+        }
+        .admin-table td:last-child .btn-icon,
+        .admin-table td:last-child .btn {
+            min-height: 38px !important;
+            min-width: 38px !important;
+            font-size: 14px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
         
         /* Modals bottom-sheet style */
         .modal-overlay { padding: 0 !important; align-items: flex-end !important; }
@@ -133,7 +156,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/data.js"></script>
-    <script src="js/supabase-client.js?v=4.6"></script>
+    <script src="js/supabase-client.js?v=4.7"></script>
 </head>
 <body>
 
@@ -399,8 +422,23 @@
                                     <i class="fas fa-search"></i>
                                     <input type="text" class="search-input" id="blogSearch" placeholder="Search articles..." oninput="filterBlogTable()">
                                 </div>
+                                <div class="view-switcher">
+                                    <button type="button" class="view-btn active" id="blogViewCardsBtn" onclick="setBlogView('cards')">
+                                        <i class="fas fa-grip"></i> <span>Cards</span>
+                                    </button>
+                                    <button type="button" class="view-btn" id="blogViewTableBtn" onclick="setBlogView('table')">
+                                        <i class="fas fa-table-list"></i> <span>Table</span>
+                                    </button>
+                                </div>
                             </div>
-                            <div class="table-responsive">
+
+                            <!-- WIX-STYLE VISUAL BLOG CARDS GRID -->
+                            <div id="blogCardsGrid" class="wix-cards-grid">
+                                <!-- Rendered dynamically -->
+                            </div>
+
+                            <!-- DATA TABLE (TOGGLEABLE) -->
+                            <div class="table-responsive" id="blogTableContainer" style="display: none;">
                                 <table class="admin-table">
                                     <thead>
                                         <tr>
@@ -1242,6 +1280,6 @@
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Admin App Controller Script -->
-    <script src="js/admin-app.js?v=4.6"></script>
+    <script src="js/admin-app.js?v=4.7"></script>
 </body>
 </html>

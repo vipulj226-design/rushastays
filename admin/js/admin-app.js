@@ -498,6 +498,7 @@ async function loadBlog() {
 }
 
 function renderBlogTable() {
+    renderBlogCards();
     const tbody = document.getElementById('blogTableBody');
     if (!tbody) return;
 
@@ -717,12 +718,153 @@ async function loadFaqs() {
         } catch (err) {}
     }
 
-    if (!data) {
+    if (!data || data.length < 5) {
         data = [
-            { id: '1', question: 'What is Rusha Stays?', answer: 'Rusha Stays provides executive serviced rooms, 1 BHK suites and studio apartments in Gurugram.', category: 'General', display_order: 1, is_published: true },
-            { id: '2', question: 'Which locations does Rusha Stays operate in?', answer: 'Sector 28 (DLF Phase 1), Sector 42 (Golf Course Road), Sushant Lok Phase 1, Sector 43 and Sector 55.', category: 'Locations', display_order: 2, is_published: true },
-            { id: '3', question: 'Are meals included?', answer: 'Selected properties offer freshly prepared homestyle breakfasts and dinners.', category: 'Amenities', display_order: 3, is_published: true }
-        ];
+        {
+                "id": "1",
+                "question": "What is Rusha Stays ?",
+                "answer": "Rusha Stays offers professionally managed accommodation solutions in Gurugram (Gurgaon), including Executive Rooms, Executive Premium Rooms, King Room Suites, Studio Suites and Fully Furnished 1 BHK Suites. Our properties are designed for working professionals, consultants, startup founders, interns, remote workers, hybrid workers and relocating professionals seeking a comfortable, secure and hassle-free living experience.",
+                "category": "About",
+                "display_order": 1,
+                "is_published": true
+        },
+        {
+                "id": "2",
+                "question": "What is the difference between a traditional PG and Rusha Stays ?",
+                "answer": "Unlike traditional PG accommodations, Rusha Stays offers professionally managed living spaces with premium furnishings, housekeeping services, security systems, high-speed Wi-Fi, lifestyle amenities and dedicated resident support. Depending on the property, residents can choose from private rooms, Studio Suites, King Room Suites or Fully Furnished 1 BHK Suites, allowing greater flexibility, privacy and comfort.",
+                "category": "About",
+                "display_order": 2,
+                "is_published": true
+        },
+        {
+                "id": "3",
+                "question": "Why choose Rusha Stays?",
+                "answer": "Rusha Stays combines the comfort of premium furnished living with the convenience of professional hospitality. Prime Gurugram (Gurgaon) locations, flexible stay options, fully furnished accommodations, modern amenities, housekeeping services, security features and dedicated resident support make Rusha Stays a preferred choice for professionals seeking a better way to live, work and stay in Gurugram (Gurgaon).",
+                "category": "About",
+                "display_order": 3,
+                "is_published": true
+        },
+        {
+                "id": "4",
+                "question": "Which locations does Rusha Stays operate in?",
+                "answer": "Rusha Stays currently offers accommodation in Sector 28, Sector 42 and Sushant Lok Phase 1, Gurugram (Gurgaon), with new locations coming soon in Sector 43 and Sector 55. Each property is strategically located near major business hubs, metro stations, shopping destinations and lifestyle centres.",
+                "category": "Locations",
+                "display_order": 4,
+                "is_published": true
+        },
+        {
+                "id": "5",
+                "question": "Do you offer accommodation near Cyber City and Udyog Vihar?",
+                "answer": "Yes. Rusha Stays offers fully furnished rooms, executive suites, studio apartments and managed accommodations with convenient access to DLF Cyber City, Cyber Hub, Udyog Vihar, Global Business Park, One Horizon Center, Golf Course Road and other major corporate hubs across Gurugram (Gurgaon). Our properties are preferred by corporate employees, consultants, startup founders, interns, hybrid workers and relocating professionals looking to reduce commute times while enjoying a comfortable and professionally managed living experience. Whether you work in Cyber City, Udyog Vihar, Cyber Hub, One Horizon Center or surrounding business districts, Rusha Stays provides well-connected accommodation options designed around the needs of modern professionals.",
+                "category": "Locations",
+                "display_order": 5,
+                "is_published": true
+        },
+        {
+                "id": "6",
+                "question": "Do you offer accommodation near Golf Course Road, MG Road Metro Station and Galleria Market?",
+                "answer": "Yes. Selected Rusha Stays properties are strategically located near Golf Course Road, MG Road Metro Station, Sikanderpur Metro Station, Galleria Market, DLF Phase 1, Hamilton Road and MGF Mega City Mall, providing excellent connectivity to business hubs, shopping destinations, restaurants, caf\u00e9s and healthcare facilities. Residents also benefit from proximity to established residential communities such as MLA Apartments, Jan Pratinidhi Apartments, Ridgewood Estate and Green Avenue, along with convenient access to the upcoming Apollo Hospital and other lifestyle destinations. These locations offer the perfect balance of convenience, connectivity and comfort for professionals seeking premium accommodation in Gurugram (Gurgaon).",
+                "category": "Locations",
+                "display_order": 6,
+                "is_published": true
+        },
+        {
+                "id": "7",
+                "question": "Do you offer accommodation near DLF Phase 1 and Sikanderpur Metro Station?",
+                "answer": "Yes. Selected Rusha Stays properties are conveniently located near DLF Phase 1, Sikanderpur Metro Station, MG Road Metro Station, Golf Course Road and Galleria Market, offering excellent access to business hubs, transportation networks and lifestyle destinations across Gurugram (Gurgaon).",
+                "category": "Accommodation",
+                "display_order": 7,
+                "is_published": true
+        },
+        {
+                "id": "8",
+                "question": "What types of accommodation are available at Rusha Stays?",
+                "answer": "Depending on the location, residents can choose from: Executive Rooms Executive Premium Rooms King Room Suites Studio Suites Fully Furnished 1 BHK Suites Twin Sharing Options",
+                "category": "Accommodation",
+                "display_order": 8,
+                "is_published": true
+        },
+        {
+                "id": "9",
+                "question": "Which Rusha Stays property is best for me ?",
+                "answer": "Executive Rooms are ideal for professionals seeking a comfortable and affordable managed living experience. Executive Premium Rooms offer additional space and upgraded features for residents looking for greater comfort. King Room Suites are designed for professionals who prefer spacious private accommodation with premium amenities. Studio Suites provide an independent living experience with enhanced privacy and convenience. Fully Furnished 1 BHK Suites are best suited for long-term residents, corporate executives, consultants and professionals seeking complete independence and a home-like environment.",
+                "category": "Accommodation",
+                "display_order": 9,
+                "is_published": true
+        },
+        {
+                "id": "10",
+                "question": "Is Rusha Stays suitable for working professionals ?",
+                "answer": "Yes. Rusha Stays is specifically designed for corporate employees, consultants, startup founders, interns, hybrid workers, remote professionals and individuals relocating to Gurugram (Gurgaon) for work assignments.",
+                "category": "Corporate",
+                "display_order": 10,
+                "is_published": true
+        },
+        {
+                "id": "11",
+                "question": "Do you provide fully furnished Studio Suites in Gurugram (Gurgaon) ?",
+                "answer": "Yes. Rusha Stays offers fully furnished Studio Suites and 1 BHK Suites equipped with modern furniture, high-speed Wi-Fi, appliances, housekeeping support and essential amenities. These accommodations are ideal for professionals seeking greater privacy and flexibility than a traditional PG.",
+                "category": "Corporate",
+                "display_order": 11,
+                "is_published": true
+        },
+        {
+                "id": "12",
+                "question": "Do you provide corporate accommodation in Gurugram (Gurgaon) ?",
+                "answer": "Yes. Rusha Stays offers accommodation solutions for companies, consultants, project teams, relocating employees, startup teams and business travellers requiring short-term or long-term stays.",
+                "category": "Corporate",
+                "display_order": 12,
+                "is_published": true
+        },
+        {
+                "id": "13",
+                "question": "Can companies book multiple rooms ?",
+                "answer": "Yes. Companies can reserve multiple rooms, suites or accommodation units for project teams, consultants, relocating employees and corporate staff. For bulk booking requirements, our team can provide customized accommodation solutions.",
+                "category": "Amenities",
+                "display_order": 13,
+                "is_published": true
+        },
+        {
+                "id": "14",
+                "question": "Do you offer accommodation for relocating professionals and corporate transfers?",
+                "answer": "Yes. Rusha Stays is a preferred choice for professionals relocating to Gurugram (Gurgaon) for employment, project assignments, business expansion or corporate transfers. Our move-in-ready accommodations help residents settle quickly without the challenges of setting up a new home.",
+                "category": "Amenities",
+                "display_order": 14,
+                "is_published": true
+        },
+        {
+                "id": "15",
+                "question": "Are meals available?",
+                "answer": "Selected Rusha Stays properties offer freshly prepared breakfast and dinner along with weekend lunch options. Food services may vary depending on the property and room category.",
+                "category": "Amenities",
+                "display_order": 15,
+                "is_published": true
+        },
+        {
+                "id": "16",
+                "question": "Is housekeeping included?",
+                "answer": "Yes. Daily housekeeping services are available at most Rusha Stays properties to ensure a clean, comfortable and hassle-free living experience.",
+                "category": "Booking",
+                "display_order": 16,
+                "is_published": true
+        },
+        {
+                "id": "17",
+                "question": "Is high-speed Wi-Fi available ?",
+                "answer": "Yes. All Rusha Stays accommodations are equipped with high-speed Wi-Fi suitable for remote work, virtual meetings, entertainment and everyday connectivity needs.",
+                "category": "Booking",
+                "display_order": 17,
+                "is_published": true
+        },
+        {
+                "id": "18",
+                "question": "Can I schedule a property visit before booking?",
+                "answer": "Absolutely. Prospective residents can schedule a property tour, request a video walkthrough or speak with our accommodation advisors before making a booking decision.",
+                "category": "Booking",
+                "display_order": 18,
+                "is_published": true
+        }
+];
     }
 
     State.faqs = data;
@@ -1629,12 +1771,21 @@ async function deleteMedia(fileName, fileUrl) {
 // ==============================================================================
 async function loadPages() {
     State.pages = [
-        { name: 'Homepage', slug: 'index.html', title: 'Premium Living & Executive Suites in Gurugram | Rusha Stays', status: 'Live' },
-        { name: 'About Us', slug: 'about.html', title: 'About Us | Rusha Stays Premium Accommodation', status: 'Live' },
-        { name: 'Locations', slug: 'locations.html', title: 'Locations | Managed Serviced Apartments | Rusha Stays', status: 'Live' },
-        { name: 'Corporate Stays', slug: 'corporate.html', title: 'Corporate Stays in Gurugram | Rusha Stays', status: 'Live' },
-        { name: 'FAQs', slug: 'faqs.html', title: 'FAQs | Rusha Stays Gurugram', status: 'Live' },
-        { name: 'Blogs & Insights', slug: 'blog.html', title: 'Blogs & Insights | Rusha Stays', status: 'Live' }
+        { name: 'Homepage', slug: 'index.html', title: 'Premium Living & Executive Suites in Gurugram | Rusha Stays', category: 'Main Pages', status: 'Live' },
+        { name: 'Locations Hub', slug: 'locations.html', title: 'Locations | Managed Serviced Apartments | Rusha Stays', category: 'Main Pages', status: 'Live' },
+        { name: 'Sector 28 — 1 BHK Suite', slug: 'properties/sector-28-1-bhk-suite.html', title: '1 BHK Suite in Sector 28 Gurugram | Rusha Stays', category: 'Property Detail Pages', status: 'Live' },
+        { name: 'Sector 28 — Executive Rooms', slug: 'properties/sector-28-executive-rooms.html', title: 'Executive Rooms in Sector 28 Gurugram | Rusha Stays', category: 'Property Detail Pages', status: 'Live' },
+        { name: 'Sector 28 — Executive Premium Rooms', slug: 'properties/sector-28-executive-premium-rooms.html', title: 'Executive Premium Rooms in Sector 28 Gurugram | Rusha Stays', category: 'Property Detail Pages', status: 'Live' },
+        { name: 'Sector 28 — King Room Suite', slug: 'properties/sector-28-king-room-suite.html', title: 'King Room Suite in Sector 28 Gurugram | Rusha Stays', category: 'Property Detail Pages', status: 'Live' },
+        { name: 'Sector 42 — 1 BHK Suite', slug: 'properties/sector-42-1-bhk-suite.html', title: '1 BHK Suite in Sector 42 Golf Course Road | Rusha Stays', category: 'Property Detail Pages', status: 'Live' },
+        { name: 'Sushant Lok Phase 1 — 1 BHK Studio', slug: 'properties/sushant-lok-1-bhk-studio.html', title: '1 BHK Studio in Sushant Lok Phase 1 | Rusha Stays', category: 'Property Detail Pages', status: 'Live' },
+        { name: 'Corporate Stays', slug: 'corporate.html', title: 'Corporate Stays in Gurugram | Rusha Stays', category: 'Main Pages', status: 'Live' },
+        { name: 'About Us', slug: 'about.html', title: 'About Us | Rusha Stays Premium Accommodation', category: 'Main Pages', status: 'Live' },
+        { name: 'FAQs Knowledge Hub', slug: 'faqs.html', title: 'FAQs | Rusha Stays Gurugram', category: 'Main Pages', status: 'Live' },
+        { name: 'Blogs & Insights Hub', slug: 'blog.html', title: 'Blogs & Insights | Rusha Stays', category: 'Main Pages', status: 'Live' },
+        { name: 'Blog: Top 10 Places in Gurugram', slug: 'blog/top-10-popular-places-in-gurugram.html', title: 'Top 10 Places to Visit in Gurugram | Rusha Stays Blog', category: 'Blog Articles', status: 'Live' },
+        { name: 'Blog: Why Serviced Apartments Replacing PGs', slug: 'blog/why-serviced-apartments-are-replacing-pgs-in-gurugram.html', title: 'Why Serviced Apartments Are Replacing PGs in Gurugram', category: 'Blog Articles', status: 'Live' },
+        { name: '404 Error Page', slug: '404.html', title: 'Page Not Found | Rusha Stays', category: 'System Pages', status: 'Live' }
     ];
 
     const tbody = document.getElementById('pagesTableBody');
@@ -1642,12 +1793,15 @@ async function loadPages() {
 
     tbody.innerHTML = State.pages.map(p => `
         <tr>
-            <td><strong>${escapeHtml(p.name)}</strong></td>
-            <td><code style="font-family: var(--font-mono); font-size: 12px;">/${p.slug}</code></td>
-            <td>${escapeHtml(p.title)}</td>
+            <td>
+                <strong>${escapeHtml(p.name)}</strong>
+                <div style="font-size: 11px; color: var(--primary); font-weight: 600;">${p.category}</div>
+            </td>
+            <td><code style="font-family: var(--font-mono); font-size: 11.5px; background: #F1F5F9; padding: 2px 6px; border-radius: 4px;">/${p.slug}</code></td>
+            <td><span style="font-size: 12.5px; color: #475569;">${escapeHtml(p.title)}</span></td>
             <td><span class="badge badge-published">✅ LIVE</span></td>
             <td>
-                <a href="/${p.slug}" target="_blank" class="btn btn-sm btn-secondary">
+                <a href="../${p.slug}" target="_blank" class="btn btn-sm btn-secondary" style="display: inline-flex; align-items: center; gap: 4px;">
                     <i class="fas fa-arrow-up-right-from-square"></i> View Page
                 </a>
             </td>
