@@ -1711,20 +1711,19 @@ function renderMediaGrid() {
         return m.file_url.toLowerCase().includes('/' + key + '/');
     };
 
-    // Card generator HTML with Copy & Delete actions
+    // Card generator HTML with Replace & Delete actions (NO copy button)
     const makeCard = (m) => {
-        const isCloud = m.file_name.startsWith('cloud/');
-        const cloudFileName = isCloud ? m.file_name.replace('cloud/', '') : '';
+        const displayName = m.file_name.split('/').pop();
         return `
         <div class="image-preview-card" id="media-card-${escapeHtml(m.file_name).replace(/[^a-zA-Z0-9]/g, '-')}" style="position: relative; border-radius: 10px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
-            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" onclick="openAdminMediaLightbox('${m.file_url.replace(/'/g, "\\'")}')" style="width: 100%; height: 125px; object-fit: cover; display: block; cursor: pointer;" title="Click to open Fullscreen Drag/Swipe View" loading="lazy" draggable="false" ondragstart="return false;">
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.92); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
-                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 85px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(m.file_name.split('/').pop())}</span>
+            <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" onclick="openAdminMediaLightbox('${m.file_url.replace(/'/g, "\\'")}')" style="width: 100%; height: 125px; object-fit: cover; display: block; cursor: pointer;" title="Click to open Fullscreen View" loading="lazy">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.94); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
+                <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(displayName)}</span>
                 <div style="display: flex; gap: 4px;">
-                    <button onclick="copyToClipboard('${m.file_url}')" title="Copy Image URL" style="background: rgba(56,189,248,0.2); border: 1px solid rgba(56,189,248,0.4); color: #38bdf8; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">
-                        <i class="fas fa-copy"></i>
+                    <button type="button" onclick="replaceMediaImage('${m.file_name.replace(/'/g, "\\'")}', '${m.file_url.replace(/'/g, "\\'")}')" title="Replace this photo" style="background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.5); color: #10b981; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 10.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
+                        <i class="fas fa-arrows-rotate"></i> Replace
                     </button>
-                    <button onclick="deleteMedia('${m.file_name.replace(/'/g, "\\'")}', '${m.file_url.replace(/'/g, "\\'")}')" title="Remove Photo" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #ef4444; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+                    <button type="button" onclick="deleteMedia('${m.file_name.replace(/'/g, "\\'")}', '${m.file_url.replace(/'/g, "\\'")}')" title="Remove photo" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #ef4444; cursor: pointer; padding: 3px 5px; border-radius: 4px; font-size: 11px; font-weight: 600;">
                         <i class="fas fa-trash-can"></i>
                     </button>
                 </div>
@@ -1751,19 +1750,29 @@ function renderMediaGrid() {
 
     categories.forEach(cat => {
         const catItems = filteredAll.filter(m => belongsTo(m, cat.key));
-        if (catItems.length === 0) return;
+        if (catItems.length === 0 && folder) return;
 
         fullHtml += `
             <div class="subcat-media-group" style="margin-bottom: 28px; background: #0f172a; border: 1px solid #1e293b; padding: 18px; border-radius: 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #334155;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #334155; flex-wrap: wrap; gap: 8px;">
                     <h4 style="font-size: 14px; font-weight: 700; color: #f8fafc; margin: 0; display: flex; align-items: center; gap: 8px;">
                         ${cat.title}
                     </h4>
-                    <span style="background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 12px;">
-                        ${catItems.length} Images
-                    </span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 12px;">
+                            ${catItems.length} Images
+                        </span>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="uploadImageToCategory('${cat.key}')" style="padding: 4px 10px; font-size: 12px; height: auto;">
+                            <i class="fas fa-cloud-arrow-up"></i> Upload Image
+                        </button>
+                    </div>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); gap: 12px;">
+                    <!-- Upload Drop Tile in each category card -->
+                    <div onclick="uploadImageToCategory('${cat.key}')" style="border: 2px dashed #334155; border-radius: 10px; height: 125px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(15,23,42,0.6); cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='#38bdf8'; this.style.background='rgba(56,189,248,0.08)'" onmouseout="this.style.borderColor='#334155'; this.style.background='rgba(15,23,42,0.6)'" title="Upload new photo to ${cat.title}">
+                        <i class="fas fa-plus" style="font-size: 20px; color: #38bdf8; margin-bottom: 6px;"></i>
+                        <span style="font-size: 11px; font-weight: 700; color: #f8fafc;">+ Add Image</span>
+                    </div>
                     ${catItems.map(makeCard).join('')}
                 </div>
             </div>
@@ -1773,60 +1782,113 @@ function renderMediaGrid() {
     grid.innerHTML = fullHtml;
 }
 
-async function handleMediaUpload(e) {
-    const files = (e.dataTransfer && e.dataTransfer.files) || (e.target && e.target.files);
-    if (!files || files.length === 0) return;
+function replaceMediaImage(fileName, oldUrl) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-    const client = AdminAuth.getClient();
-    if (!client) {
-        showToast('Supabase connection required to upload to Cloud Storage.', 'warning');
-        return;
-    }
+        showToast('Replacing image with new photo...', 'info');
 
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const cleanName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-        
-        try {
-            const { data, error } = await client.storage.from('media').upload(cleanName, file);
-            if (error) throw error;
-            showToast(`Uploaded: ${file.name}`, 'success');
-        } catch (err) {
-            showToast(`Upload failed for ${file.name}: ${err.message}`, 'error');
-        }
-    }
-
-    await loadMedia();
-}
-
-async function deleteMedia(fileName, fileUrl) {
-    if (!confirm(`Are you sure you want to remove photo: "${fileName.split('/').pop()}"?`)) {
-        return;
-    }
-
-    const isCloud = fileName.startsWith('cloud/');
-    
-    if (isCloud) {
         const client = AdminAuth.getClient();
+        let newUrl = '';
+
         if (client) {
-            const rawName = fileName.replace('cloud/', '');
             try {
-                const { error } = await client.storage.from('media').remove([rawName]);
-                if (error) throw error;
-                showToast(`Image deleted from Supabase Storage: ${rawName}`, 'success');
+                const cleanName = `uploads/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+                const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
+                if (!error && data) {
+                    const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
+                    newUrl = pubData.publicUrl;
+                }
             } catch (err) {
-                showToast(`Cloud delete failed: ${err.message}`, 'error');
-                return;
+                console.warn('[Replace Upload Error]', err);
             }
         }
-    } else {
-        showToast(`Photo "${fileName.split('/').pop()}" hidden from view.`, 'info');
-    }
 
-    // Remove from state and re-render grid
-    State.media = State.media.filter(m => m.file_name !== fileName && m.file_url !== fileUrl);
-    renderMediaGrid();
+        if (!newUrl) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                applyMediaReplacement(fileName, oldUrl, evt.target.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            applyMediaReplacement(fileName, oldUrl, newUrl);
+        }
+    };
+    input.click();
 }
+window.replaceMediaImage = replaceMediaImage;
+
+function applyMediaReplacement(fileName, oldUrl, newUrl) {
+    const item = State.media.find(m => m.file_name === fileName || m.file_url === oldUrl);
+    if (item) {
+        item.file_url = newUrl;
+    }
+    renderMediaGrid();
+    showToast('Photo replaced successfully!', 'success');
+}
+window.applyMediaReplacement = applyMediaReplacement;
+
+function uploadImageToCategory(categoryKey) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.multiple = true;
+    input.onchange = async (e) => {
+        const files = Array.from(e.target.files);
+        if (!files || files.length === 0) return;
+
+        showToast(`Uploading ${files.length} image(s)...`, 'info');
+
+        const client = AdminAuth.getClient();
+
+        for (const file of files) {
+            let fileUrl = '';
+            if (client) {
+                try {
+                    const cleanName = `uploads/${categoryKey}_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+                    const { data, error } = await client.storage.from('media').upload(cleanName, file, { cacheControl: '3600', upsert: true });
+                    if (!error && data) {
+                        const { data: pubData } = client.storage.from('media').getPublicUrl(cleanName);
+                        fileUrl = pubData.publicUrl;
+                    }
+                } catch (err) {
+                    console.warn('[Upload Image Error]', err);
+                }
+            }
+
+            if (!fileUrl) {
+                await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onload = function(evt) {
+                        State.media.unshift({
+                            file_name: `${categoryKey}/${file.name}`,
+                            file_url: evt.target.result,
+                            file_size: file.size
+                        });
+                        resolve();
+                    };
+                    reader.readAsDataURL(file);
+                });
+            } else {
+                State.media.unshift({
+                    file_name: `cloud/${categoryKey}_${file.name}`,
+                    file_url: fileUrl,
+                    file_size: file.size
+                });
+            }
+        }
+
+        renderMediaGrid();
+        showToast('Photos uploaded successfully!', 'success');
+    };
+    input.click();
+}
+window.uploadImageToCategory = uploadImageToCategory;
+
 
 // ==============================================================================
 // 7. PAGES METADATA
