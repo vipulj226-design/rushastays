@@ -184,9 +184,6 @@
                 </div>
 
                 <div class="header-actions">
-                    <button type="button" class="btn btn-secondary btn-sm" onclick="openModal('clientGuideModal')" style="display: inline-flex; align-items: center; gap: 6px; background: #FEF3C7; color: #92400E; border-color: #FCD34D; font-weight: 700; cursor: pointer;">
-                        <i class="fas fa-book-open"></i> <span>Client User Guide</span>
-                    </button>
                     <div class="conn-status-badge" id="connBadge">
                         <span class="status-dot"></span>
                         <span id="connText">Connecting...</span>
@@ -1127,88 +1124,6 @@
                 <button class="btn btn-primary" onclick="document.getElementById('testimonialForm').requestSubmit()">
                     <i class="fas fa-floppy-disk"></i> Save Testimonial
                 </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- CLIENT USER GUIDE MODAL (NOOB-FRIENDLY HELP) -->
-    <div class="modal-overlay" id="clientGuideModal">
-        <div class="modal-dialog lg">
-            <div class="modal-header" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff;">
-                <h3 class="modal-title" style="color: #fff; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-book-open" style="color: #F59E0B;"></i> Client Admin Guide — How to Manage Your Website
-                </h3>
-                <button class="modal-close" onclick="closeModal('clientGuideModal')" style="color: #fff;">&times;</button>
-            </div>
-            <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
-                <p style="color: #475569; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">
-                    Welcome to your <b>Rusha Stays Management CMS</b>! Everything is designed to be 100% beginner-friendly. You do not need any coding knowledge. Here is your quick step-by-step guide:
-                </p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
-                    <!-- Guide Card 1 -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
-                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-building"></i> 1. Managing Properties
-                        </h4>
-                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
-                            Click <b>Properties</b> in sidebar → Click <b>+ Add Property</b>. Fill in the title, price, location, and photos. Click <b>Save</b> and it goes live instantly on your website!
-                        </p>
-                    </div>
-
-                    <!-- Guide Card 2 -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
-                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-comment-dots"></i> 2. Adding Customer Reviews
-                        </h4>
-                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
-                            Click <b>Testimonials</b> in sidebar → Click <b>+ Add Testimonial</b>. Enter the resident name, 5-star rating, and review. It immediately appears on the homepage carousel!
-                        </p>
-                    </div>
-
-                    <!-- Guide Card 3 -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
-                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-newspaper"></i> 3. Publishing Blog Articles
-                        </h4>
-                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
-                            Click <b>Blog Posts</b> in sidebar → Click <b>+ Create Article</b>. Type your text. Use the top buttons (+ Heading, + List, Bold) to format easily with zero coding!
-                        </p>
-                    </div>
-
-                    <!-- Guide Card 4 -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
-                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-envelope-open-text"></i> 4. Checking Customer Leads
-                        </h4>
-                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
-                            Click <b>Enquiries</b> in sidebar. All customer callback requests and phone numbers appear here with date and requested property.
-                        </p>
-                    </div>
-
-                    <!-- Guide Card 5 -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
-                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-sliders"></i> 5. Changing WhatsApp / Phone
-                        </h4>
-                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
-                            Click <b>Site Settings</b> in sidebar → Type your new phone number or WhatsApp → Click <b>Save Configuration</b>. All website buttons update automatically!
-                        </p>
-                    </div>
-
-                    <!-- Guide Card 6 -->
-                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
-                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-photo-film"></i> 6. Uploading Photos
-                        </h4>
-                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
-                            Click <b>Media Library</b> in sidebar → Drag & drop your photos. Copy the uploaded link and paste it into any property or blog post!
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="closeModal('clientGuideModal')">Got It! Close Guide</button>
             </div>
         </div>
     </div>
