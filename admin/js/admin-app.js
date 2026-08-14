@@ -1790,11 +1790,18 @@ async function loadMedia() {
         });
     }
 
+    // Filter out locally deleted media
+    const deletedMedia = JSON.parse(localStorage.getItem('rusha_deleted_media') || '[]');
+    if (deletedMedia.length > 0) {
+        siteImages = siteImages.filter(s => !deletedMedia.includes(s.file_name) && !deletedMedia.includes(s.file_url));
+    }
+
     // Merge all sources: db uploads first, then cloud uploads, then site images
     // Deduplicate by file_url
     const allMedia = [...dbFiles, ...cloudFiles, ...siteImages];
     const seen = new Set();
     State.media = allMedia.filter(m => {
+        if (deletedMedia.includes(m.file_url) || deletedMedia.includes(m.file_name)) return false;
         if (seen.has(m.file_url)) return false;
         seen.add(m.file_url);
         return true;
@@ -1846,16 +1853,18 @@ function renderMediaGrid() {
     // Card generator HTML with Replace & Delete actions (NO copy button)
     const makeCard = (m) => {
         const displayName = m.file_name.split('/').pop();
+        const encName = encodeURIComponent(m.file_name || '');
+        const encUrl = encodeURIComponent(m.file_url || '');
         return `
         <div class="image-preview-card" id="media-card-${escapeHtml(m.file_name).replace(/[^a-zA-Z0-9]/g, '-')}" style="position: relative; border-radius: 10px; overflow: hidden; background: #0f172a; border: 1px solid #334155; transition: transform 0.2s;">
             <img src="${m.file_url}" alt="${escapeHtml(m.file_name)}" onclick="openAdminMediaLightbox('${m.file_url.replace(/'/g, "\\'")}')" style="width: 100%; height: 125px; object-fit: cover; display: block; cursor: pointer;" title="Click to open Fullscreen View" loading="lazy">
             <div style="position: absolute; bottom: 0; left: 0; right: 0; background: rgba(15,23,42,0.94); color: #f8fafc; padding: 6px 8px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(4px);">
                 <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; font-weight: 500;" title="${escapeHtml(m.file_name)}">${escapeHtml(displayName)}</span>
                 <div style="display: flex; gap: 4px;">
-                    <button type="button" onclick="replaceMediaImage('${m.file_name.replace(/'/g, "\\'")}', '${m.file_url.replace(/'/g, "\\'")}')" title="Replace this photo" style="background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.5); color: #10b981; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 10.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
+                    <button type="button" data-filename="${encName}" data-fileurl="${encUrl}" onclick="replaceMediaByDataset(this)" title="Replace this photo" style="background: rgba(16,185,129,0.2); border: 1px solid rgba(16,185,129,0.5); color: #10b981; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 10.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px;">
                         <i class="fas fa-arrows-rotate"></i> Replace
                     </button>
-                    <button type="button" onclick="deleteMedia('${m.file_name.replace(/'/g, "\\'")}', '${m.file_url.replace(/'/g, "\\'")}')" title="Remove photo" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #ef4444; cursor: pointer; padding: 3px 5px; border-radius: 4px; font-size: 11px; font-weight: 600;">
+                    <button type="button" data-filename="${encName}" data-fileurl="${encUrl}" onclick="deleteMediaByDataset(this)" title="Remove photo" style="background: rgba(239,68,68,0.2); border: 1px solid rgba(239,68,68,0.4); color: #ef4444; cursor: pointer; padding: 3px 6px; border-radius: 4px; font-size: 11px; font-weight: 600;">
                         <i class="fas fa-trash-can"></i>
                     </button>
                 </div>
@@ -2047,6 +2056,28 @@ function uploadImageToCategory(categoryKey) {
 }
 window.uploadImageToCategory = uploadImageToCategory;
 
+function replaceMediaByDataset(btn) {
+    if (window.event) {
+        window.event.stopPropagation();
+        window.event.preventDefault();
+    }
+    const fileName = decodeURIComponent(btn.getAttribute('data-filename') || '');
+    const fileUrl = decodeURIComponent(btn.getAttribute('data-fileurl') || '');
+    replaceMediaImage(fileName, fileUrl);
+}
+window.replaceMediaByDataset = replaceMediaByDataset;
+
+function deleteMediaByDataset(btn) {
+    if (window.event) {
+        window.event.stopPropagation();
+        window.event.preventDefault();
+    }
+    const fileName = decodeURIComponent(btn.getAttribute('data-filename') || '');
+    const fileUrl = decodeURIComponent(btn.getAttribute('data-fileurl') || '');
+    deleteMedia(fileName, fileUrl);
+}
+window.deleteMediaByDataset = deleteMediaByDataset;
+
 async function deleteMedia(fileName, fileUrl) {
     if (window.event) {
         window.event.stopPropagation();
@@ -2093,10 +2124,18 @@ async function deleteMedia(fileName, fileUrl) {
         }
     }
 
-    // 3. Remove from in-memory State.media array
+    // 3. Persist deleted static list in localStorage
+    try {
+        const deletedMedia = JSON.parse(localStorage.getItem('rusha_deleted_media') || '[]');
+        if (fileName && !deletedMedia.includes(fileName)) deletedMedia.push(fileName);
+        if (fileUrl && !deletedMedia.includes(fileUrl)) deletedMedia.push(fileUrl);
+        localStorage.setItem('rusha_deleted_media', JSON.stringify(deletedMedia));
+    } catch (e) {}
+
+    // 4. Remove from in-memory State.media array
     State.media = State.media.filter(m => m.file_name !== fileName && m.file_url !== fileUrl);
 
-    // 4. Re-render UI
+    // 5. Re-render UI
     renderMediaGrid();
     showToast('Photo deleted successfully!', 'success');
 }
