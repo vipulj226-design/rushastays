@@ -1777,15 +1777,31 @@ async function loadMedia() {
         }
 ];
 
-    // Apply replacements onto siteImages
+    // Apply replacements onto siteImages, dbFiles, and cloudFiles
     if (typeof dbReplacements !== 'undefined' && dbReplacements.length > 0) {
         dbReplacements.forEach(rep => {
             const origNorm = rep.original_url.replace(/^\/+/, '/');
             const origFileName = origNorm.split('/').pop();
-            const match = siteImages.find(s => s.file_url === origNorm || s.file_url.includes(origNorm) || (origFileName && s.file_name.endsWith(origFileName)));
-            if (match) {
-                match.file_url = rep.file_url;
-                match.replaced = true;
+            
+            // Check in siteImages
+            const matchSite = siteImages.find(s => s.file_url === rep.original_url || s.file_url === origNorm || s.file_url.includes(origNorm) || (origFileName && s.file_name.endsWith(origFileName)));
+            if (matchSite) {
+                matchSite.file_url = rep.file_url;
+                matchSite.replaced = true;
+            }
+
+            // Check in dbFiles (uploaded images that got replaced)
+            const matchDb = dbFiles.find(d => d.file_url === rep.original_url || d.file_url === origNorm || (origFileName && d.file_name.endsWith(origFileName)));
+            if (matchDb) {
+                matchDb.file_url = rep.file_url;
+                matchDb.replaced = true;
+            }
+
+            // Check in cloudFiles
+            const matchCloud = cloudFiles.find(c => c.file_url === rep.original_url || c.file_url === origNorm || (origFileName && c.file_name.endsWith(origFileName)));
+            if (matchCloud) {
+                matchCloud.file_url = rep.file_url;
+                matchCloud.replaced = true;
             }
         });
     }
@@ -1974,7 +1990,17 @@ function replaceMediaImage(fileName, oldUrl) {
             const item = State.media.find(m => m.file_name === fileName || m.file_url === oldUrl);
             if (item) {
                 item.file_url = newUrl;
-                item.file_name = cleanName;
+                // keep property identifier in file_name so category grouping is preserved
+                if (!cleanName.includes('sector-') && !cleanName.includes('sushant-lok') && !cleanName.includes('king-room')) {
+                    const propMatch = (fileName || '').match(/(sector-[0-9a-z-]+|sushant-lok|king-room)/i);
+                    if (propMatch) {
+                        item.file_name = `${propMatch[1]}_${cleanName}`;
+                    } else {
+                        item.file_name = cleanName;
+                    }
+                } else {
+                    item.file_name = cleanName;
+                }
             }
             renderMediaGrid();
             showToast('Photo replaced & saved to cloud permanently!', 'success');

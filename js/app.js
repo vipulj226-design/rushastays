@@ -319,7 +319,7 @@ const app = {
                             }
                         });
 
-                        // 2. Add uploaded property images to propertiesData galleries
+                        // 2. Add uploaded property images to propertiesData galleries (apply replacements if any)
                         const uploads = mediaAssets.filter(a => a.category !== 'replacement' && a.category !== 'test' && a.category !== 'general');
                         const allPropsList = window.propertiesData || (typeof propertiesData !== 'undefined' ? propertiesData : []);
                         if (allPropsList && uploads.length > 0) {
@@ -332,14 +332,21 @@ const app = {
                                 'sector-28-premium-rooms': 'sector-28-executive-premium-rooms'
                             };
                             uploads.forEach(upload => {
+                                let finalUploadUrl = upload.file_url;
+                                // Check if this uploaded image was replaced by another image
+                                const matchedRep = replacements.find(r => r.original_url === upload.file_url || r.original_url.includes(upload.file_name));
+                                if (matchedRep) {
+                                    finalUploadUrl = matchedRep.file_url;
+                                }
+
                                 const cat = upload.category;
                                 const propId = catToIdMap[cat];
                                 const prop = allPropsList.find(p => 
                                     p.id === propId || p.id === cat || (cat && p.id.includes(cat)) || (cat && cat.includes(p.id))
                                 );
                                 if (prop && prop.images) {
-                                    if (!prop.images.includes(upload.file_url)) {
-                                        prop.images.unshift(upload.file_url);
+                                    if (!prop.images.includes(finalUploadUrl)) {
+                                        prop.images.unshift(finalUploadUrl);
                                     }
                                 }
                             });
