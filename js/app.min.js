@@ -144,33 +144,51 @@ const app = {
                         const list = dbFaqs.filter(f => f.is_published !== false);
 
                         if (container && list.length > 0) {
-                            const categories = {};
+                            const categories = {
+                                'About': [],
+                                'Locations': [],
+                                'Accommodation': [],
+                                'Corporate': [],
+                                'Amenities': [],
+                                'Booking': []
+                            };
+
                             list.forEach(item => {
-                                const cat = item.category || 'General Questions';
+                                const cat = item.category || 'About';
                                 if (!categories[cat]) categories[cat] = [];
                                 categories[cat].push(item);
                             });
 
                             let html = '';
+                            let globalIdx = 1;
+
                             for (const [catName, faqItems] of Object.entries(categories)) {
+                                if (faqItems.length === 0) continue;
+                                const catId = `cat-${catName.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
+
                                 html += `
-                                    <div class="category-group">
-                                        <h3 class="category-heading">${catName}</h3>
-                                        <div class="faq-list">
+                                    <div class="category-group" id="${catId}">
+                                        <h2 class="category-heading">${catName}</h2>
+                                        <div class="accordion-container">
                                 `;
+
                                 faqItems.forEach(item => {
                                     html += `
-                                        <div class="faq-card faq-item">
-                                            <button class="faq-trigger" onclick="toggleAccordion(this)">
-                                                <span>${item.question}</span>
-                                                <i class="fas fa-chevron-down"></i>
+                                        <div class="faq-card">
+                                            <button class="faq-trigger" aria-expanded="false" onclick="toggleAccordion(this)">
+                                                <span class="faq-question">${globalIdx}. ${item.question}</span>
+                                                <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
                                             </button>
-                                            <div class="faq-answer">
-                                                <p>${item.answer}</p>
+                                            <div class="faq-content">
+                                                <div class="faq-answer">
+                                                    <p>${item.answer}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     `;
+                                    globalIdx++;
                                 });
+
                                 html += `
                                         </div>
                                     </div>
@@ -1600,9 +1618,15 @@ window.shareProperty = function(id) {
 };
 
 window.toggleAccordion = function(el) {
-    const item = el ? (el.closest('.faq-item') || el.parentElement) : null;
-    if (item) {
-        item.classList.toggle('active');
+    const card = el ? (el.closest('.faq-card') || el.closest('.faq-item') || el.parentElement) : null;
+    if (card) {
+        card.classList.toggle('open');
+        card.classList.toggle('active');
+        const trigger = card.querySelector('.faq-trigger');
+        if (trigger) {
+            const isOpen = card.classList.contains('open');
+            trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        }
     }
 };
 
