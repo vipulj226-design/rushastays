@@ -2153,3 +2153,187 @@ function updateSerpPreview() {
 window.renderSeoAuditTable = renderSeoAuditTable;
 window.updateSerpPreview = updateSerpPreview;
 window.runLiveSeoAudit = runLiveSeoAudit;
+
+
+/* ==============================================================================
+   WIX-STYLE CMS CONTROLLER HELPERS
+   ============================================================================== */
+
+let currentPropsView = 'cards';
+function setPropertiesView(mode) {
+    currentPropsView = mode;
+    const cardsBtn = document.getElementById('propViewCardsBtn');
+    const tableBtn = document.getElementById('propViewTableBtn');
+    const cardsGrid = document.getElementById('propertiesCardsGrid');
+    const tableContainer = document.getElementById('propertiesTableContainer');
+
+    if (mode === 'cards') {
+        if (cardsBtn) cardsBtn.classList.add('active');
+        if (tableBtn) tableBtn.classList.remove('active');
+        if (cardsGrid) cardsGrid.style.display = 'grid';
+        if (tableContainer) tableContainer.style.display = 'none';
+    } else {
+        if (cardsBtn) cardsBtn.classList.remove('active');
+        if (tableBtn) tableBtn.classList.add('active');
+        if (cardsGrid) cardsGrid.style.display = 'none';
+        if (tableContainer) tableContainer.style.display = 'block';
+    }
+}
+window.setPropertiesView = setPropertiesView;
+
+function renderPropertiesCards() {
+    const cardsGrid = document.getElementById('propertiesCardsGrid');
+    if (!cardsGrid) return;
+
+    if (!State.properties || State.properties.length === 0) {
+        cardsGrid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 48px; background: #fff; border-radius: 12px; border: 1px dashed #CBD5E1;">
+                <i class="fas fa-hotel" style="font-size: 36px; color: #94A3B8; margin-bottom: 12px;"></i>
+                <h4 style="font-size: 16px; color: #334155;">No Properties Found</h4>
+                <p style="font-size: 13px; color: #94A3B8; margin-top: 4px;">Click "+ Add New Property" above to create your first listing!</p>
+            </div>
+        `;
+        return;
+    }
+
+    cardsGrid.innerHTML = State.properties.map(p => {
+        const isLive = p.is_published !== false;
+        const mainImg = p.featured_image || (p.images && p.images[0]) || '../images/sector-28-1bhk/img-1.jpg';
+        const price = p.pricing_html || (p.price_val ? `₹${Number(p.price_val).toLocaleString('en-IN')}/mo` : 'Price on Request');
+        const locality = p.locality || 'Gurugram';
+        const roomType = p.room_type || p.roomType || p.title || 'Executive Suite';
+        const occupancy = p.occupancy || 'Single / Double';
+        const size = p.size || '350+ Sq. Ft.';
+
+        return `
+            <div class="wix-property-card">
+                <div class="wix-card-media">
+                    <img src="${mainImg}" alt="${escapeHtml(roomType)}" loading="lazy" onerror="this.src='../images/rusha-stays-logo.webp'">
+                    <span class="wix-card-status-badge ${isLive ? 'published' : 'draft'}">
+                        ${isLive ? '● Live' : '○ Hidden'}
+                    </span>
+                    <span class="wix-card-price-badge">${escapeHtml(price)}</span>
+                </div>
+                <div class="wix-card-body">
+                    <div class="wix-card-locality"><i class="fas fa-location-dot"></i> ${escapeHtml(locality)}</div>
+                    <div class="wix-card-title">${escapeHtml(roomType)}</div>
+                    <div class="wix-card-meta">
+                        <span><i class="fas fa-user-group"></i> ${escapeHtml(occupancy)}</span>
+                        <span><i class="fas fa-vector-square"></i> ${escapeHtml(size)}</span>
+                    </div>
+                </div>
+                <div class="wix-card-footer">
+                    <button class="btn btn-secondary btn-sm" onclick="openPropertyModal('${p.id}')">
+                        <i class="fas fa-pen-to-square"></i> Edit
+                    </button>
+                    <div style="display: flex; gap: 6px;">
+                        <a href="../properties/${p.id}.html" target="_blank" class="btn-icon" title="View Public Page">
+                            <i class="fas fa-arrow-up-right-from-square"></i>
+                        </a>
+                        <button class="btn-icon delete" onclick="deleteProperty('${p.id}')" title="Delete Property">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+window.renderPropertiesCards = renderPropertiesCards;
+
+function triggerVisualUpload(inputId, previewWrapId, placeholderId) {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        showToast('Processing photo...', 'info');
+
+        const client = AdminAuth.getClient();
+        let uploadedUrl = '';
+
+        if (client) {
+            try {
+                const fileName = `uploads/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+                const { data, error } = await client.storage.from('media').upload(fileName, file, { cacheControl: '3600', upsert: true });
+                if (!error && data) {
+                    const { data: pubData } = client.storage.from('media').getPublicUrl(fileName);
+                    uploadedUrl = pubData.publicUrl;
+                }
+            } catch (err) {
+                console.warn('[Storage Upload Fallback]', err);
+            }
+        }
+
+        // Fallback to FileReader base64 preview
+        if (!uploadedUrl) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                setVisualImagePreview(inputId, previewWrapId, placeholderId, evt.target.result);
+            };
+            reader.readAsDataURL(file);
+        } else {
+            setVisualImagePreview(inputId, previewWrapId, placeholderId, uploadedUrl);
+        }
+
+        showToast('Photo selected successfully!', 'success');
+    };
+    input.click();
+}
+window.triggerVisualUpload = triggerVisualUpload;
+
+function setVisualImagePreview(inputId, previewWrapId, placeholderId, url) {
+    const input = document.getElementById(inputId);
+    const wrap = document.getElementById(previewWrapId);
+    const placeholder = document.getElementById(placeholderId);
+    const img = wrap ? wrap.querySelector('img') : null;
+
+    if (input) input.value = url;
+    if (img) img.src = url;
+    if (wrap) wrap.style.display = 'block';
+    if (placeholder) placeholder.style.display = 'none';
+}
+window.setVisualImagePreview = setVisualImagePreview;
+
+function removeVisualImage(inputId, previewWrapId, placeholderId) {
+    const input = document.getElementById(inputId);
+    const wrap = document.getElementById(previewWrapId);
+    const placeholder = document.getElementById(placeholderId);
+    const img = wrap ? wrap.querySelector('img') : null;
+
+    if (input) input.value = '';
+    if (img) img.src = '';
+    if (wrap) wrap.style.display = 'none';
+    if (placeholder) placeholder.style.display = 'block';
+}
+window.removeVisualImage = removeVisualImage;
+
+function toggleAmenityChip(el, name) {
+    if (el) el.classList.toggle('active');
+    syncAmenitiesFromChips();
+}
+window.toggleAmenityChip = toggleAmenityChip;
+
+function syncAmenitiesFromChips() {
+    const activeChips = document.querySelectorAll('#propAmenitiesGrid .amenity-chip.active');
+    const list = Array.from(activeChips).map(c => c.textContent.replace('✓', '').trim());
+    const input = document.getElementById('propAmenities');
+    if (input) input.value = JSON.stringify(list);
+}
+
+function setTestimonialRating(val) {
+    const ratingInput = document.getElementById('testiRating');
+    if (ratingInput) ratingInput.value = val;
+    const stars = document.querySelectorAll('#testiStarPicker .star');
+    stars.forEach(s => {
+        const starVal = parseInt(s.getAttribute('data-val')) || 1;
+        if (starVal <= val) {
+            s.classList.add('active');
+        } else {
+            s.classList.remove('active');
+        }
+    });
+}
+window.setTestimonialRating = setTestimonialRating;
