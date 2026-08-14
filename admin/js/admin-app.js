@@ -566,6 +566,44 @@ function openBlogModal(id = null) {
     openModal('blogModal');
 }
 
+function insertBlogTag(type) {
+    const textarea = document.getElementById('blogContent');
+    if (!textarea) return;
+
+    const start = textarea.selectionStart || 0;
+    const end = textarea.selectionEnd || 0;
+    const selected = textarea.value.substring(start, end);
+    let replacement = '';
+
+    switch(type) {
+        case 'h2':
+            replacement = selected ? `<h2>${selected}</h2>\n` : '<h2>Section Heading Title</h2>\n';
+            break;
+        case 'p':
+            replacement = selected ? `<p>${selected}</p>\n` : '<p>Write your paragraph text here...</p>\n';
+            break;
+        case 'ul':
+            replacement = selected ? `<ul>\n  <li>${selected}</li>\n</ul>\n` : '<ul>\n  <li>Key point 1</li>\n  <li>Key point 2</li>\n</ul>\n';
+            break;
+        case 'b':
+            replacement = selected ? `<strong>${selected}</strong>` : '<strong>Bold text</strong>';
+            break;
+        case 'img':
+            const url = prompt('Enter Image URL (or copy from Media Library):', '/images/luxury_apartment_living.webp');
+            if (url) {
+                replacement = `<img src="${url}" alt="Article Photo" style="width:100%; border-radius:12px; margin: 20px 0;">\n`;
+            }
+            break;
+    }
+
+    if (replacement) {
+        textarea.value = textarea.value.substring(0, start) + replacement + textarea.value.substring(end);
+        textarea.focus();
+        textarea.setSelectionRange(start + replacement.length, start + replacement.length);
+    }
+}
+window.insertBlogTag = insertBlogTag;
+
 async function saveBlogPost(e) {
     e.preventDefault();
     const editId = document.getElementById('blogEditId').value;
@@ -575,8 +613,18 @@ async function saveBlogPost(e) {
     const image = document.getElementById('blogImage').value.trim();
     const author = document.getElementById('blogAuthor').value.trim();
     const excerpt = document.getElementById('blogExcerpt').value.trim();
-    const content = document.getElementById('blogContent').value.trim();
+    let content = document.getElementById('blogContent').value.trim();
     const isPublished = document.getElementById('blogStatus').value === 'true';
+
+    // Smart Auto-Formatter: If client typed plain text without HTML tags, automatically format into paragraphs!
+    if (content && !content.includes('<p>') && !content.includes('<h2>') && !content.includes('<div>') && !content.includes('<article>')) {
+        content = content
+            .split('\n\n')
+            .map(para => para.trim())
+            .filter(para => para.length > 0)
+            .map(para => `<p>${para.replace(/\n/g, '<br>')}</p>`)
+            .join('\n');
+    }
 
     const payload = {
         slug: slug,

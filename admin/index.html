@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
     <!-- Admin CSS -->
-    <link rel="stylesheet" href="css/admin.css?v=4.3">
+    <link rel="stylesheet" href="css/admin.css?v=4.4">
 
     <!-- MOBILE OVERRIDES (inline to bypass cache) -->
     <style>
@@ -93,7 +93,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="../js/data.js"></script>
-    <script src="js/supabase-client.js?v=4.3"></script>
+    <script src="js/supabase-client.js?v=4.4"></script>
 </head>
 <body>
 
@@ -184,11 +184,14 @@
                 </div>
 
                 <div class="header-actions">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="openModal('clientGuideModal')" style="display: inline-flex; align-items: center; gap: 6px; background: #FEF3C7; color: #92400E; border-color: #FCD34D; font-weight: 700; cursor: pointer;">
+                        <i class="fas fa-book-open"></i> <span>Client User Guide</span>
+                    </button>
                     <div class="conn-status-badge" id="connBadge">
                         <span class="status-dot"></span>
                         <span id="connText">Connecting...</span>
                     </div>
-                    <a href="/" target="_blank" class="btn-view-site">
+                    <a href="../" target="_blank" class="btn-view-site">
                         <i class="fas fa-arrow-up-right-from-square"></i>
                         <span>Live Site</span>
                     </a>
@@ -1008,8 +1011,18 @@
                         <textarea class="form-control" id="blogExcerpt" style="min-height: 70px;"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">Full HTML Content</label>
-                        <textarea class="form-control" id="blogContent" style="min-height: 200px; font-family: var(--font-mono); font-size: 13px;" placeholder="<p>Write content...</p>"></textarea>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px;">
+                            <label class="form-label" style="margin-bottom: 0;">Article Content (No Coding Needed!)</label>
+                            <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="insertBlogTag('h2')" title="Add Heading Title" style="padding: 4px 8px; font-size: 12px;">+ Heading</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="insertBlogTag('p')" title="Add Paragraph" style="padding: 4px 8px; font-size: 12px;">+ Paragraph</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="insertBlogTag('ul')" title="Add Bullet List" style="padding: 4px 8px; font-size: 12px;">• Bullet List</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="insertBlogTag('b')" title="Add Bold Text" style="padding: 4px 8px; font-size: 12px;"><b>B</b> Bold</button>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="insertBlogTag('img')" title="Add Photo" style="padding: 4px 8px; font-size: 12px;">🖼️ Add Photo</button>
+                            </div>
+                        </div>
+                        <textarea class="form-control" id="blogContent" style="min-height: 200px; font-size: 14px;" placeholder="Write or paste your article text here... (Click the buttons above to format)"></textarea>
+                        <div class="form-help">💡 <b>Noob Tip:</b> Just type normal text! If you type plain lines, they will automatically format nicely on the website.</div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
@@ -1118,10 +1131,92 @@
         </div>
     </div>
 
+    <!-- CLIENT USER GUIDE MODAL (NOOB-FRIENDLY HELP) -->
+    <div class="modal-overlay" id="clientGuideModal">
+        <div class="modal-dialog lg">
+            <div class="modal-header" style="background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%); color: #fff;">
+                <h3 class="modal-title" style="color: #fff; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-book-open" style="color: #F59E0B;"></i> Client Admin Guide — How to Manage Your Website
+                </h3>
+                <button class="modal-close" onclick="closeModal('clientGuideModal')" style="color: #fff;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 24px; max-height: 70vh; overflow-y: auto;">
+                <p style="color: #475569; font-size: 14px; margin-bottom: 20px; line-height: 1.6;">
+                    Welcome to your <b>Rusha Stays Management CMS</b>! Everything is designed to be 100% beginner-friendly. You do not need any coding knowledge. Here is your quick step-by-step guide:
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+                    <!-- Guide Card 1 -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
+                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-building"></i> 1. Managing Properties
+                        </h4>
+                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
+                            Click <b>Properties</b> in sidebar → Click <b>+ Add Property</b>. Fill in the title, price, location, and photos. Click <b>Save</b> and it goes live instantly on your website!
+                        </p>
+                    </div>
+
+                    <!-- Guide Card 2 -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
+                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-comment-dots"></i> 2. Adding Customer Reviews
+                        </h4>
+                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
+                            Click <b>Testimonials</b> in sidebar → Click <b>+ Add Testimonial</b>. Enter the resident name, 5-star rating, and review. It immediately appears on the homepage carousel!
+                        </p>
+                    </div>
+
+                    <!-- Guide Card 3 -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
+                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-newspaper"></i> 3. Publishing Blog Articles
+                        </h4>
+                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
+                            Click <b>Blog Posts</b> in sidebar → Click <b>+ Create Article</b>. Type your text. Use the top buttons (+ Heading, + List, Bold) to format easily with zero coding!
+                        </p>
+                    </div>
+
+                    <!-- Guide Card 4 -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
+                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-envelope-open-text"></i> 4. Checking Customer Leads
+                        </h4>
+                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
+                            Click <b>Enquiries</b> in sidebar. All customer callback requests and phone numbers appear here with date and requested property.
+                        </p>
+                    </div>
+
+                    <!-- Guide Card 5 -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
+                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-sliders"></i> 5. Changing WhatsApp / Phone
+                        </h4>
+                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
+                            Click <b>Site Settings</b> in sidebar → Type your new phone number or WhatsApp → Click <b>Save Configuration</b>. All website buttons update automatically!
+                        </p>
+                    </div>
+
+                    <!-- Guide Card 6 -->
+                    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 18px;">
+                        <h4 style="font-size: 15px; color: #C83828; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <i class="fas fa-photo-film"></i> 6. Uploading Photos
+                        </h4>
+                        <p style="font-size: 13px; color: #64748B; line-height: 1.5;">
+                            Click <b>Media Library</b> in sidebar → Drag & drop your photos. Copy the uploaded link and paste it into any property or blog post!
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('clientGuideModal')">Got It! Close Guide</button>
+            </div>
+        </div>
+    </div>
+
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- Admin App Controller Script -->
-    <script src="js/admin-app.js?v=4.3"></script>
+    <script src="js/admin-app.js?v=4.4"></script>
 </body>
 </html>
